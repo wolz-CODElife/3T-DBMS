@@ -1,0 +1,255 @@
+{% extends 'base2.html' %}
+{% block title %}Clients{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+<hr>
+{% endif %}
+
+{% endwith %}
+
+<div class="pb-2">
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-users"></i> Clients - <span class="badge badge-dark">{{category}}</span></h4>
+</div>
+<div class="table-responsive listings">
+    <table class="table table-dark table-striped">
+        <thead>
+            <tr>
+                <th colspan="2">Head</th>
+                <th>Head2</th>
+                <th>Head3</th>
+                <th>Head4</th>
+                <th>Head5</th>
+                <th>Head6</th>
+                <th>Head5</th>
+                <th>Head6</th>
+                <th>Head5</th>
+                <th>Head6</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2</td>
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+            <tr>
+                <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                <td><button class="btn btn-danger"><i class="fa fa-trash-alt"></i></button></td>
+                <td>Dataforyou2
+                <td>Data3</td>
+                <td>Data4forme</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+                <td>Data5</td>
+                <td>Data6</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

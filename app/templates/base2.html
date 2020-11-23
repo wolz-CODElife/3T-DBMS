@@ -13,7 +13,8 @@
 <body>
     <!-- pre-loader -->
     <div id="loader">
-        <i class="fa fa-spinner fa-spin"></i>
+        <!-- <i class="fa fa-spinner fa-spin"></i> -->
+        <img src="{{url_for('static', filename='img/logo.png')}}" class="fa-spin" style="width: 80px; height: 80px;" alt="">
     </div>
     <!-- site's main content -->
     <div id="content">        
@@ -23,7 +24,7 @@
                 {% if current_user %}
                     <span class="float-right user-details" style="text-transform: capitalize;"> <i class="fa fa-user-circle"></i> {{current_user.firstname}} {{current_user.lastname}}</span>
                 {% endif %}
-                <p>Students DBMS</p>
+                <p>3T-CDMS</p>
             </div>
         </div>
         <div id="section">
@@ -34,15 +35,15 @@
                             <span class="h5 nav-user-details" style="text-transform: capitalize;"> <i class="fa fa-user-circle"></i> {{current_user.firstname}} {{current_user.lastname}}</span>
                         {% endif %}
                     </li>
-                    <li><a href=""><button>List</button></a></li>
-                    <li><a href=""><button>List</button></a></li>
-                    <li><a href=""><button>List</button></a></li>
-                    <li><a href=""><button>List</button></a></li>
+                    <li><a href="/"><button>Dashboard</button></a></li>
+                    <li><a href="/customers/prospects"><button>Prospects</button></a></li>
+                    <li><a href="/customers/students"><button>Students</button></a></li>
+                    <li><a href="/customers/exstudents"><button>Exstudents</button></a></li>
                     <li><a href="/logout"><button>Logout</button></a></li>
                 </ul>
             </div>
             <div class="aside">  
-                <div class="row p-3">
+                <div class="container-fluid p-3">
                     {% block body %}
                     
                     {% endblock %}

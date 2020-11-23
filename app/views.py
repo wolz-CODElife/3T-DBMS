@@ -108,6 +108,12 @@ def deleteuser(id):
     return redirect(url_for('controlpanel'))
 
 
+@app.route('/customers/<category>', methods=['GET', 'POST'])
+@login_required
+def customers(category):
+    return render_template('customers.html', category=category)
+
+
 @app.route("/settings", methods=['GET', 'POST'])
 @login_required
 def settings():

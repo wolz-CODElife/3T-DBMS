@@ -27,12 +27,54 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# class Complaints(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
-#     complain = db.Column(db.Text)
-#     status = db.Column(db.String)
+class Prospects(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fullname = db.Column(db.Text)
+    email = db.Column(db.String)
+    phone = db.Column(db.String)
+    location = db.Column(db.String)
+    sector = db.Column(db.String)
+    status = db.Column(db.String)
+    remark = db.Column(db.Text)
 
-#     def __repr__(self):
-#         return 'Complaints ' + str(self.id)
+    def __repr__(self):
+        return 'Prospect ' + str(self.id)
+
+class Students(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fullname = db.Column(db.Text)
+    email = db.Column(db.String)
+    phone = db.Column(db.String)
+    location = db.Column(db.String)
+    courses = db.Column(db.Text)
+    registration_fee = db.Column(db.Integer)
+    tutorial_fee = db.Column(db.Integer)
+    course_fee = db.Column(db.Integer)
+    payment_1 = db.Column(db.Integer)
+    payment_2 = db.Column(db.Integer)
+    payment_3 = db.Column(db.Integer)
+    balance = db.Column(db.Integer)
+    exam = db.Column(db.String)
+    remark_1 = db.Column(db.Text)
+    remark_2 = db.Column(db.Text)
+
+    def __repr__(self):
+        return 'Student ' + str(self.id)
+
+class Exstudents(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fullname = db.Column(db.Text)
+    email = db.Column(db.String)
+    phone = db.Column(db.String)
+    location = db.Column(db.String)
+    courses = db.Column(db.Text)
+    balance = db.Column(db.Integer)
+    results = db.Column(db.Text)
+    referral_name = db.Column(db.String)
+    referral_number = db.Column(db.String)
+    referral_email = db.Column(db.String)
+    remark = db.Column(db.Text)
+
+    def __repr__(self):
+        return 'Exstudent ' + str(self.id)
 

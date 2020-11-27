@@ -7,6 +7,8 @@ from .models import *
 from flask_login import login_user, logout_user, current_user, login_required
 import secrets
 import os
+import csv
+import pandas as pd
 
 
 @app.route('/', methods=['GET'])
@@ -55,25 +57,30 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/create-user', methods=['GET', 'POST'])
+@app.route('/users', methods=['GET', 'POST'])
 @login_required
-def createuser():
+def users():
     if request.method == "POST":
-        hashed_password = generate_password_hash(request.form["password"] , method='sha256')
+        if request.form['password'] == request.form['confirm_password']:
+            flash('Password Mismatch . . .')
+        else:
+            hashed_password = generate_password_hash(request.form["password"] , method='sha256')
 
-        lastname = request.form["lastname"]
-        firstname = request.form["firstname"]
-        periods = request.form["periods"]
-        role = request.form["role"]
-        email = request.form["email"]
-        password = hashed_password
+            lastname = request.form["lastname"]
+            firstname = request.form["firstname"]
+            role = request.form["role"]
+            email = request.form["email"]
+            password = hashed_password
+            if User.query.filter_by(email=email) != None:
+                new_user = User(lastname=lastname, firstname=firstname, role=role, email=email, password=password)
+                db.session.add(new_user)
+                db.session.commit()
 
-        new_user = User(lastname=lastname, firstname=firstname, role=role, email=email, password=password)
-        db.session.add(new_user)
-        db.session.commit()
-
-        flash('Educator Registration Successful!')
-        return redirect(url_for('controlpanel'))
+                flash('Educator Registration Successful!')
+            else:
+                flash('Email already registered')
+    users = User.query.all()
+    return render_template('users.html', users=users)
 
 @app.route('/edit-user/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -83,8 +90,6 @@ def edituser(id):
         user.firstname = request.form['firstname']
         user.lastname = request.form['lastname']
         user.role = request.form['role']
-        user.periods = request.form['periods']
-        user.email = request.form['email']
         if request.form['password'] == '':
             pass
         else:
@@ -94,7 +99,7 @@ def edituser(id):
         db.session.commit()
 
         flash("User " + user.firstname + ' ' + user.lastname + " has been successfully edited")
-        return redirect(url_for('controlpanel'))
+        return redirect(url_for('users'))
     return redirect(request.url)
 
 @app.route('/delete-user/<int:id>', methods=['GET', 'POST'])
@@ -105,7 +110,7 @@ def deleteuser(id):
     db.session.commit()
 
     flash("Deleted Educator")
-    return redirect(url_for('controlpanel'))
+    return redirect(url_for('users'))
 
 
 @app.route('/customers/<category>', methods=['GET', 'POST'])
@@ -113,28 +118,32 @@ def deleteuser(id):
 def customers(category):
     return render_template('customers.html', category=category)
 
+# the below function is to verify if the uploaded file is an xls, xlsx or csv file
+def validate_xlfiles(xlfile):
+    f_name, f_ext = os.path.splitext(xlfile.filename)
+    if f_ext.upper() in ['.XLSX', '.XLS', '.CSV']:
+        return True
+    else:
+        return 'File must be xls, xlsx, csv'
 
-@app.route("/settings", methods=['GET', 'POST'])
+
+@app.route('/import', methods=['GET', 'POST'])
 @login_required
-def settings():
+def importfile():
     if request.method == 'POST':
-        current_user.firstname = request.form['firstname']
-        current_user.lastname = request.form['lastname']
-        current_user.email = request.form['email']
-        if request.form['password'] == '':
-            pass
+        category = request.form['category']
+        if category == '0':
+            flash('Please choose a category')
         else:
-            hashed_password = generate_password_hash(request.form["password"] , method='sha256')
-            current_user.password = hashed_password
-
-        db.session.commit()
-
-        flash("User " + current_user.firstname + ' ' + current_user.lastname + " has been successfully edited")
-        return redirect(url_for('settings'))
-
-    return render_template('settings.html')
-
-    
+            xlfile = request.files['file']
+            if validate_xlfiles(xlfile) == True:
+                df = pd.read_excel(xlfile)
+                print(df.head())
+                flash("Successful Upload")
+                return render_template('import.html')
+            else:
+                flash(validate_xlfiles(xlfile))
+    return render_template('import.html')
 
 @app.errorhandler(404)
 def page_notfound(e):

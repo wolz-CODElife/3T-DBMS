@@ -61,7 +61,7 @@ def logout():
 @login_required
 def users():
     if request.method == "POST":
-        if request.form['password'] == request.form['confirm_password']:
+        if request.form['password'] != request.form['confirm_password']:
             flash('Password Mismatch . . .')
         else:
             hashed_password = generate_password_hash(request.form["password"] , method='sha256')
@@ -71,14 +71,17 @@ def users():
             role = request.form["role"]
             email = request.form["email"]
             password = hashed_password
-            if User.query.filter_by(email=email) != None:
+            countUser = 0
+            for found in User.query.filter_by(email=email):
+                countUser += 1
+            if countUser > 0:
+                flash('Email already registered')
+            else:
                 new_user = User(lastname=lastname, firstname=firstname, role=role, email=email, password=password)
                 db.session.add(new_user)
                 db.session.commit()
 
                 flash('Educator Registration Successful!')
-            else:
-                flash('Email already registered')
     users = User.query.all()
     return render_template('users.html', users=users)
 
@@ -109,7 +112,7 @@ def deleteuser(id):
     db.session.delete(user)
     db.session.commit()
 
-    flash("Deleted Educator")
+    flash("Deleted User")
     return redirect(url_for('users'))
 
 

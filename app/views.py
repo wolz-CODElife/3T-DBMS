@@ -72,16 +72,19 @@ def users():
             email = request.form["email"]
             password = hashed_password
             countUser = 0
-            for found in User.query.filter_by(email=email):
-                countUser += 1
-            if countUser > 0:
-                flash('Email already registered')
+            if role == '0':
+                flash('Select a role')
             else:
-                new_user = User(lastname=lastname, firstname=firstname, role=role, email=email, password=password)
-                db.session.add(new_user)
-                db.session.commit()
+                for found in User.query.filter_by(email=email):
+                    countUser += 1
+                if countUser > 0:
+                    flash('Email already registered')
+                else:
+                    new_user = User(lastname=lastname, firstname=firstname, role=role, email=email, password=password)
+                    db.session.add(new_user)
+                    db.session.commit()
 
-                flash('Educator Registration Successful!')
+                    flash('Educator Registration Successful!')
     users = User.query.all()
     return render_template('users.html', users=users)
 
@@ -135,13 +138,15 @@ def validate_xlfiles(xlfile):
 def importfile():
     if request.method == 'POST':
         category = request.form['category']
+        category = category.lower()
         if category == '0':
             flash('Please choose a category')
         else:
             xlfile = request.files['file']
             if validate_xlfiles(xlfile) == True:
-                df = pd.read_excel(xlfile)
-                print(df.head())
+                dfs = pd.read_excel(xlfile, file_name=None, header=0)
+                for table, df in dfs.items():
+                    print(df.to_dict()) 
                 flash("Successful Upload")
                 return render_template('import.html')
             else:

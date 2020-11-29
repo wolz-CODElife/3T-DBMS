@@ -89,6 +89,52 @@
                     {% endfor %}
                 {% endif %}
             {% endif %}
+            {% if category == 'students' %}
+                {% if clients %}
+                    {% for client in clients %}
+                        <tr>
+                            <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                            <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            <td>{{client.fullname}}</td>
+                            <td>{{client.email}}</td>
+                            <td>{{client.phone}}</td>
+                            <td>{{client.location}}</td>
+                            <td>{{client.courses}}</td>
+                            <td>{{client.registration_fee}}</td>
+                            <td>{{client.tutorial_fee}}</td>
+                            <td>{{client.course_fee}}</td>
+                            <td>{{client.payment_1}}</td>
+                            <td>{{client.payment_2}}</td>
+                            <td>{{client.payment_3}}</td>
+                            <td>{{client.balance}}</td>
+                            <td>{{client.exam}}</td>
+                            <td>{{client.remark_1}}</td>
+                            <td>{{client.remark_2}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
+            {% if category == 'exstudents' %}
+                {% if clients %}
+                    {% for client in clients %}
+                        <tr>
+                            <td><button class="btn"><i class="fa fa-edit"></i></button></td>
+                            <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            <td>{{client.fullname}}</td>
+                            <td>{{client.email}}</td>
+                            <td>{{client.phone}}</td>
+                            <td>{{client.location}}</td>
+                            <td>{{client.courses}}</td>
+                            <td>{{client.balance}}</td>
+                            <td>{{client.results}}</td>
+                            <td>{{client.referral_name}}</td>
+                            <td>{{client.referral_number}}</td>
+                            <td>{{client.referral_email}}</td>
+                            <td>{{client.remark}}</td>
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
         </tbody>
     </table>
 </div>

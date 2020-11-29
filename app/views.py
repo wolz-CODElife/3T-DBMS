@@ -182,6 +182,8 @@ def importfile():
                             if check_data_exist == 0:
                                 print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Prospects(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i])             
+                                db.session.add(new_data_input)
+                                db.session.commit()      
                             else:
                                 print('Found ', dfs['Email'][i], ' in db')         
                         elif sheet.lower() == 'students':
@@ -190,20 +192,22 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Students(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], registration_fee=dfs['Registration Fee'][i], tutorial_fee=dfs['Tutorial Fee'][i], course_fee=dfs['Course Fee'][i], payment_1=dfs['1st Payment'][i], payment_2=dfs['2nd Payment'][i], payment_3=dfs['3rd Payment'][i], balance=dfs['Balance'][i], exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
+                                new_data_input = Students(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], registration_fee=int(dfs['Registration Fee'][i]), tutorial_fee=int(dfs['Tutorial Fee'][i]), course_fee=int(dfs['Course Fee'][i]), payment_1=int(dfs['1st Payment'][i]), payment_2=int(dfs['2nd Payment'][i]), payment_3=int(dfs['3rd Payment'][i]), balance=int(dfs['Balance'][i]), exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
+                                db.session.add(new_data_input)
+                                db.session.commit()      
                             else:
                                 print('Found ', dfs['Email'][i], ' in db')
-                        elif sheet.lower() == 'exstudent':
+                        elif sheet.lower() == 'ex-student':
                             check_data_exist = 0
                             for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Exstudents(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], balance=dfs['Balance'][i], results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=dfs['Referral-Number'][i], referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
+                                new_data_input = Exstudents(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], balance=int(dfs['Balance'][i]), results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=int(dfs['Referral-Number'][i]), referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
+                                db.session.add(new_data_input)
+                                db.session.commit()      
                             else:
                                 print('Found ', dfs['Email'][i], ' in db')  
-                        db.session.add(new_data_input)
-                        db.session.commit()      
                 flash("Successful Upload")
                 return render_template('import.html')
             else:

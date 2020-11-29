@@ -15,7 +15,10 @@ import pandas as pd
 @app.route('/index', methods=['GET'])
 @login_required
 def index():
-    return render_template("index.html")
+    students = Students.query.all()
+    prospects = Prospects.query.all()
+    exstudents = Exstudents.query.all()
+    return render_template("index.html", prospects=prospects, students=students, exstudents=exstudents)
 
     
 @app.route('/login', methods=['GET', 'POST'])

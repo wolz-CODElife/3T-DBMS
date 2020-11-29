@@ -27,15 +27,33 @@
     <div class="row" style="width: 100%;">
         <a href="/customers/prospects" class="col-md m-3 p-3 wall">
             <h3>Prospects</h3>
-            <p>230</p>
+            <p>
+                {% if prospects %}
+                    {{prospects|length}}  
+                {% else %}
+                    0
+                {% endif %}
+            </p>
         </a>
         <a href="/customers/students" class="col-md m-3 p-3 wall">
             <h3>Students</h3>
-            <p>230</p>
+            <p>                
+                {% if students %}
+                    {{students|length}}  
+                {% else %}
+                    0
+                {% endif %}
+            </p>
         </a>
         <a href="/customers/exstudents" class="col-md m-3 p-3 wall">
             <h3>Exstudents</h3>
-            <p>230</p>
+            <p>                
+                {% if exstudents %}
+                    {{exstudents|length}}  
+                {% else %}
+                    0
+                {% endif %}
+            </p>
         </a>
     </div>
     <hr class="bg-light">

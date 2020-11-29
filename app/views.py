@@ -122,7 +122,29 @@ def deleteuser(id):
 @app.route('/customers/<category>', methods=['GET', 'POST'])
 @login_required
 def customers(category):
-    return render_template('customers.html', category=category)
+    if category == 'prospects':
+        clients = Prospects.query.all()
+    elif category == 'students':
+        clients = Students.query.all()
+    elif category == 'exstudents':
+        clients = Exstudents.query.all()
+    return render_template('customers.html', category=category, clients=clients)
+
+@app.route('/delete-customer/<category>/<int:id>', methods=['GET', 'POST'])
+@login_required
+def delete_customer(category, id):
+    if category == 'prospects':
+        client = Prospects.query.get_or_404(id)
+    elif category == 'students':
+        client = Students.query.get_or_404(id)
+    elif category == 'exstudents':
+        client = Exstudents.query.get_or_404(id)
+    db.session.delete(client)
+    db.session.commit()
+    flash('Deleted a client from ', category)
+    new_url = '/customers/' + category
+    return redirect(new_url)
+
 
 # the below function is to verify if the uploaded file is an xls, xlsx or csv file
 def validate_xlfiles(xlfile):
@@ -144,9 +166,44 @@ def importfile():
         else:
             xlfile = request.files['file']
             if validate_xlfiles(xlfile) == True:
-                dfs = pd.read_excel(xlfile, file_name=None, header=0)
-                for table, df in dfs.items():
-                    print(df.to_dict()) 
+                files = pd.read_excel(xlfile, sheet_name=None, header=0)
+                for sheet, data in files.items():
+                    dfs = pd.read_excel(xlfile, sheet_name=sheet, header=0)
+                #     print(dfs.to_dict())
+                    if dfs['S/N'].any():
+                        length = dfs['S/N']
+                    else:
+                        length = dfs['Email']
+                    for i in range(0, len(length)):
+                        if sheet.lower() == 'prospect':
+                            check_data_exist = 0
+                            for items in Prospects.query.filter_by(email=dfs['Email'][i]):
+                                check_data_exist += 1
+                            if check_data_exist == 0:
+                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Prospects(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i])             
+                            else:
+                                print('Found ', dfs['Email'][i], ' in db')         
+                        elif sheet.lower() == 'students':
+                            check_data_exist = 0
+                            for items in Students.query.filter_by(email=dfs['Email'][i]):
+                                check_data_exist += 1
+                            if check_data_exist == 0:
+                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Students(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], registration_fee=dfs['Registration Fee'][i], tutorial_fee=dfs['Tutorial Fee'][i], course_fee=dfs['Course Fee'][i], payment_1=dfs['1st Payment'][i], payment_2=dfs['2nd Payment'][i], payment_3=dfs['3rd Payment'][i], balance=dfs['Balance'][i], exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
+                            else:
+                                print('Found ', dfs['Email'][i], ' in db')
+                        elif sheet.lower() == 'exstudent':
+                            check_data_exist = 0
+                            for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
+                                check_data_exist += 1
+                            if check_data_exist == 0:
+                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Exstudents(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], balance=dfs['Balance'][i], results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=dfs['Referral-Number'][i], referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
+                            else:
+                                print('Found ', dfs['Email'][i], ' in db')  
+                        db.session.add(new_data_input)
+                        db.session.commit()      
                 flash("Successful Upload")
                 return render_template('import.html')
             else:

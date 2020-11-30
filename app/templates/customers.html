@@ -30,7 +30,9 @@
         </div>
         <div class="col-md m-1 text-center">
             <button class="btn button float-left">Filter <i class="fa fa-filter"></i></button>
+            {% if current_user.role|lower != 'reader' %}
             <span class="btn btn-success" data-toggle="modal" data-target="#add{{category}}"><i class="fa fa-plus"></i></span>
+            {% endif %}
             <a href="/customers/{{category}}" class="btn btn-danger float-right">Clear Filter <i class="fa fa-times"></i></a>
         </div>
     </div>
@@ -40,7 +42,9 @@
         <thead>
             <tr>
                 {% if category == 'prospects' %}
-                    <th colspan="2">Actions</th>
+                    {% if current_user.role|lower != 'reader' %}
+                        <th colspan="2">Actions</th>
+                    {% endif %}
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -50,7 +54,9 @@
                     <th>Remark</th>
                 {% endif %}
                 {% if category == 'students' %}
-                    <th colspan="2">Actions</th>
+                    {% if current_user.role|lower != 'reader' %}
+                        <th colspan="2">Actions</th>
+                    {% endif %}
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -68,7 +74,9 @@
                     <th>Remark 2</th>
                 {% endif %}
                 {% if category == 'exstudents' %}
-                    <th colspan="2">Actions</th>
+                    {% if current_user.role|lower != 'reader' %}
+                        <th colspan="2">Actions</th>
+                    {% endif %}
                     <th>Full Name</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -88,8 +96,10 @@
                 {% if clients %}
                     {% for client in clients %}
                         <tr>
+                            {% if current_user.role|lower != 'reader' %}
                             <td><button class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></button></td>
                             <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            {% endif %}
                             <td>{{client.fullname}}</td>
                             <td>{{client.email}}</td>
                             <td>{{client.phone}}</td>
@@ -105,8 +115,10 @@
                 {% if clients %}
                     {% for client in clients %}
                         <tr>
+                            {% if current_user.role|lower != 'reader' %}
                             <td><button class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></button></td>
                             <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            {% endif %}
                             <td>{{client.fullname}}</td>
                             <td>{{client.email}}</td>
                             <td>{{client.phone}}</td>
@@ -130,8 +142,10 @@
                 {% if clients %}
                     {% for client in clients %}
                         <tr>
+                            {% if current_user.role|lower != 'reader' %}
                             <td><button class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></button></td>
                             <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
+                            {% endif %}
                             <td>{{client.fullname}}</td>
                             <td>{{client.email}}</td>
                             <td>{{client.phone}}</td>

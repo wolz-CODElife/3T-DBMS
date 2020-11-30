@@ -58,8 +58,10 @@
     </div>
     <hr class="bg-light">
     <p class="text-right">
-        <a href="/import" class="btn button m-1"> <i class="fa fa-file-import"></i> Import Sheet </a>
-        <!-- <a href="/export" class="btn button m-1"> <i class="fa fa-file-export"></i> Export Sheet </a> -->
+            {% if current_user.role|lower != 'reader' %}
+            <a href="/import" class="btn button m-1"> <i class="fa fa-file-import"></i> Import Sheet </a>
+            <!-- <a href="/export" class="btn button m-1"> <i class="fa fa-file-export"></i> Export Sheet </a> -->
+            {% endif %}
     </p>
 </div>
 {% endblock %}

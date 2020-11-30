@@ -20,7 +20,7 @@ def index():
     exstudents = Exstudents.query.all()
     return render_template("index.html", prospects=prospects, students=students, exstudents=exstudents)
 
-    
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -133,6 +133,75 @@ def customers(category):
         clients = Exstudents.query.all()
     return render_template('customers.html', category=category, clients=clients)
 
+
+
+@app.route('/filter/<category>', methods=['GET', 'POST'])
+@login_required
+def filter(category):
+    if request.method == 'POST':
+        search = request.form['keyword']
+        if category == 'prospects':
+            clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%')))
+        elif category == 'students':
+            clients = Students.query.filter(or_(Students.fullname.ilike(f'%{search}%'), Students.email.ilike(f'%{search}%'), Students.phone.ilike(f'%{search}%'), Students.location.ilike(f'%{search}%'), Students.courses.ilike(f'%{search}%'), Students.registration_fee.ilike(f'%{search}%'), Students.tutorial_fee.ilike(f'%{search}%'), Students.course_fee.ilike(f'%{search}%'), Students.payment_1.ilike(f'%{search}%'), Students.payment_2.ilike(f'%{search}%'), Students.payment_3.ilike(f'%{search}%'), Students.balance.ilike(f'%{search}%'), Students.exam.ilike(f'%{search}%'), Students.remark_1.ilike(f'%{search}%'), Students.remark_2.ilike(f'%{search}%')))
+        elif category == 'exstudents':
+            clients = Exstudents.query.filter(or_(Exstudents.fullname.ilike(f'%{search}%'), Exstudents.email.ilike(f'%{search}%'), Exstudents.phone.ilike(f'%{search}%'), Exstudents.location.ilike(f'%{search}%'), Exstudents.courses.ilike(f'%{search}%'), Exstudents.balance.ilike(f'%{search}%'), Exstudents.results.ilike(f'%{search}%'), Exstudents.referral_name.ilike(f'%{search}%'), Exstudents.referral_number.ilike(f'%{search}%'), Exstudents.referral_email.ilike(f'%{search}%'), Exstudents.remark.ilike(f'%{search}%')))
+        return render_template('customers.html', category=category, clients=clients)
+    else:
+        return redirect(url_for('index'))
+
+
+@app.route('/edit-client/<category>/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_customer(category, id):
+    if request.method == 'POST':
+        if category == 'prospects':
+            client = Prospects.query.get_or_404(id)
+            client.fullname = request.form['fullname']
+            client.email = request.form['email']
+            client.phone = int(request.form['phone'])
+            client.location = request.form['location']
+            client.sector = request.form['sector']
+            client.status = request.form['status']
+            client.remark = request.form['remark']
+        elif category == 'students':
+            client = Students.query.get_or_404(id)
+            client.fullname = request.form['fullname']
+            client.email = request.form['email']
+            client.phone = int(request.form['phone'])
+            client.location = request.form['location']
+            client.courses = request.form['courses']
+            client.registration_fee = int(request.form['registration_fee'])
+            client.tutorial_fee = int(request.form['tutorial_fee'])
+            client.course_fee = int(request.form['course_fee'])
+            client.payment_1 = int(request.form['payment_1'])
+            client.payment_2 = int(request.form['payment_2'])
+            client.payment_3 = int(request.form['payment_3'])
+            client.balance = int(request.form['balance'])
+            client.exam = request.form['exam']
+            client.remark_1 = request.form['remark_1']
+            client.remark_2 = request.form['remark_2']
+        elif category == 'exstudents':
+            client = Exstudents.query.get_or_404(id)
+            client.fullname = request.form['fullname']
+            client.email = request.form['email']
+            client.phone = int(request.form['phone'])
+            client.location = request.form['location']
+            client.courses = request.form['courses']
+            client.balance = request.form['balance']
+            client.results = request.form['results']
+            client.referral_name = request.form['referral_name']
+            client.referral_number = request.form['referral_number']
+            client.referral_email = request.form['referral_email']
+            client.remark = request.form['remark']
+        db.session.commit()
+        flash('Edited ' + str(client.fullname) + ' a client from ' + str(category))
+        new_url = '/customers/' + category
+        return redirect(new_url)
+    else:
+        new_url = '/customers/' + category
+        return redirect(new_url)
+
 @app.route('/delete-customer/<category>/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_customer(category, id):
@@ -144,7 +213,7 @@ def delete_customer(category, id):
         client = Exstudents.query.get_or_404(id)
     db.session.delete(client)
     db.session.commit()
-    flash('Deleted a client from ', category)
+    flash('Deleted a client from ' + str(category))
     new_url = '/customers/' + category
     return redirect(new_url)
 
@@ -183,39 +252,79 @@ def importfile():
                             for items in Prospects.query.filter_by(email=dfs['Email'][i]):
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Prospects(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i])             
+                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Prospects(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
-                            else:
-                                print('Found ', dfs['Email'][i], ' in db')         
+                            # else:
+                            #     print('Found ', dfs['Email'][i], ' in db')         
                         elif sheet.lower() == 'students':
                             check_data_exist = 0
                             for items in Students.query.filter_by(email=dfs['Email'][i]):
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Students(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], registration_fee=int(dfs['Registration Fee'][i]), tutorial_fee=int(dfs['Tutorial Fee'][i]), course_fee=int(dfs['Course Fee'][i]), payment_1=int(dfs['1st Payment'][i]), payment_2=int(dfs['2nd Payment'][i]), payment_3=int(dfs['3rd Payment'][i]), balance=int(dfs['Balance'][i]), exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
+                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Students(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], registration_fee=int(dfs['Registration-Fee'][i]), tutorial_fee=int(dfs['Tutorial-Fee'][i]), course_fee=int(dfs['Course-Fee'][i]), payment_1=int(dfs['1st-Payment'][i]), payment_2=int(dfs['2nd-Payment'][i]), payment_3=int(dfs['3rd-Payment'][i]), balance=int(dfs['Balance'][i]), exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
-                            else:
-                                print('Found ', dfs['Email'][i], ' in db')
+                            # else:
+                            #     print('Found ', dfs['Email'][i], ' in db')
                         elif sheet.lower() == 'ex-student':
                             check_data_exist = 0
                             for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Exstudents(fullname=dfs['Full Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course Name'][i], balance=int(dfs['Balance'][i]), results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=int(dfs['Referral-Number'][i]), referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
+                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                new_data_input = Exstudents(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], balance=int(dfs['Balance'][i]), results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=int(dfs['Referral-Number'][i]), referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
-                            else:
-                                print('Found ', dfs['Email'][i], ' in db')  
+                            # else:
+                            #     print('Found ', dfs['Email'][i], ' in db')  
                 flash("Successful Upload")
                 return render_template('import.html')
             else:
                 flash(validate_xlfiles(xlfile))
     return render_template('import.html')
+
+@app.route('/add/<category>', methods=['GET', 'POST'])
+@login_required
+def addclient(category):
+    if request.method == 'POST':
+        if category.lower() == 'prospects':
+            check_data_exist = 0
+            for items in Prospects.query.filter_by(email=request.form['email']):
+                check_data_exist += 1
+            if check_data_exist == 0:
+                new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], sector=request.form['sector'], status=request.form['status'], remark=request.form['remark'])             
+                db.session.add(new_data_input)
+                db.session.commit()      
+            # else:
+            #     print('Found ', dfs['Email'][i], ' in db')         
+        elif category.lower() == 'students':
+            check_data_exist = 0
+            for items in Students.query.filter_by(email=request.form['email']):
+                check_data_exist += 1
+            if check_data_exist == 0:
+                # print(request.form['email'], ' not found in db . . .Proceed . . .')
+                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=int(request.form['balance']), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'])             
+                db.session.add(new_data_input)
+                db.session.commit()      
+            # else:
+            #     print('Found ', request.form['email'], ' in db')
+        elif category.lower() == 'exstudents':
+            check_data_exist = 0
+            for items in Exstudents.query.filter_by(email=request.form['email']):
+                check_data_exist += 1
+            if check_data_exist == 0:
+                # print(request.form['email'], ' not found in db . . .Proceed . . .')
+                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'])             
+                db.session.add(new_data_input)
+                db.session.commit()      
+            # else:
+            #     print('Found ', dfs['Email'][i], ' in db')  
+        flash("Client Successfully added")
+    new_url = '/customers/' + category
+    return redirect(new_url)
 
 @app.errorhandler(404)
 def page_notfound(e):

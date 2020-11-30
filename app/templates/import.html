@@ -24,7 +24,13 @@
     <h4 style="text-transform: capitalize;"> <i class="fa fa-file-import"></i> Import Sheets</h4>
 </div>
 <div class="listings">
-    <div class="container">        
+    <div class="container">   
+        <div>
+            <p class="text-info">
+                <span class="text-danger">**NOTE: </span> Files upload may fail if they dont match this sample sheet, column header must not have white spaces <br>
+                Download Sample Workbook : <a href="{{url_for('static', filename='data/CDMS.xlsx')}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
+            </p>
+        </div>     
         <form action="/import" enctype="multipart/form-data" method="post">
             <div class="row">
                 <div class="col-md m-2">

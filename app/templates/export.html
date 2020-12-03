@@ -1,5 +1,5 @@
 {% extends 'base2.html' %}
-{% block title %}Import Sheet{% endblock %}
+{% block title %}Export Sheet{% endblock %}
 {% block body %}
 {% with messages = get_flashed_messages() %}
 
@@ -21,17 +21,11 @@
 {% endwith %}
 
 <div class="pb-2">
-    <h4 style="text-transform: capitalize;"> <i class="fa fa-file-import"></i> Import Sheets</h4>
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-file-import"></i> Export Sheets</h4>
 </div>
 <div class="listings">
     <div class="container">   
-        <div>
-            <p class="text-info">
-                <span class="text-danger">**NOTE: </span> Files upload may fail if they dont match this sample sheet, column header must not have white spaces <br>
-                Download Sample Workbook : <a href="{{url_for('static', filename='data/CDMS.xlsx')}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
-            </p>
-        </div>     
-        <form action="/import" enctype="multipart/form-data" method="post">
+        <form action="/export" method="post">
             <div class="row">
                 <div class="col-md m-2">
                     <label for="category">Select Category</label>
@@ -43,16 +37,19 @@
                         <option value="ex-student">Exstudents</option>
                     </select>
                 </div>
-                <div class="col-md m-2">
-                    <label for="file">Upload xls, xlsx, or csv only</label>
-                    <input type="file" name="file" id="file" class="form-control">
-                </div>
             </div>
             <p class="m-2">                
-                <button type="submit" class="btn button">Import <i class="fa fa-file-import"></i></button>
+                <button type="submit" class="btn button">Export <i class="fa fa-file-export"></i></button>
             </p>
         </form>
-        <hr>
+        {% if file %}
+            <hr class="bg-info">
+            <hr class="bg-info">
+            <div class="text-info text-center">
+                <h2>File Ready for Download</h2>
+                <a href="" class="btn button">Download <i class="fa fa-file-download"></i></a>
+            </div>     
+        {% endif %}
     </div>
 </div>
 {% endblock %}

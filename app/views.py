@@ -7,6 +7,7 @@ from .models import *
 from flask_login import login_user, logout_user, current_user, login_required
 import secrets
 import os
+from datetime import datetime
 import csv
 import pandas as pd
 
@@ -226,6 +227,41 @@ def validate_xlfiles(xlfile):
     else:
         return 'File must be xls, xlsx, csv'
 
+@app.route('/export', methods=['GET', 'POST'])
+@login_required
+def exportfile():
+    if request.method == 'POST':
+        category = request.form['category']
+        if category == '0':
+            flash('Please select a category')
+        else:
+            random_hex = secrets.token_hex(8)
+            file_name = 'data/CDMS-' + str(random_hex) + '.xlsx' 
+            file = url_for('static', filename=file_name)
+            if category.lower() == 'mixed':                
+                data_fetched = pd.DataFrame(Prospects.query.all())
+                data_fetched2 = pd.DataFrame(Students.query.all())
+                data_fetched3 = pd.DataFrame(Exstudents.query.all())
+                sheets = {'PROSPECT': data_fetched, 'STUDENTS': data_fetched2, 'EX-STUDENT': data_fetched3}
+                writer = pd.ExcelWriter(file, engine='xlsxwriter')
+
+                for sheet in sheets.keys():
+                    sheets[sheet].to_excel(writer, sheet_name=sheet, index=False)
+                writer.save()
+                flash('Downloadable File generated for download')
+            else:
+                if category.lower() == 'prospect':
+                    data_fetched = pd.DataFrame(Prospects.query.all())
+                elif category.lower() == 'students':
+                    data_fetched = pd.DataFrame(Students.query.all())
+                elif category.lower() == 'ex-student':
+                    data_fetched = pd.DataFrame(Exstudents.query.all())
+                # writer = pd.ExcelWriter(file, engine='xlsxwriter')
+                sheet = category.upper()
+                data_fetched.to_excel(file, sheet_name=sheet, index=False)
+                flash('Downloadable File generated for download')
+            return render_template('export.html', file=file)
+    return render_template('export.html')
 
 @app.route('/import', methods=['GET', 'POST'])
 @login_required

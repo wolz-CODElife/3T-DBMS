@@ -96,21 +96,36 @@ def users():
 @login_required
 def edituser(id):
     if request.method == 'POST':
-        user = User.query.get_or_404(id)
-        user.firstname = request.form['firstname']
-        user.lastname = request.form['lastname']
-        user.role = request.form['role']
-        if request.form['password'] == '':
-            pass
+        if request.form['password'] == request.form['copassword']:
+            user = User.query.get_or_404(id)
+            user.firstname = request.form['firstname']
+            user.lastname = request.form['lastname']
+            if current_user.id == id:
+                pass
+            else:
+                user.role = request.form['role']
+            if request.form['password'] == '':
+                pass
+            else:
+                hashed_password = generate_password_hash(request.form["password"] , method='sha256')
+                user.password = hashed_password
+
+            db.session.commit()
+
+            flash("User " + user.firstname + ' ' + user.lastname + " has been successfully edited")
         else:
-            hashed_password = generate_password_hash(request.form["password"] , method='sha256')
-            user.password = hashed_password
+            flash('Opps! Password mismatch . . .')
+        if current_user.id == id:
+            return redirect(url_for('settings'))
+        else:
+            return redirect(url_for('users'))
+    else:
+        return redirect(request.url)
 
-        db.session.commit()
-
-        flash("User " + user.firstname + ' ' + user.lastname + " has been successfully edited")
-        return redirect(url_for('users'))
-    return redirect(request.url)
+@app.route('/settings', methods=['GET', 'POST'])
+@login_required
+def settings():
+    return render_template('settings.html')
 
 @app.route('/delete-user/<int:id>', methods=['GET', 'POST'])
 @login_required

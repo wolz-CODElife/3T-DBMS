@@ -42,12 +42,12 @@
                 <button type="submit" class="btn button">Export <i class="fa fa-file-export"></i></button>
             </p>
         </form>
-        {% if file %}
+        {% if file_name %}
             <hr class="bg-info">
             <hr class="bg-info">
             <div class="text-info text-center">
                 <h2>File Ready for Download</h2>
-                <a href="" class="btn button">Download <i class="fa fa-file-download"></i></a>
+                <a href="{{file_name}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
             </div>     
         {% endif %}
     </div>

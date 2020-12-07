@@ -212,11 +212,14 @@ def delete_customer(category, id):
         client = Students.query.get_or_404(id)
     elif category == 'exstudents':
         client = Exstudents.query.get_or_404(id)
-    db.session.delete(client)
-    db.session.commit()
-    flash('Deleted a client from ' + str(category))
-    new_url = '/customers/' + category
-    return redirect(new_url)
+    if request.method == 'POST':
+        db.session.delete(client)
+        db.session.commit()
+        flash('Deleted a client from ' + str(category))
+        new_url = '/customers/' + category
+        return redirect(new_url)
+    else:
+        return render_template('delete.html', category=category, client=client)
 
 
 # the below function is to verify if the uploaded file is an xls, xlsx or csv file
@@ -235,15 +238,13 @@ def exportfile():
         if category == '0':
             flash('Please select a category')
         else:
-            random_hex = secrets.token_hex(8)
-            file_name = 'data/CDMS-' + str(random_hex) + '.xlsx' 
-            file = url_for('static', filename=file_name)
+            file_name = 'CDMS.xlsx' 
             if category.lower() == 'mixed':                
                 data_fetched = pd.DataFrame(Prospects.query.all())
                 data_fetched2 = pd.DataFrame(Students.query.all())
                 data_fetched3 = pd.DataFrame(Exstudents.query.all())
                 sheets = {'PROSPECT': data_fetched, 'STUDENTS': data_fetched2, 'EX-STUDENT': data_fetched3}
-                writer = pd.ExcelWriter(file, engine='xlsxwriter')
+                writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
 
                 for sheet in sheets.keys():
                     sheets[sheet].to_excel(writer, sheet_name=sheet, index=False)
@@ -256,11 +257,10 @@ def exportfile():
                     data_fetched = pd.DataFrame(Students.query.all())
                 elif category.lower() == 'ex-student':
                     data_fetched = pd.DataFrame(Exstudents.query.all())
-                # writer = pd.ExcelWriter(file, engine='xlsxwriter')
                 sheet = category.upper()
-                data_fetched.to_excel(file, sheet_name=sheet, index=False)
+                data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
                 flash('Downloadable File generated for download')
-            return render_template('export.html', file=file)
+            return render_template('export.html', file_name=file_name)
     return render_template('export.html')
 
 @app.route('/import', methods=['GET', 'POST'])

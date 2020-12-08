@@ -47,7 +47,7 @@
             <hr class="bg-info">
             <div class="text-info text-center">
                 <h2>File Ready for Download</h2>
-                <a href="{{file_name}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
+                <a href="{{url_for('static', filename=file_name)}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
             </div>     
         {% endif %}
     </div>

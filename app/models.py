@@ -34,8 +34,13 @@ class Prospects(db.Model):
     phone = db.Column(db.String)
     location = db.Column(db.String)
     sector = db.Column(db.String)
+    data_source = db.Column(db.String)
+    company_name = db.Column(db.String)
     status = db.Column(db.String)
     remark = db.Column(db.Text)
+    extra1 = db.Column(db.Text) 
+    extra2 = db.Column(db.Text) 
+    extra3 = db.Column(db.Text) 
 
     def __repr__(self):
         return 'Prospect ' + str(self.id)
@@ -46,6 +51,7 @@ class Students(db.Model):
     email = db.Column(db.String)
     phone = db.Column(db.String)
     location = db.Column(db.String)
+    dob = db.Column(db.Date)
     courses = db.Column(db.Text)
     registration_fee = db.Column(db.Integer)
     tutorial_fee = db.Column(db.Integer)
@@ -57,6 +63,9 @@ class Students(db.Model):
     exam = db.Column(db.String)
     remark_1 = db.Column(db.Text)
     remark_2 = db.Column(db.Text)
+    extra1 = db.Column(db.Text) 
+    extra2 = db.Column(db.Text) 
+    extra3 = db.Column(db.Text) 
 
     def __repr__(self):
         return 'Student ' + str(self.id)
@@ -74,6 +83,9 @@ class Exstudents(db.Model):
     referral_number = db.Column(db.String)
     referral_email = db.Column(db.String)
     remark = db.Column(db.Text)
+    extra1 = db.Column(db.Text) 
+    extra2 = db.Column(db.Text) 
+    extra3 = db.Column(db.Text) 
 
     def __repr__(self):
         return 'Exstudent ' + str(self.id)

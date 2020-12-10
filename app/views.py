@@ -158,11 +158,11 @@ def filter(category):
     if request.method == 'POST':
         search = request.form['keyword']
         if category == 'prospects':
-            clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%')))
+            clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%'), Prospects.extra1.ilike(f'%{search}%'), Prospects.extra2.ilike(f'%{search}%'), Prospects.extra3.ilike(f'%{search}%')))
         elif category == 'students':
-            clients = Students.query.filter(or_(Students.fullname.ilike(f'%{search}%'), Students.email.ilike(f'%{search}%'), Students.phone.ilike(f'%{search}%'), Students.location.ilike(f'%{search}%'), Students.courses.ilike(f'%{search}%'), Students.registration_fee.ilike(f'%{search}%'), Students.tutorial_fee.ilike(f'%{search}%'), Students.course_fee.ilike(f'%{search}%'), Students.payment_1.ilike(f'%{search}%'), Students.payment_2.ilike(f'%{search}%'), Students.payment_3.ilike(f'%{search}%'), Students.balance.ilike(f'%{search}%'), Students.exam.ilike(f'%{search}%'), Students.remark_1.ilike(f'%{search}%'), Students.remark_2.ilike(f'%{search}%')))
+            clients = Students.query.filter(or_(Students.fullname.ilike(f'%{search}%'), Students.email.ilike(f'%{search}%'), Students.phone.ilike(f'%{search}%'), Students.location.ilike(f'%{search}%'), Students.courses.ilike(f'%{search}%'), Students.registration_fee.ilike(f'%{search}%'), Students.tutorial_fee.ilike(f'%{search}%'), Students.course_fee.ilike(f'%{search}%'), Students.payment_1.ilike(f'%{search}%'), Students.payment_2.ilike(f'%{search}%'), Students.payment_3.ilike(f'%{search}%'), Students.balance.ilike(f'%{search}%'), Students.exam.ilike(f'%{search}%'), Students.remark_1.ilike(f'%{search}%'), Students.remark_2.ilike(f'%{search}%'), Students.extra1.ilike(f'%{search}%'), Students.extra2.ilike(f'%{search}%'), Students.extra3.ilike(f'%{search}%')))
         elif category == 'exstudents':
-            clients = Exstudents.query.filter(or_(Exstudents.fullname.ilike(f'%{search}%'), Exstudents.email.ilike(f'%{search}%'), Exstudents.phone.ilike(f'%{search}%'), Exstudents.location.ilike(f'%{search}%'), Exstudents.courses.ilike(f'%{search}%'), Exstudents.balance.ilike(f'%{search}%'), Exstudents.results.ilike(f'%{search}%'), Exstudents.referral_name.ilike(f'%{search}%'), Exstudents.referral_number.ilike(f'%{search}%'), Exstudents.referral_email.ilike(f'%{search}%'), Exstudents.remark.ilike(f'%{search}%')))
+            clients = Exstudents.query.filter(or_(Exstudents.fullname.ilike(f'%{search}%'), Exstudents.email.ilike(f'%{search}%'), Exstudents.phone.ilike(f'%{search}%'), Exstudents.location.ilike(f'%{search}%'), Exstudents.courses.ilike(f'%{search}%'), Exstudents.balance.ilike(f'%{search}%'), Exstudents.results.ilike(f'%{search}%'), Exstudents.referral_name.ilike(f'%{search}%'), Exstudents.referral_number.ilike(f'%{search}%'), Exstudents.referral_email.ilike(f'%{search}%'), Exstudents.remark.ilike(f'%{search}%'), Exstudents.extra1.ilike(f'%{search}%'), Exstudents.extra2.ilike(f'%{search}%'), Exstudents.extra3.ilike(f'%{search}%')))
         return render_template('customers.html', category=category, clients=clients)
     else:
         return redirect(url_for('index'))
@@ -181,6 +181,9 @@ def edit_customer(category, id):
             client.sector = request.form['sector']
             client.status = request.form['status']
             client.remark = request.form['remark']
+            client.extra1 = request.form['extra1']
+            client.extra2 = request.form['extra2']
+            client.extra3 = request.form['extra3']
         elif category == 'students':
             client = Students.query.get_or_404(id)
             client.fullname = request.form['fullname']
@@ -198,6 +201,9 @@ def edit_customer(category, id):
             client.exam = request.form['exam']
             client.remark_1 = request.form['remark_1']
             client.remark_2 = request.form['remark_2']
+            client.extra1 = request.form['extra1']
+            client.extra2 = request.form['extra2']
+            client.extra3 = request.form['extra3']
         elif category == 'exstudents':
             client = Exstudents.query.get_or_404(id)
             client.fullname = request.form['fullname']
@@ -211,6 +217,9 @@ def edit_customer(category, id):
             client.referral_number = request.form['referral_number']
             client.referral_email = request.form['referral_email']
             client.remark = request.form['remark']
+            client.extra1 = request.form['extra1']
+            client.extra2 = request.form['extra2']
+            client.extra3 = request.form['extra3']
         db.session.commit()
         flash('Edited ' + str(client.fullname) + ' a client from ' + str(category))
         new_url = '/customers/' + category
@@ -318,7 +327,7 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Prospects(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i])             
+                                new_data_input = Prospects(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], sector=dfs['Sector'][i], status=dfs['Status'][i], remark=dfs['Remark'][i], extra1=dfs['Extra1'], extra2=dfs['Extra2'], extra3=dfs['Extra3'])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:
@@ -329,7 +338,7 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Students(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], registration_fee=int(dfs['Registration-Fee'][i]), tutorial_fee=int(dfs['Tutorial-Fee'][i]), course_fee=int(dfs['Course-Fee'][i]), payment_1=int(dfs['1st-Payment'][i]), payment_2=int(dfs['2nd-Payment'][i]), payment_3=int(dfs['3rd-Payment'][i]), balance=int(dfs['Balance'][i]), exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i])             
+                                new_data_input = Students(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], registration_fee=int(dfs['Registration-Fee'][i]), tutorial_fee=int(dfs['Tutorial-Fee'][i]), course_fee=int(dfs['Course-Fee'][i]), payment_1=int(dfs['1st-Payment'][i]), payment_2=int(dfs['2nd-Payment'][i]), payment_3=int(dfs['3rd-Payment'][i]), balance=int(dfs['Balance'][i]), exam=dfs['Exam'][i], remark_1=dfs['Remark-1'][i], remark_2=dfs['Remark-2'][i], extra1=dfs['Extra1'], extra2=dfs['Extra2'], extra3=dfs['Extra3'])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:
@@ -340,7 +349,7 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Exstudents(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], balance=int(dfs['Balance'][i]), results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=int(dfs['Referral-Number'][i]), referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i])             
+                                new_data_input = Exstudents(fullname=dfs['Full-Name'][i], email=dfs['Email'][i], phone=int(dfs['Phone'][i]), location=dfs['Location'][i], courses=dfs['Course-Name'][i], balance=int(dfs['Balance'][i]), results=dfs['Results'][i], referral_name=dfs['Referral-Name'][i], referral_number=int(dfs['Referral-Number'][i]), referral_email=dfs['Referral-Email'][i], remark=dfs['Remark'][i], extra1=dfs['Extra1'], extra2=dfs['Extra2'], extra3=dfs['Extra3'])             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:
@@ -360,7 +369,7 @@ def addclient(category):
             for items in Prospects.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
-                new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], sector=request.form['sector'], status=request.form['status'], remark=request.form['remark'])             
+                new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], sector=request.form['sector'], status=request.form['status'], remark=request.form['remark'], extra1=request.form['Extra1'], extra2=request.form['Extra2'], extra3=request.form['Extra3'])             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -371,7 +380,7 @@ def addclient(category):
                 check_data_exist += 1
             if check_data_exist == 0:
                 # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=int(request.form['balance']), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'])             
+                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=int(request.form['balance']), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=request.form['Extra1'], extra2=request.form['Extra2'], extra3=request.form['Extra3'])             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -382,7 +391,7 @@ def addclient(category):
                 check_data_exist += 1
             if check_data_exist == 0:
                 # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'])             
+                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=request.form['Extra1'], extra2=request.form['Extra2'], extra3=request.form['Extra3'])             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:

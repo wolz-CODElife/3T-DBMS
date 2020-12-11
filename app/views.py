@@ -162,7 +162,7 @@ def filter(category):
                 clients = Students.query.filter_by(balance = 0).all()
         elif search == 'Outstanding':
             if category == 'students':
-                clients = Students.query.filter(Students.balance != 0).all()
+                clients = Students.query.filter(Students.balance > 0).all()
         else:
             if category == 'prospects':
                 clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%'), Prospects.extra1.ilike(f'%{search}%'), Prospects.extra2.ilike(f'%{search}%'), Prospects.extra3.ilike(f'%{search}%'))).all()
@@ -219,10 +219,22 @@ def edit_customer(category, id):
             client.registration_fee = int(request.form['registration_fee'])
             client.tutorial_fee = int(request.form['tutorial_fee'])
             client.course_fee = int(request.form['course_fee'])
-            client.payment_1 = int(request.form['payment_1'])
-            client.payment_2 = int(request.form['payment_2'])
-            client.payment_3 = int(request.form['payment_3'])
-            client.balance = (int(request.form['registration_fee']) + int(request.form['tutorial_fee']) + int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3']))
+            if request.form['payment_1'] == '' or request.form['payment_1'] == ' ':
+                payment_1 = 0
+            else:
+                payment_1 = request.form['payment_1']
+            if request.form['payment_2'] == '' or request.form['payment_2'] == ' ':
+                payment_2 = 0
+            else:
+                payment_2 = request.form['payment_2']
+            if request.form['payment_3'] == '' or request.form['payment_3'] == ' ':
+                payment_3 = 0
+            else:
+                payment_3 = request.form['payment_3']
+            client.payment_1 = int(payment_1)
+            client.payment_2 = int(payment_2)
+            client.payment_3 = int(payment_3)
+            client.balance = (int(request.form['course_fee'])) - (int(payment_1) + int(payment_2) + int(payment_3))
             client.exam = request.form['exam']
             client.remark_1 = request.form['remark_1']
             client.remark_2 = request.form['remark_2']
@@ -417,7 +429,7 @@ def addclient(category):
                 check_data_exist += 1
             if check_data_exist == 0:
                 # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=(int(request.form['registration_fee']) + int(request.form['tutorial_fee']) + int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=(int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:

@@ -353,10 +353,10 @@ def importfile():
                 for sheet, data in files.items():
                     dfs = pd.read_excel(xlfile, sheet_name=sheet, header=0)
                 #     print(dfs.to_dict())
-                    if dfs['S/N'].any():
-                        length = dfs['S/N']
-                    else:
+                    if dfs['Email'].any():
                         length = dfs['Email']
+                    else:
+                        length = dfs['S/N']
                     for i in range(0, len(length)):
                         if sheet.lower() == 'prospect':
                             check_data_exist = 0

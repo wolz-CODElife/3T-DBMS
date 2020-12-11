@@ -26,7 +26,13 @@
 <form action="/filter/{{category}}" method="post">
     <div class="row">
         <div class="col-md-4 m-1">
-            <input type="text" name="keyword" placeholder="Search KEYWORD" class="form-control">
+            <input type="text" list="search" name="keyword" autocomplete="off" placeholder="Search KEYWORD" class="form-control">
+            <datalist id="search">
+                {% if category == 'students' %}
+                <option value="Balanced">
+                <option value="Outstanding">
+                {% endif %}
+            </datalist>
         </div>
         <div class="col-md m-1 text-center">
             <button class="btn button float-left">Filter <i class="fa fa-filter"></i></button>
@@ -35,8 +41,14 @@
             {% endif %}
             <a href="/customers/{{category}}" class="btn btn-danger float-right">Clear Filter <i class="fa fa-times"></i></a>
         </div>
+        <div class="col-md-2">
+            <span class="btn btn-light m-1">{{clients|count}}</span>/<span class="btn btn-light m-1">{{totalcount|length}}</span>
+        </div>
     </div>
 </form>
+{% if search %}
+<h4 class="text-center">Searched Keyword - <span class="badge badge-light">{{search}}</span></h4>
+{% endif %}
 <div class="table-responsive listings">
     <table class="table table-dark table-striped table-bordered table-hover">
         <thead>
@@ -142,7 +154,11 @@
                             <td>{{client.payment_1}}</td>
                             <td>{{client.payment_2}}</td>
                             <td>{{client.payment_3}}</td>
-                            <td>{{client.balance}}</td>
+                            {% if client.balance|int > 0 %}
+                            <td class="bg-danger text-white">{{client.balance}}</td>
+                            {%else%}
+                            <td class="bg-success">{{client.balance}}</td>
+                            {% endif %}
                             <td>{{client.exam}}</td>
                             <td>{{client.remark_1}}</td>
                             <td>{{client.remark_2}}</td>
@@ -277,7 +293,7 @@
                                 </div>
                             <div class="form-group">
                                 <label for="email{{category}}">Email: </label>
-                                <input type="text" id="email{{category}}" name="email" placeholder="Email . . ."
+                                <input type="text" id="email{{category}}" required name="email" placeholder="Email . . ."
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -401,8 +417,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
-                                    <input type="text" id="editbalance" name="balance" value="{{client.balance}}"
-                                    class="form-control">
+                                    {% if client.balance|int > 0 %}
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance}}" class="form-control bg-danger text-white">
+                                    {% else %}
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance}}" class="form-control bg-success">
+                                    {% endif %}
                                 </div>
                                 <div class="form-group">
                                     <label for="editexam">Exam: </label>
@@ -459,7 +478,7 @@
                                 </div>
                                 <div class="form-group">
                                 <label for="email{{category}}">Email: </label>
-                                <input type="text" id="email{{category}}" name="email" placeholder="Email . . ."
+                                <input type="text" id="email{{category}}" required name="email" placeholder="Email . . ."
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -501,17 +520,12 @@
                                 <label for="payment_2{{category}}">Payment 2: </label>
                                 <input type="text" id="payment_2{{category}}" name="payment_2" placeholder="Payment 2 . . ."
                                     class="form-control">
-                                </div>
+                            </div>
                                 <div class="form-group">
                                 <label for="payment_3{{category}}">Payment 3: </label>
                                 <input type="text" id="payment_3{{category}}" name="payment_3" placeholder="Payment 3 . . ."
                                     class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="balance{{category}}">Balance: </label>
-                                <input type="text" id="balance{{category}}" name="balance" placeholder="Balance . . ."
-                                class="form-control">
-                                </div>
+                            </div>                 
                             <div class="form-group">
                                 <label for="exam{{category}}">Exam: </label>
                                 <input type="text" id="exam{{category}}" name="exam" placeholder="Exam . . ."
@@ -658,7 +672,7 @@
                         </div>
                         <div class="form-group">
                             <label for="email{{categort}}">Email: </label>
-                            <input type="text" id="email{{categort}}" name="email" placeholder="Email . . ."
+                            <input type="text" id="email{{categort}}" required name="email" placeholder="Email . . ."
                                 class="form-control">
                             </div>
                             <div class="form-group">

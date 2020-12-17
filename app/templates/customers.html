@@ -672,6 +672,9 @@
                         <div style="width: 100%;">
                             <form action="/move-customer" method="post">
                                 <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="bg-secondary"> Move to :</span>
+                                    </div>
                                     <select name="category" id="category" class="custom-select">
                                         <option value="0" selected>Select New Category</option>
                                         {% if category != 'prospects' %}

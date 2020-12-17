@@ -280,7 +280,7 @@ def move_customer(id):
             newcategory = request.form['newcategory']
             return redirect(request.url)
         else:
-        flash('Please Select a category')
+            flash('Please Select a category')
     return redirect(request.url)
 
 

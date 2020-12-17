@@ -271,17 +271,17 @@ def edit_customer(category, id):
 
 
 
-@app.route('/move-customer/<int:id>', methods=['GET', 'POST'])
+@app.route('/move-customer/<category>/<int:id>', methods=['GET', 'POST'])
 @login_required
-def move_customer(id):
+def move_customer(category, id):
     if request.method == 'POST':
-        if request.form['category'] != '0':
-            category = request.form['category']
+        if request.form['newcategory'] != '0':
             newcategory = request.form['newcategory']
+            flash(newcategory)
             return redirect(request.url)
         else:
             flash('Please Select a category')
-    return redirect(request.url)
+    return redirect('/customers/'+category)
 
 
 

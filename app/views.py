@@ -269,6 +269,12 @@ def edit_customer(category, id):
         new_url = '/customers/' + category
         return redirect(new_url)
 
+
+
+@app.route('/move-customer/<int:id>')
+
+
+
 @app.route('/delete-customer/<category>/<int:id>', methods=['GET', 'POST'])
 @login_required
 def delete_customer(category, id):

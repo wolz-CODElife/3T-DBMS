@@ -41,13 +41,13 @@
             {% endif %}
             <a href="/customers/{{category}}" class="btn btn-danger float-right">Clear Filter <i class="fa fa-times"></i></a>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 text-right">
             <span class="btn btn-light m-1">{{clients|count}}</span>/<span class="btn btn-light m-1">{{totalcount|length}}</span>
         </div>
     </div>
 </form>
 {% if search %}
-<h4 class="text-center">Searched Keyword - <span class="badge badge-light">{{search}}</span></h4>
+<h4 class="text-center bg-dark p-2">Searched Keyword - <span class="badge badge-light">{{search}}</span></h4>
 {% endif %}
 <div class="table-responsive listings">
     <table class="table table-dark table-striped table-bordered table-hover">
@@ -67,9 +67,10 @@
                     <th>Courses</th>
                     <th>Status</th>
                     <th>Remark</th>
-                    <th>Extra1</th>
-                    <th>Extra2</th>
-                    <th>Extra3</th>
+                    <th>Record 1</th>
+                    <th>Record 2</th>
+                    <th>Record 3</th>
+                    <th>Reg Date</th>
                     {% endif %}
                     {% if category == 'students' %}
                     {% if current_user.role|lower != 'reader' %}
@@ -91,13 +92,14 @@
                     <th>Exam</th>
                     <th>Remark 1</th>
                     <th>Remark 2</th>
-                    <th>Extra1</th>
-                    <th>Extra2</th>
-                    <th>Extra3</th>
+                    <th>Record 1</th>
+                    <th>Record 2</th>
+                    <th>Record 3</th>
+                    <th>Reg Date</th>
                     {% endif %}
                     {% if category == 'exstudents' %}
                     {% if current_user.role|lower != 'reader' %}
-                        <th colspan="2">Actions</th>
+                    <th colspan="2">Actions</th>
                     {% endif %}
                     <th>Full Name</th>
                     <th>Email</th>
@@ -110,9 +112,10 @@
                     <th>Referral Number</th>
                     <th>Referral Email</th>
                     <th>Remark</th>
-                    <th>Extra1</th>
-                    <th>Extra2</th>
-                    <th>Extra3</th>
+                    <th>Record 1</th>
+                    <th>Record 2</th>
+                    <th>Record 3</th>
+                    <th>Reg Date</th>
                 {% endif %}
             </tr>
         </thead>
@@ -138,13 +141,14 @@
                             <td>{{client.extra1}}</td>
                             <td>{{client.extra2}}</td>
                             <td>{{client.extra3}}</td>
+                            <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                         </tr>
                         {% endfor %}
-                {% endif %}
-            {% endif %}
-            {% if category == 'students' %}
-                {% if clients %}
-                    {% for client in clients %}
+                        {% endif %}
+                        {% endif %}
+                        {% if category == 'students' %}
+                        {% if clients %}
+                        {% for client in clients %}
                         <tr>
                             {% if current_user.role|lower != 'reader' %}
                             <td><button class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></button></td>
@@ -173,13 +177,14 @@
                             <td>{{client.extra1}}</td>
                             <td>{{client.extra2}}</td>
                             <td>{{client.extra3}}</td>
+                            <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                         </tr>
                         {% endfor %}
                         {% endif %}
-            {% endif %}
-            {% if category == 'exstudents' %}
-                {% if clients %}
-                {% for client in clients %}
+                        {% endif %}
+                        {% if category == 'exstudents' %}
+                        {% if clients %}
+                        {% for client in clients %}
                         <tr>
                             {% if current_user.role|lower != 'reader' %}
                             <td><button class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></button></td>
@@ -199,6 +204,7 @@
                             <td>{{client.extra1}}</td>
                             <td>{{client.extra2}}</td>
                             <td>{{client.extra3}}</td>
+                            <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                         </tr>
                         {% endfor %}
                         {% endif %}
@@ -214,11 +220,32 @@
         <div class="modal" style="align-self: center;" id="client-edit{{client.id}}" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="flex-direction: column;">
                         <h4 class="text-dark">
                             <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
                             Edit <span class="badge">{{client.fullname}}</span>
                         </h4>
+                        <div style="width: 100%;">
+                            <form action="/move-customer" method="post">
+                                <div class="input-group">
+                                    <select name="category" id="category" class="custom-select">
+                                        <option value="0" selected>Select New Category</option>
+                                        {% if category != 'prospects' %}
+                                        <option value="prospects">Prospects</option>
+                                        {% endif %}
+                                        {% if category != 'students' %}
+                                        <option value="students">Students</option>
+                                        {% endif %}
+                                        {% if category != 'exstudents' %}
+                                        <option value="exstudents">Exstudents</option>
+                                        {% endif %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-body text-white bg-dark">
                         <form action="/edit-client/{{category}}/{{client.id}}" method="post">
@@ -236,15 +263,30 @@
                                 <label for="editphone">Phone: </label>
                                 <input type="text" id="editphone" name="phone" value="{{client.phone}}"
                                     class="form-control">
-                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="editlocation">Location: </label>
                                 <input type="text" id="editlocation" name="location" value="{{client.location}}"
                                     class="form-control">
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="editdata_source">Data Source: </label>
+                                <input type="text" id="editdata_source" name="data_source" value="{{client.data_source}}"
+                                    class="form-control">
+                            </div>
                             <div class="form-group">
                                 <label for="editsector">Sector: </label>
                                 <input type="text" id="editsector" name="sector" value="{{client.sector}}"
+                                class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="editcompany_name">Company Name: </label>
+                                <input type="text" id="editcompany_name" name="company_name" value="{{client.company_name}}"
+                                class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="editcourses">Courses: </label>
+                                <input type="text" id="editcourses" name="courses" value="{{client.courses}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -260,15 +302,15 @@
                                 <textarea id="editremark" name="remark" class="form-control">{{client.remark}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editextra1">Extra 1: </label>
+                                <label for="editextra1">Record 1: </label>
                                 <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editextra2">Extra 2: </label>
+                                <label for="editextra2">Record 2: </label>
                                 <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editextra3">Extra 3: </label>
+                                <label for="editextra3">Record 3: </label>
                                 <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
@@ -308,15 +350,30 @@
                                 <label for="phone{{category}}">Phone: </label>
                                 <input type="text" id="phone{{category}}" name="phone" placeholder="Phone . . ."
                                     class="form-control">
-                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="location{{category}}">Location: </label>
                                 <input type="text" id="location{{category}}" name="location" placeholder="Location . . ."
                                     class="form-control">
-                                </div>
-                                <div class="form-group">
+                            </div>
+                            <div class="form-group">
+                                <label for="data_source{category}}">Data Source: </label>
+                                <input type="text" id="data_source{category}}" name="data_source" placeholder="Data Source . . ."
+                                    class="form-control">
+                            </div>
+                            <div class="form-group">
                                 <label for="sector{{category}}">Sector: </label>
                                 <input type="text" id="sector{{category}}" name="sector" placeholder="Sector . . ."
+                                class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="company_name{{category}}">Company Name: </label>
+                                <input type="text" id="company_name{{category}}" name="company_name" placeholder="Company Name . . ."
+                                class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="courses{{category}}">Courses: </label>
+                                <input type="text" id="courses{{category}}" name="courses" placeholder="Courses . . ."
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -332,16 +389,16 @@
                                 <textarea id="remark{{category}}" name="remark" class="form-control" placeholder="Remark . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra1{{category}}">Extra 1: </label>
-                                <textarea id="extra1{{category}}" name="extra1" class="form-control" placeholder="Extra 1 . . ."></textarea>
+                                <label for="extra1{{category}}">Record 1: </label>
+                                <textarea id="extra1{{category}}" name="extra1" class="form-control" placeholder="Record 1 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra2{{category}}">Extra 2: </label>
-                                <textarea id="extra2{{category}}" name="extra2" class="form-control" placeholder="Extra 2 . . ."></textarea>
+                                <label for="extra2{{category}}">Record 2: </label>
+                                <textarea id="extra2{{category}}" name="extra2" class="form-control" placeholder="Record 2 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra3{{category}}">Extra 3: </label>
-                                <textarea id="extra3{{category}}" name="extra3" class="form-control" placeholder="Extra 3 . . ."></textarea>
+                                <label for="extra3{{category}}">Record 3: </label>
+                                <textarea id="extra3{{category}}" name="extra3" class="form-control" placeholder="Record 3 . . ."></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                         </form>
@@ -360,11 +417,32 @@
             <div class="modal" style="align-self: center;" id="client-edit{{client.id}}" role="dialog">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header" style="flex-direction: column;">
                             <h4 class="text-dark">
                                 <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
                                 Edit <span class="badge">{{client.fullname}}</span>
                             </h4>
+                            <div style="width: 100%;">
+                                <form action="/move-customer" method="post">
+                                    <div class="input-group">
+                                        <select name="category" id="category" class="custom-select">
+                                            <option value="0" selected>Select New Category</option>
+                                            {% if category != 'prospects' %}
+                                            <option value="prospects">Prospects</option>
+                                            {% endif %}
+                                            {% if category != 'students' %}
+                                            <option value="students">Students</option>
+                                            {% endif %}
+                                            {% if category != 'exstudents' %}
+                                            <option value="exstudents">Exstudents</option>
+                                            {% endif %}
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                         <div class="modal-body text-white bg-dark">
                             <form action="/edit-client/{{category}}/{{client.id}}" method="post">
@@ -382,18 +460,23 @@
                                     <label for="editphone">Phone: </label>
                                     <input type="text" id="editphone" name="phone" value="{{client.phone}}"
                                     class="form-control">
-                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="editlocation">Location: </label>
                                     <input type="text" id="editlocation" name="location" value="{{client.location}}"
                                     class="form-control">
-                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="editdob">Date of Birth: </label>
+                                    <input type="date" id="editdob" name="dob" value="{{client.dob}}"
+                                    class="form-control">
+                                </div>
                                 <div class="form-group">
                                     <label for="editcourses">Courses: </label>
                                     <input type="text" id="editcourses" name="courses" value="{{client.courses}}"
                                         class="form-control">
-                                    </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="editregistration_fee">Registration Fee: </label>
                                     <input type="text" id="editregistration_fee" name="registration_fee" value="{{client.registration_fee}}"
                                     class="form-control">
@@ -402,8 +485,8 @@
                                     <label for="edittutorial_fee">Tutorial Fee: </label>
                                     <input type="text" id="edittutorial_fee" name="tutorial_fee" value="{{client.tutorial_fee}}"
                                         class="form-control">
-                                    </div>
-                                    <div class="form-group">
+                                </div>
+                                <div class="form-group">
                                     <label for="editcourse_fee">Course Fee: </label>
                                     <input type="text" id="editcourse_fee" name="course_fee" value="{{client.course_fee}}"
                                         class="form-control">
@@ -445,15 +528,15 @@
                                     <textarea id="editremark_2" name="remark_2" class="form-control">{{client.remark_2}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editextra1">Extra 1: </label>
+                                    <label for="editextra1">Record 1: </label>
                                     <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editextra2">Extra 2: </label>
+                                    <label for="editextra2">Record 2: </label>
                                     <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2}}</textarea>
                                 </div>
                                 <div class="form-group">
-                                    <label for="editextra3">Extra 3: </label>
+                                    <label for="editextra3">Record 3: </label>
                                     <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3}}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
@@ -493,12 +576,17 @@
                                 <label for="phone{{category}}">Phone: </label>
                                 <input type="text" id="phone{{category}}" name="phone" placeholder="Phone . . ."
                                     class="form-control">
-                                </div>
+                            </div>
                             <div class="form-group">
                                 <label for="location{{category}}">Location: </label>
                                 <input type="text" id="location{{category}}" name="location" placeholder="Location . . ."
                                 class="form-control">
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dob{{category}}">Date of Birth: </label>
+                                <input type="date" id="dob{{category}}" name="dob" placeholder="Date of Birth . . ."
+                                class="form-control">
+                            </div>
                             <div class="form-group">
                                 <label for="courses{{category}}">Courses: </label>
                                 <input type="text" id="courses{{category}}" name="courses" placeholder="Courses . . ."
@@ -513,8 +601,8 @@
                                 <label for="tutorial_fee{{category}}">Tutorial Fee: </label>
                                 <input type="text" id="tutorial_fee{{category}}" name="tutorial_fee" placeholder="Tutorial Fee . . ."
                                     class="form-control">
-                                </div>
-                                <div class="form-group">
+                            </div>
+                            <div class="form-group">
                                 <label for="course_fee{{category}}">Course Fee: </label>
                                 <input type="text" id="course_fee{{category}}" name="course_fee" placeholder="Course Fee . . ."
                                     class="form-control">
@@ -548,16 +636,16 @@
                                 <textarea id="remark_2{{category}}" name="remark_2" class="form-control" placeholder="Remark 2 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra1{{category}}">Extra 1: </label>
-                                <textarea id="extra1{{category}}" name="extra1" class="form-control" placeholder="Extra 1 . . ."></textarea>
+                                <label for="extra1{{category}}">Record 1: </label>
+                                <textarea id="extra1{{category}}" name="extra1" class="form-control" placeholder="Record 1 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra2{{category}}">Extra 2: </label>
-                                <textarea id="extra2{{category}}" name="extra2" class="form-control" placeholder="Extra 2 . . ."></textarea>
+                                <label for="extra2{{category}}">Record 2: </label>
+                                <textarea id="extra2{{category}}" name="extra2" class="form-control" placeholder="Record 2 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra3{{category}}">Extra 3: </label>
-                                <textarea id="extra3{{category}}" name="extra3" class="form-control" placeholder="Extra 3 . . ."></textarea>
+                                <label for="extra3{{category}}">Record 3: </label>
+                                <textarea id="extra3{{category}}" name="extra3" class="form-control" placeholder="Record 3 . . ."></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                         </form>
@@ -576,11 +664,32 @@
         <div class="modal" style="align-self: center;" id="client-edit{{client.id}}" role="dialog">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" style="flex-direction: column;">
                         <h4 class="text-dark">
                             <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
                             Edit <span class="badge">{{client.fullname}}</span>
                         </h4>
+                        <div style="width: 100%;">
+                            <form action="/move-customer" method="post">
+                                <div class="input-group">
+                                    <select name="category" id="category" class="custom-select">
+                                        <option value="0" selected>Select New Category</option>
+                                        {% if category != 'prospects' %}
+                                        <option value="prospects">Prospects</option>
+                                        {% endif %}
+                                        {% if category != 'students' %}
+                                        <option value="students">Students</option>
+                                        {% endif %}
+                                        {% if category != 'exstudents' %}
+                                        <option value="exstudents">Exstudents</option>
+                                        {% endif %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-body text-white bg-dark">
                         <form action="/edit-client/{{category}}/{{client.id}}" method="post">
@@ -643,11 +752,11 @@
                                 <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editextra2">Extra 2: </label>
+                                <label for="editextra2">Record 2: </label>
                                 <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2}}</textarea>
                             </div>
                             <div class="form-group">
-                                <label for="editextra3">Extra 3: </label>
+                                <label for="editextra3">Record 3: </label>
                                 <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
@@ -732,12 +841,12 @@
                                 <textarea id="extra1{{category}}" name="extra1" class="form-control" placeholder="Extra 1 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra2">Extra 2: </label>
-                                <textarea id="extra2" name="extra2" class="form-control" placeholder="Extra 2 . . ."></textarea>
+                                <label for="extra2">Record 2: </label>
+                                <textarea id="extra2" name="extra2" class="form-control" placeholder="Record 2 . . ."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="extra3">Extra 3: </label>
-                                <textarea id="extra3" name="extra3" class="form-control" placeholder="Extra 3 . . ."></textarea>
+                                <label for="extra3">Record 3: </label>
+                                <textarea id="extra3" name="extra3" class="form-control" placeholder="Record 3 . . ."></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
                         </form>

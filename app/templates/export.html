@@ -29,8 +29,12 @@
             <div class="row">
                 <div class="col-md m-2">
                     <label for="category">Select Category</label>
-                    <select name="category" id="category" class="form-control">
-                        <option value="0">Please Select Category</option>
+                        <select name="category" id="category" class="form-control">
+                        {% if category %}
+                            <option value="{{category}}">{{category|title()}}</option>
+                        {% else %}
+                            <option  value="0">Please Select Category</option>
+                        {% endif %}
                         <option value="mixed">Mixed</option>
                         <option value="prospect">Prospects</option>
                         <option value="students">Students</option>

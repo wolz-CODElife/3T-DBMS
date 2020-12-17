@@ -228,6 +228,9 @@
                         <div style="width: 100%;">
                             <form action="/move-customer" method="post">
                                 <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="bg-secondary"> Move to :</span>
+                                    </div>
                                     <select name="category" id="category" class="custom-select">
                                         <option value="0" selected>Select New Category</option>
                                         {% if category != 'prospects' %}
@@ -241,7 +244,7 @@
                                         {% endif %}
                                     </select>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
+                                        <button class="btn btn-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
                                     </div>
                                 </div>
                             </form>
@@ -425,6 +428,9 @@
                             <div style="width: 100%;">
                                 <form action="/move-customer" method="post">
                                     <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="bg-secondary"> Move to :</span>
+                                        </div>
                                         <select name="category" id="category" class="custom-select">
                                             <option value="0" selected>Select New Category</option>
                                             {% if category != 'prospects' %}
@@ -438,7 +444,7 @@
                                             {% endif %}
                                         </select>
                                         <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
+                                            <button class="btn btn-secondary"> Move <i class="fa fa-arrow-alt-circle-right"></i></button>
                                         </div>
                                     </div>
                                 </form>

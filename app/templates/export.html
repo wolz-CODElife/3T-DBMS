@@ -26,25 +26,25 @@
 <div class="listings">
     <div class="container">   
         <form action="/export" method="post">
-            <div class="row">
-                <div class="col-md m-2">
-                    <label for="category">Select Category</label>
-                        <select name="category" id="category" class="form-control">
-                        {% if category %}
-                            <option value="{{category}}">{{category|title()}}</option>
-                        {% else %}
-                            <option  value="0">Please Select Category</option>
-                        {% endif %}
-                        <option value="mixed">Mixed</option>
-                        <option value="prospect">Prospects</option>
-                        <option value="students">Students</option>
-                        <option value="ex-student">Exstudents</option>
-                    </select>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Please Select Category</label>
+                </div>
+                <select name="category" class="custom-select" id="inputGroupSelect01">
+                    {% if category %}
+                    <option value="{{category}}">{{category|title()}}</option>
+                    {% else %}
+                    <option  value="0"></option>
+                    {% endif %}
+                    <option value="mixed">Mixed</option>
+                    <option value="prospect">Prospects</option>
+                    <option value="students">Students</option>
+                    <option value="ex-student">Exstudents</option>
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn button">Export <i class="fa fa-file-export"></i></button>
                 </div>
             </div>
-            <p class="m-2">                
-                <button type="submit" class="btn button">Export <i class="fa fa-file-export"></i></button>
-            </p>
         </form>
         {% if file_name %}
             <hr class="bg-info">

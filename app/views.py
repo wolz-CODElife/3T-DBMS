@@ -277,6 +277,13 @@ def move_customer(category, id):
     if request.method == 'POST':
         if request.form['newcategory'] != '0':
             newcategory = request.form['newcategory']
+            # TO-DO
+            # rmove the below flash 
+            # make the client move to new category
+            # 
+            # 
+            # 
+            # 
             flash(newcategory)
             return redirect(request.url)
         else:

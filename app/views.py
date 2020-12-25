@@ -643,6 +643,31 @@ def lessons(coursesid):
     return render_template('lessons.html', lessons=lessons, course=course, coursesid=coursesid)
 
 
+
+@app.route('/delete-course/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deletecourse(id):
+    course = Courses.query.get_or_404(id)
+    db.session.delete(course)
+    db.session.commit()
+
+    flash("Deleted course")
+    return redirect(url_for('courses'))
+
+
+@app.route('/edit-course/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editcourse(id):
+    course = Courses.query.get_or_404(id)
+    course.title = request.form['title']
+    db.session.commit()
+
+    flash("Edit course " + str(course.title))
+    return redirect(url_for('courses'))
+
+
+
+
 @app.route('/delete-lesson/<coursesid>/<int:id>', methods=['GET', 'POST'])
 @login_required
 def deletelesson(coursesid, id):
@@ -653,6 +678,7 @@ def deletelesson(coursesid, id):
     flash("Deleted lesson")
     new_url = '/lessons/' + str(coursesid)
     return redirect(new_url)
+
 
 @app.route('/edit-lesson/<coursesid>/<int:id>', methods=['GET', 'POST'])
 @login_required

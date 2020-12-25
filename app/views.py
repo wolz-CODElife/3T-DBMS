@@ -709,14 +709,27 @@ def editlesson(coursesid, id):
     return redirect(new_url)
 
 
-# @app.route('/offer', methods=['GET', 'POST'])
-# @login_required
-# def offer():
-#     if request.method == 'POST':
-#         course_id - request.form['course']
-#         course = Courses.query.get_or_404(course_id)
-#         new_offer = Offers(course_offered=course, student=current_user, status='Pending')
 
+@app.route('/make-offer', methods=['GET', 'POST'])
+@login_required
+def makeoffer():
+    myid = current_user.id
+    if request.method == 'POST':
+        course_id = int(request.form['course'])
+        course = Courses.query.get_or_404(course_id)
+        check = 0
+        for offer in Offers.query.filter_by(course_id=course_id):
+            if offer.student == current_user:
+                check += 1
+        if check > 0:
+            flash('You already offer this Course')
+        else:
+            new_offer = Offers(course=course, student=current_user, status='Pending')
+            db.session.add(new_offer)
+            db.session.commit()
+            flash('Successfully sent application . . .')
+    return redirect(url_for('courses'))
+    
 
 @app.errorhandler(404)
 def page_notfound(e):

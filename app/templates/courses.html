@@ -71,6 +71,24 @@
         <h3>No Course offered yet!</h3>
         {% endif %}
     </div>
+    <form action="/make-offer" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Apply for a course</label>
+            </div>
+            <select name="course" class="custom-select" id="inputGroupSelect01">
+                <option value="0"></option>
+                {% if courses %}
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course.title}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn button">Apply <i class="fa fa-sign"></i></button>
+            </div>
+        </div>
+    </form>
 </div>
 <!-- Modal add prospect -->
 <div class="modal" style="align-self: center;" id="addcourses" role="dialog">

@@ -25,7 +25,7 @@ def checkrole():
         return redirect(url_for('index'))
 
 
-@app.route('/index', methods=['GET'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     students = Students.query.all()
@@ -39,13 +39,18 @@ def index():
    
 
 
-@app.route('/index2', methods=['GET'])
+@app.route('/index2', methods=['GET', 'POST'])
 @login_required
 def index2():
-    students = Students.query.all()
-    prospects = Prospects.query.all()
-    exstudents = Exstudents.query.all()
-    return render_template("index2.html", prospects=prospects, students=students, exstudents=exstudents)
+    if request.method == 'POST':
+        course_id = request.form['course']
+        course = Courses.query.get_or_404(course_id)
+        new_offer = Offers(course_offered=course, student=current_user, status='Pending')
+        flash('Successfully sent application . . .')
+    myid = current_user.id
+    courses = Courses.query.all()
+    offers = Offers.query.filter_by(user_id=myid).all()
+    return render_template("index2.html", courses=courses, offers=offers)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -613,8 +618,10 @@ def courses():
             db.session.add(new_course)
             db.session.commit()
             flash(title + ' successfully registered')
+    myid = current_user.id
     courses = Courses.query.all()
-    return render_template('courses.html', courses=courses)
+    offers = Offers.query.filter_by(user_id=myid).all()
+    return render_template('courses.html', courses=courses, offers=offers)
 
 
 
@@ -691,6 +698,15 @@ def editlesson(coursesid, id):
     flash("Edit lesson " + str(lesson.title))
     new_url = '/lessons/' + str(coursesid)
     return redirect(new_url)
+
+
+# @app.route('/offer', methods=['GET', 'POST'])
+# @login_required
+# def offer():
+#     if request.method == 'POST':
+#         course_id - request.form['course']
+#         course = Courses.query.get_or_404(course_id)
+#         new_offer = Offers(course_offered=course, student=current_user, status='Pending')
 
 
 @app.errorhandler(404)

@@ -26,14 +26,32 @@
 <div class="listings">
     <div class="row" style="width: 100%;">
         <a href="/courses" class="col-md-3 m-3 p-3 wall">
-            <h3>Courses </h3>
-            <p>{% if courses %}
-            {{courses|length}}
+            <h3>My Courses </h3>
+            <p>{% if offers %}
+            {{offers|length}}
             {% else %}
             0
             {% endif %}
             </p>
         </a>
     </div>
+    <form action="" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Apply for a course</label>
+            </div>
+            <select name="course" class="custom-select" id="inputGroupSelect01">
+                <option value="0"></option>
+                {% if courses %}
+                    {% for course in courses %}
+                    <option value="{{course.id}}">{{course.title}}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn button">Apply <i class="fa fa-sign"></i></button>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}

@@ -33,13 +33,16 @@
     <div class="row" style="width: 100%;">
         {% if courses %}
         {% for course in courses %}
-        <a href="/lessons/{{course.id}}" class="col-md-3 m-3 p-3 wall">
-            <h3 class="mb-4"> <i class="fa fa-book"></i> {{course.title}}</h3>
-            <br>
+        <div class="col-md-3 m-3 p-3 wall">
+            <a href="/lessons/{{course.id}}" style="min-height: 90px; width: 100%; text-decoration:none;" class="pb-4 h3">
+                <i class="fa fa-book"></i> {{course.title}}
+                <br>
+            </a>
             <div class="h6 mt-4">
+                <a href="/delete-course/{{course.id}}" class="btn btn-danger float-right"><i class="fa fa-trash-alt"></i></a>
                 <i class="fa fa-clock"></i> {{course.date_created.strftime('%d %B, %Y')}}
             </div>
-        </a>
+        </div>
         {% endfor %}
         {% else %}
         <h3 class="text-center m-5">No Course found . . .</h3>

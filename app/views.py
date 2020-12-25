@@ -628,7 +628,7 @@ def lessons(coursesid):
         link = request.form['link']
         catchcount = 0
         for catch in Lessons.query.filter_by(title=title):
-            if catch.course.id == coursesid:
+            if catch.course.id == coursesid and catch.link == link:
                 catchcount += 1
         if catchcount > 0:
             flash(title + ' is already registered')
@@ -643,15 +643,28 @@ def lessons(coursesid):
     return render_template('lessons.html', lessons=lessons, course=course, coursesid=coursesid)
 
 
-@app.route('/delete-lesson/<int:id>', methods=['GET', 'POST'])
+@app.route('/delete-lesson/<coursesid>/<int:id>', methods=['GET', 'POST'])
 @login_required
-def deletelesson(id):
-    lesson = Lesson.query.get_or_404(id)
+def deletelesson(coursesid, id):
+    lesson = Lessons.query.get_or_404(id)
     db.session.delete(lesson)
     db.session.commit()
 
     flash("Deleted lesson")
-    return redirect(url_for('lessons'))
+    new_url = '/lessons/' + str(coursesid)
+    return redirect(new_url)
+
+@app.route('/edit-lesson/<coursesid>/<int:id>', methods=['GET', 'POST'])
+@login_required
+def editlesson(coursesid, id):
+    lesson = Lessons.query.get_or_404(id)
+    lesson.title = request.form['title']
+    lesson.link = request.form['link']
+    db.session.commit()
+
+    flash("Edit lesson " + str(lesson.title))
+    new_url = '/lessons/' + str(coursesid)
+    return redirect(new_url)
 
 
 @app.errorhandler(404)

@@ -54,9 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="text-dark">
-                    <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal">
-                        <i class="fa fa-times"></i>
-                    </span> &nbsp;Add New Lesson
+                    <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;Add New Lesson
                 </h4>
             </div>
             <div class="modal-body text-white bg-dark">
@@ -92,19 +90,18 @@
                 <h4 class="text-dark">
                     <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
                     <span class="badge">{{lesson.title}}</span>
-                    <div class="h6 mt-4">
-                        {% if current_user.role|lower() != 'student' %}
-                            {% if current_user.role|lower() != 'reader' %}
-                            <span href="#" data-toggle="modal" data-target="#lesson-edit{{lesson.id}}" class="btn btn-primary float-right"><i
-                                    class="fa fa-edit"></i></span>
-                                    {% endif %}
-                                    {% endif %}
-                        <i class="fa fa-clock"></i> {{lesson.date_created.strftime('%d %B, %Y')}}
-                    </div>
                 </h4>
             </div>
             <div class="modal-body text-white bg-dark">
-                <iframe style="width: 100%; min-height: 50vh;" src="{{lesson.link}}}"></iframe>
+                <div class="text-right mb-2">
+                    {% if current_user.role|lower() != 'student' %}
+                        {% if current_user.role|lower() != 'reader' %}
+                        <span href="#" data-toggle="modal" data-target="#lesson-edit{{lesson.id}}" class="btn btn-primary"><i
+                                class="fa fa-edit"></i> Edit</span>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <iframe style="width: 100%; min-height: 50vh;" class="mt-2" src="{{lesson.link}}}"></iframe>
                 <!-- <iframe src="<?php echo str_replace('watch?v=', 'embed/', $meal['strYoutube']); ?>"></iframe> -->
             </div>
             <div class="modal-footer">

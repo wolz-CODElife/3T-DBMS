@@ -37,10 +37,17 @@
                     {% for course in courses %}
                         {% if offer.course_id == course.id %}
                             <div class="col-md-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">
-                                <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="badge badge-primary pt-2">
-                                    <i class="fa fa-book"></i> {{course.title}}
-                                    <br>
-                                </a>
+                                {% if offer.status|lower() == 'pending'%}
+                                <a href="#" disabled style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="badge badge-primary pt-2">
+                                    {% else %}
+                                    <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="badge badge-primary pt-2">
+                                {% endif %}
+                                <i class="fa fa-book"></i> {{course.title}}
+                                <br>
+                            </a>
+                            {% if offer.status|lower() == 'pending'%}
+                                Status - <i class="text-warning">{{offer.status|title()}}</i>
+                            {% endif %}
                                 <br>
                                 {% if current_user.role|lower() != 'student' %}
                                     {% if current_user.role|lower() != 'reader' %}

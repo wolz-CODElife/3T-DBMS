@@ -43,7 +43,7 @@
             <select name="course" class="custom-select" id="inputGroupSelect01">
                 <option value="0"></option>
                 {% if courses %}
-                    {% for course in courses %}
+                    {% for course in courses %}            
                     <option value="{{course.id}}">{{course.title}}</option>
                     {% endfor %}
                 {% endif %}

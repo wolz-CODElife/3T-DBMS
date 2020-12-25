@@ -42,12 +42,21 @@ def index():
 @app.route('/index2', methods=['GET', 'POST'])
 @login_required
 def index2():
-    if request.method == 'POST':
-        course_id = request.form['course']
-        course = Courses.query.get_or_404(course_id)
-        new_offer = Offers(course_offered=course, student=current_user, status='Pending')
-        flash('Successfully sent application . . .')
     myid = current_user.id
+    if request.method == 'POST':
+        course_id = int(request.form['course'])
+        course = Courses.query.get_or_404(course_id)
+        check = 0
+        for offer in Offers.query.filter_by(course_id=course_id):
+            if offer.student == current_user:
+                check += 1
+        if check > 0:
+            flash('You already offer this Course')
+        else:
+            new_offer = Offers(course=course, student=current_user, status='Pending')
+            db.session.add(new_offer)
+            db.session.commit()
+            flash('Successfully sent application . . .')
     courses = Courses.query.all()
     offers = Offers.query.filter_by(user_id=myid).all()
     return render_template("index2.html", courses=courses, offers=offers)

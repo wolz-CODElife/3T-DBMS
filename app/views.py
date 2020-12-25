@@ -13,14 +13,39 @@ import pandas as pd
 
 static = os.path.join(app.root_path, 'static/')
 
+
+
 @app.route('/', methods=['GET'])
+@login_required
+def checkrole():
+    role = current_user.role
+    if role.lower() == 'student':
+        return redirect(url_for('index2'))
+    else:
+        return redirect(url_for('index'))
+
+
 @app.route('/index', methods=['GET'])
 @login_required
 def index():
     students = Students.query.all()
     prospects = Prospects.query.all()
     exstudents = Exstudents.query.all()
-    return render_template("index.html", prospects=prospects, students=students, exstudents=exstudents)
+    role = current_user.role
+    if role.lower() == 'student':
+        return redirect(url_for('index2'))
+    else:
+        return render_template("index.html", prospects=prospects, students=students, exstudents=exstudents)
+   
+
+
+@app.route('/index2', methods=['GET'])
+@login_required
+def index2():
+    students = Students.query.all()
+    prospects = Prospects.query.all()
+    exstudents = Exstudents.query.all()
+    return render_template("index2.html", prospects=prospects, students=students, exstudents=exstudents)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -33,7 +58,11 @@ def login():
                 login_user(user)
                 
                 flash('Welcome '+ user.lastname+' '+user.firstname)
-                return redirect(url_for('index'))
+                role = user.role
+                if role.lower() == 'student':
+                    return redirect(url_for('index2'))
+                else:
+                    return redirect(url_for('index'))
             else:
                 flash ('Invalid Credentials')
     
@@ -61,10 +90,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-
-@app.route('/users', methods=['GET', 'POST'])
+@app.route('/users/<usertype>', methods=['GET', 'POST'])
 @login_required
-def users():
+def users(usertype):
     if request.method == "POST":
         if request.form['password'] != request.form['confirm_password']:
             flash('Password Mismatch . . .')
@@ -89,13 +117,16 @@ def users():
                     db.session.add(new_user)
                     db.session.commit()
 
-                    flash('Educator Registration Successful!')
+                    flash('User Registration Successful!')
     users = User.query.all()
-    return render_template('users.html', users=users)
+    if usertype == 'students':
+        return render_template('students.html', users=users)
+    else:
+        return render_template('staff.html', users=users)
 
-@app.route('/edit-user/<int:id>', methods=['GET', 'POST'])
+@app.route('/edit-user/<usertype>/<int:id>', methods=['GET', 'POST'])
 @login_required
-def edituser(id):
+def edituser(usertype, id):
     if request.method == 'POST':
         if request.form['password'] == request.form['copassword']:
             user = User.query.get_or_404(id)
@@ -116,10 +147,11 @@ def edituser(id):
             flash("User " + user.firstname + ' ' + user.lastname + " has been successfully edited")
         else:
             flash('Opps! Password mismatch . . .')
-        if current_user.id == id:
+        if usertype.lower() == 'me':
             return redirect(url_for('settings'))
         else:
-            return redirect(url_for('users'))
+            new_url = '/users/' + usertype
+            return redirect(new_url)
     else:
         return redirect(request.url)
 
@@ -127,6 +159,7 @@ def edituser(id):
 @login_required
 def settings():
     return render_template('settings.html')
+
 
 @app.route('/delete-user/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -563,6 +596,63 @@ def addclient(category):
         flash("Client Successfully added")
     new_url = '/customers/' + category
     return redirect(new_url)
+
+
+@app.route('/courses', methods=['GET', 'POST'])
+@login_required
+def courses():
+    if request.method == 'POST':
+        title = request.form['title']
+        catchcount = 0
+        for catch in Courses.query.filter_by(title=title):
+            catchcount += 1
+        if catchcount > 0:
+            flash(title + ' is already registered')
+        else:
+            new_course = Courses(title=title)
+            db.session.add(new_course)
+            db.session.commit()
+            flash(title + ' successfully registered')
+    courses = Courses.query.all()
+    return render_template('courses.html', courses=courses)
+
+
+
+@app.route('/lessons/<coursesid>', methods=['GET', 'POST'])
+@login_required
+def lessons(coursesid):
+    coursesid = int(coursesid)
+    course = Courses.query.get_or_404(coursesid)
+    if request.method == 'POST':
+        title = request.form['title']
+        link = request.form['link']
+        catchcount = 0
+        for catch in Lessons.query.filter_by(title=title):
+            if catch.course.id == coursesid:
+                catchcount += 1
+        if catchcount > 0:
+            flash(title + ' is already registered')
+        else:
+            new_lesson = Lessons(course=course, title=title, link=link)
+            db.session.add(new_lesson)
+            db.session.commit()
+            flash(title + ' successfully registered')
+        new_url = '/lessons/' + str(coursesid)
+        return redirect(new_url)
+    lessons = Lessons.query.filter_by(course_id=coursesid).all()
+    return render_template('lessons.html', lessons=lessons, course=course, coursesid=coursesid)
+
+
+@app.route('/delete-lesson/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deletelesson(id):
+    lesson = Lesson.query.get_or_404(id)
+    db.session.delete(lesson)
+    db.session.commit()
+
+    flash("Deleted lesson")
+    return redirect(url_for('lessons'))
+
 
 @app.errorhandler(404)
 def page_notfound(e):

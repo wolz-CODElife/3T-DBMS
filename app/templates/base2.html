@@ -36,6 +36,7 @@
                         {% endif %}
                     </li>
                     <li><a href="/"><button>Dashboard</button></a></li>
+                    {% if current_user.role|lower != 'student' %}
                     <li><a href="/customers/prospects"><button>Prospects</button></a></li>
                     <li><a href="/customers/students"><button>Students</button></a></li>
                     <li><a href="/customers/exstudents"><button>Exstudents</button></a></li>
@@ -43,8 +44,11 @@
                     <li><a href="/import"><button>Import Sheets</button></a></li>
                     <li><a href="/export"><button>Export Sheets</button></a></li>
                     {% endif %}
+                    {% endif %}
+                    <li><a href="/courses"><button>Courses</button></a></li>
                     {% if current_user.role|lower == 'admin' %}
-                    <li><a href="/users"><button>Users</button></a></li>
+                    <li><a href="/users/staff"><button>Staff</button></a></li>
+                    <li><a href="/users/students"><button>Students</button></a></li>
                     {% endif %}
                     <li><a href="/settings"><button>Settings</button></a></li>
                     <li><a href="/logout"><button>Logout</button></a></li>

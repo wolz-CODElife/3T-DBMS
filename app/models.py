@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     role = db.Column(db.String(100))
     email = db.Column(db.String(100), nullable=False) 
     password = db.Column(db.String(100)) 
+    student = db.relationship('Offers', backref='student', lazy=True)
     # complains = db.relationship('Complaints', backref='author', lazy=True)
 
     def __init__(self, firstname, lastname, role, email, password):
@@ -95,4 +96,41 @@ class Exstudents(db.Model):
 
     def __repr__(self):
         return 'Exstudent ' + str(self.id)
+
+
+
+class Courses(db.Model):
+    __tablename__ = 'courses'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.Text, default=" ")
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    course = db.relationship('Lessons', backref='course', lazy=True)
+    course_offered = db.relationship('Offers', backref='course', lazy=True)
+
+    def __repr__(self):
+        return 'Courses ' + str(self.id)
+
+
+class Lessons(db.Model):
+    __tablename__ = 'lesson'
+    id = db.Column(db.Integer, primary_key=True)
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    title = db.Column(db.Text, default=" ")
+    link = db.Column(db.Text, default=" ")
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return 'Lessons ' + str(self.id)
+
+
+class Offers(db.Model):
+    __tablename__ = 'offers'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    course_id = db.Column(db.Integer, db.ForeignKey('courses.id'))
+    status = db.Column(db.String, default=" ")
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return 'Offers ' + str(self.id)
 

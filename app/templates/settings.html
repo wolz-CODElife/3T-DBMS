@@ -23,7 +23,7 @@
         {% endif %}
         
         {% endwith %}
-        <form action="/edit-user/{{current_user.id}}" method="post">
+        <form action="/edit-user/me/{{current_user.id}}" method="post">
             <div class="form-group">
                 <label for="firstname">Firstname: </label>
                 <input type="text" name="firstname" class="form-control" value="{{current_user.firstname}}" id="firstname">

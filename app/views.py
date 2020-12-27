@@ -667,6 +667,8 @@ def lessons(coursesid):
 @login_required
 def deletecourse(id):
     course = Courses.query.get_or_404(id)
+    for offer in Offers.query.filter_by(course_id=id).all():
+        db.session.delete(offer)
     db.session.delete(course)
     db.session.commit()
 

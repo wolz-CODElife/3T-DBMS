@@ -35,7 +35,7 @@
         {% for lesson in lessons %}
         {% if lesson.course.id == course.id %}
         <a href="#" data-toggle="modal" data-target="#lesson-view{{lesson.id}}" class="col-md-3 m-3 p-3 wall">
-            <h3 class="mb-2"> <i class="fa fa-book-open"></i> {{lesson.title}} </h3>
+            <h4 class="mb-2"> <i class="fa fa-book-open"></i> {{lesson.title}} </h4>
             <hr class="bg-light">
             <div class="h6 mt-2">
                 <i class="fa fa-clock"></i> {{lesson.date_created.strftime('%d %B, %Y')}}

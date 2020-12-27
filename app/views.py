@@ -704,7 +704,6 @@ def editlesson(coursesid, id):
     lesson.title = request.form['title']    
     link = request.form['link']
     link = link.replace('watch?v=', 'embed/')
-    link = link.replace('www.youtube.com', 'www.youtube-nocookie.com')
     lesson.link = link
     db.session.commit()
 

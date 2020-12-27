@@ -703,7 +703,9 @@ def editlesson(coursesid, id):
     lesson = Lessons.query.get_or_404(id)
     lesson.title = request.form['title']    
     link = request.form['link']
-    link = link.replace('watch?v=', 'embed/')
+    link = link.replace('https://www.youtube.com/watch?v=', '')
+    link = link.replace('https://www.youtube.com/embed/', '')
+    link = link.replace('https://youtu.be/', '')
     lesson.link = link
     db.session.commit()
 

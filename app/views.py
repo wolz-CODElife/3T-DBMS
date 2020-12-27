@@ -701,8 +701,10 @@ def deletelesson(coursesid, id):
 @login_required
 def editlesson(coursesid, id):
     lesson = Lessons.query.get_or_404(id)
-    lesson.title = request.form['title']
-    lesson.link = request.form['link']
+    lesson.title = request.form['title']    
+    link = request.form['link']
+    link = link.replace('watch?v=', 'embed/')
+    lesson.link = link
     db.session.commit()
 
     flash("Edit lesson " + str(lesson.title))

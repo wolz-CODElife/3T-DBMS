@@ -69,8 +69,10 @@ body{
   position: fixed;
   border-right: solid 0.9px #055178;
   height: 100vh;
+  padding-bottom: 90px;
   display: unset;
   z-index: 2;
+  overflow: auto;
 }
 .nav ul{
   list-style: none;

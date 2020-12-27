@@ -45,11 +45,12 @@
                     <li><a href="/export"><button>Export Sheets</button></a></li>
                     {% endif %}
                     {% endif %}
-                    <li><a href="/courses"><button>Courses</button></a></li>
                     {% if current_user.role|lower == 'admin' %}
                     <li><a href="/users/staff"><button>Staff</button></a></li>
                     <li><a href="/users/students"><button>Students</button></a></li>
+                    <li><a href="/applications"><button>Applications</button></a></li>
                     {% endif %}
+                    <li><a href="/courses"><button>Courses</button></a></li>
                     <li><a href="/settings"><button>Settings</button></a></li>
                     <li><a href="/logout"><button>Logout</button></a></li>
                 </ul>

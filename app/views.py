@@ -629,7 +629,7 @@ def courses():
             flash(title + ' successfully registered')
     myid = current_user.id
     courses = Courses.query.all()
-    offers = Offers.query.filter_by(user_id=myid).all()
+    offers = Offers.query.filter_by(user_id=myid).order_by(Offers.status.asc()).all()
     return render_template('courses.html', courses=courses, offers=offers)
 
 
@@ -729,7 +729,68 @@ def makeoffer():
             db.session.commit()
             flash('Successfully sent application . . .')
     return redirect(url_for('courses'))
-    
+
+@app.route('/applications', methods=['GET', 'POST'])
+@login_required
+def applications():    
+    role = current_user.role
+    if role.lower() == 'student':
+        return redirect(url_for('courses'))
+    else:
+        if request.method == 'POST':
+            user_id = int(request.form['student'])
+            course_id = int(request.form['course'])
+            course = Courses.query.get_or_404(course_id)
+            student = User.query.get_or_404(user_id)
+            check = 0
+            for offer in Offers.query.filter_by(course_id=course_id):
+                if offer.student == student:
+                    check += 1
+            if check > 0:
+                flash('Student already offer this Course')
+            else:
+                new_offer = Offers(course=course, student=student, status='Active')
+                db.session.add(new_offer)
+                db.session.commit()
+                flash('Successfully sent application . . .')
+        courses = Courses.query.all()
+        offers = Offers.query.order_by(Offers.status.desc()).all()
+        students = User.query.filter_by(role='Student').all()
+        return render_template('applications.html', courses=courses, offers=offers, students=students)
+
+
+@app.route('/accept-offer/<int:id>', methods=['GET', 'POST'])
+@login_required
+def acceptoffer(id):
+    offer = Offers.query.get_or_404(id)
+    offer.status = 'Active'
+    db.session.commit()
+    flash('Application accepted')
+    return redirect(url_for('applications'))
+
+
+
+@app.route('/delete-offer/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deleteoffer(id):
+    offer = Offers.query.get_or_404(id)
+    db.session.delete(offer)
+    db.session.commit()
+    flash('Application deleted')
+    return redirect(url_for('applications'))
+
+
+
+@app.route('/delete-my-offer/<int:id>', methods=['GET', 'POST'])
+@login_required
+def deletemyoffer(id):
+    offer = Offers.query.get_or_404(id)
+    db.session.delete(offer)
+    db.session.commit()
+    flash('Application deleted')
+    return redirect(url_for('courses'))
+
+
 
 @app.errorhandler(404)
 def page_notfound(e):

@@ -642,6 +642,7 @@ def lessons(coursesid):
     if request.method == 'POST':
         title = request.form['title']
         link = request.form['link']
+        link = link.replace('watch?v=', 'embed/')
         catchcount = 0
         for catch in Lessons.query.filter_by(title=title):
             if catch.course.id == coursesid and catch.link == link:

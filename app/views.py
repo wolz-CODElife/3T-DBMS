@@ -248,7 +248,7 @@ def edit_customer(category, id):
             client = Prospects.query.get_or_404(id)
             client.fullname = request.form['fullname']
             client.email = request.form['email']
-            client.phone = int(request.form['phone'])
+            client.phone = request.form['phone']
             client.location = request.form['location']
             client.data_source = request.form['data_source']
             client.sector = request.form['sector']
@@ -263,7 +263,7 @@ def edit_customer(category, id):
             client = Students.query.get_or_404(id)
             client.fullname = request.form['fullname']
             client.email = request.form['email']
-            client.phone = int(request.form['phone'])
+            client.phone = request.form['phone']
             client.location = request.form['location']
             client.dob = request.form['dob']
             client.courses = request.form['courses']
@@ -296,7 +296,7 @@ def edit_customer(category, id):
             client = Exstudents.query.get_or_404(id)
             client.fullname = request.form['fullname']
             client.email = request.form['email']
-            client.phone = int(request.form['phone'])
+            client.phone = request.form['phone']
             client.location = request.form['location']
             client.courses = request.form['courses']
             client.balance = request.form['balance']
@@ -434,7 +434,7 @@ def importfile():
                             check_data_exist = 0
                             for items in Prospects.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname = dfs['Full-Name'][i]
-                                items.phone = int(dfs['Phone'][i])
+                                items.phone = dfs['Phone'][i]
                                 items.location = dfs['Location'][i]
                                 items.data_source = dfs['Data-Source'][i]
                                 items.sector = dfs['Sector'][i]
@@ -451,7 +451,7 @@ def importfile():
                                 new_data_input = Prospects(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
-                                    phone=int(dfs['Phone'][i]), 
+                                    phone=dfs['Phone'][i], 
                                     location=dfs['Location'][i], 
                                     data_source = dfs['Data-Source'][i],
                                     sector=dfs['Sector'][i], 
@@ -470,7 +470,7 @@ def importfile():
                             check_data_exist = 0
                             for items in Students.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname=dfs['Full-Name'][i] 
-                                items.phone=int(dfs['Phone'][i]) 
+                                items.phone=dfs['Phone'][i]
                                 items.location=dfs['Location'][i] 
                                 items.dob=dfs['Date-of-Birth'][i] 
                                 items.courses=dfs['Course-Name'][i] 
@@ -493,7 +493,7 @@ def importfile():
                                 new_data_input = Students(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
-                                    phone=int(dfs['Phone'][i]), 
+                                    phone=dfs['Phone'][i],
                                     location=dfs['Location'][i], 
                                     dob=dfs['Date-of-Birth'][i], 
                                     courses=dfs['Course-Name'][i], 
@@ -519,13 +519,13 @@ def importfile():
                             for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname=dfs['Full-Name'][i] 
                                 items.email=dfs['Email'][i] 
-                                items.phone=int(dfs['Phone'][i]) 
+                                items.phone=dfs['Phone'][i] 
                                 items.location=dfs['Location'][i] 
                                 items.courses=dfs['Course-Name'][i] 
                                 items.balance=int(dfs['Balance'][i]) 
                                 items.results=dfs['Results'][i] 
                                 items.referral_name=dfs['Referral-Name'][i] 
-                                items.referral_number=int(dfs['Referral-Number'][i])
+                                items.referral_number=dfs['Referral-Number'][i]
                                 items.referral_email=dfs['Referral-Email'][i] 
                                 items.remark=dfs['Remark'][i] 
                                 items.extra1=dfs['Extra1'][i] 
@@ -537,13 +537,13 @@ def importfile():
                                 new_data_input = Exstudents(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
-                                    phone=int(dfs['Phone'][i]), 
+                                    phone=dfs['Phone'][i], 
                                     location=dfs['Location'][i], 
                                     courses=dfs['Course-Name'][i], 
                                     balance=int(dfs['Balance'][i]), 
                                     results=dfs['Results'][i], 
                                     referral_name=dfs['Referral-Name'][i], 
-                                    referral_number=int(dfs['Referral-Number'][i]), 
+                                    referral_number=dfs['Referral-Number'][i], 
                                     referral_email=dfs['Referral-Email'][i], 
                                     remark=dfs['Remark'][i], 
                                     extra1=dfs['Extra1'][i], 
@@ -580,7 +580,7 @@ def addclient(category):
             for items in Prospects.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
-                new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], data_source=request.form['data_source'], sector=request.form['sector'], company_name=request.form['company_name'], courses=request.form['courses'], status=request.form['status'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], data_source=request.form['data_source'], sector=request.form['sector'], company_name=request.form['company_name'], courses=request.form['courses'], status=request.form['status'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -591,7 +591,7 @@ def addclient(category):
                 check_data_exist += 1
             if check_data_exist == 0:
                 # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], dob=request.form['dob'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=(int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], dob=request.form['dob'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=(int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -602,7 +602,7 @@ def addclient(category):
                 check_data_exist += 1
             if check_data_exist == 0:
                 # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=int(request.form['phone']), location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:

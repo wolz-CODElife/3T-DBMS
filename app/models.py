@@ -15,6 +15,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), nullable=False) 
     password = db.Column(db.String(100)) 
     student = db.relationship('Offers', backref='student', lazy=True)
+    theme = db.Column(db.String(100)) 
     # complains = db.relationship('Complaints', backref='author', lazy=True)
 
     def __init__(self, firstname, lastname, role, email, password):

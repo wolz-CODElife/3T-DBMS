@@ -15,6 +15,12 @@ import pandas as pd
 static = os.path.join(app.root_path, 'static/')
 
 
+@app.route('/theme/<theme>', methods=['GET', 'POST'])
+def theme(theme):
+    current_user.theme = theme
+    db.session.commit()
+    return redirect('/')
+
 
 @app.route('/', methods=['GET'])
 @login_required

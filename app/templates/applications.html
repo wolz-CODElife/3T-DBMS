@@ -41,7 +41,7 @@
                                 <i class="fa fa-book"></i> {{course.title}}
                                 <br>
                             </a>
-                            <i class="text-warning">{{offer.student.firstname|title()}} {{offer.student.lastname|title()}}</i><br>
+                            <i class="text-white">{{offer.student.firstname|title()}} {{offer.student.lastname|title()}}</i><br>
                             {% if offer.status|lower() == 'pending' %}
                             Status - <i class="text-warning">{{offer.status|title()}}</i>
                             {% else %}

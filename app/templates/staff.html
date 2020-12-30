@@ -69,8 +69,18 @@
     <div class="container">
         {% if users %}
             <div class="responsive">
-                <table class="table table-stripped table-dark table-bordered table-hover">
-                    <thead class="thead">
+                {% if current_user %}
+                {% if current_user.theme %}
+                {% if current_user.theme == 'light' %}
+                <table class="table table-dark table-striped table-bordered table-hover" id="selectable">
+                    {% else %}
+                    <table class="table table-light text-darktable-striped table-bordered table-hover" id="selectable">
+                        {% endif %}
+                        {% else %}
+                        <table class="table table-light text-dark table-striped table-bordered table-hover" id="selectable">
+                            {% endif %}
+                            {% endif %}    
+                        <thead class="thead">
                         <tr>
                             <th colspan="2">Actions</th>
                             <th>Firstname</th>

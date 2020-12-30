@@ -67,7 +67,17 @@
         </div>
     </div>
     <div class="table-responsive listings">
-        <table class="table table-dark table-striped table-bordered table-hover" id="selectable">
+        {% if current_user %}
+            {% if current_user.theme %}
+            {% if current_user.theme == 'light' %}
+                <table class="table table-dark table-striped table-bordered table-hover" id="selectable">
+                {% else %}
+                <table class="table table-light text-darktable-striped table-bordered table-hover" id="selectable">
+                {% endif %}
+            {% else %}
+                <table class="table table-light text-dark table-striped table-bordered table-hover" id="selectable">
+            {% endif %}
+        {% endif %}
             <thead>
                 <tr>
                     <th><input type="checkbox" id="selectall"></th>
@@ -234,7 +244,7 @@
         </table>
     </div>
 </form>
-
+<br><br><br>
 {% if category == 'prospects' %}
 <!-- Modal Edit prospects -->
     {% if clients %}

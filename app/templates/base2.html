@@ -7,7 +7,17 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/fontawesome/css/all.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/animate.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    {% if current_user %}
+        {% if current_user.theme %}
+            {% if current_user.theme == 'light' %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/dark.css')}}">
+            {% else %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/light.css')}}">
+            {% endif %}
+            {% else %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/light.css')}}">
+        {% endif %}
+    {% endif %}
     <link rel="shortcut icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
 </head>
 <body>
@@ -22,6 +32,15 @@
             <div class="col-md h4">
                 <button class="float-left btn btn-outline-dark mr-4 hambuger" id="hambuger"><i class="fa fa-bars"></i></button>
                 {% if current_user %}
+                    {% if current_user.theme %}
+                        {% if current_user.theme == 'light' %}
+                        <a href="/theme/dark" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/sun.png')}}" alt="light"></a>
+                        {% else %}
+                        <a href="/theme/light" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/moon.png')}}" alt="light"></a>
+                        {% endif %}
+                    {% else %}
+                        <a href="/theme/light" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/moon.png')}}" alt="light"></a>
+                    {% endif %}
                     <a href="settings" class="float-right user-details" style="text-transform: capitalize; text-decoration: none;"> <i class="fa fa-user-circle"></i> {{current_user.firstname}} {{current_user.lastname}}</a>
                 {% endif %}
                 <p>3T-CDMS</p>

@@ -429,7 +429,15 @@ def bulkactions(category):
                 file_name = static + file_obj
                 if category.lower() == 'prospects':
                     sheet = 'prospect'.upper()
-                    data_fetched = pd.DataFrame([to_dict(Prospects.query.get_or_404(getid)) for getid in selected])
+                    print('- X - '*25, '/n')
+                    print('- X - '*25, '/n')
+                    print('Working')
+                    print('- X - '*25, '/n')
+                    print('- X - '*25, '/n')
+                    dfetch = []
+                    for getid in selected:
+                        dfetch.append(to_dict(Prospects.query.get_or_404(getid)))
+                    data_fetched = pd.DataFrame(dfetch)
                     data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
                     # print(data_fetched)
                     flash('Downloadable File generated for download')

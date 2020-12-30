@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from .models import *
 from flask_login import login_user, logout_user, current_user, login_required
 import secrets
+import random
 import os
 from datetime import datetime
 import csv
@@ -425,37 +426,33 @@ def bulkactions(category):
                 new_url = '/customers/' + category
                 return redirect(new_url)
             elif (request.form['actiontype']).lower() == 'extract':
-                file_obj = 'data/newCDMS.xlsx'
+                dddd = random.randint(20000000, 400000000)
+                file_obj = 'data/newCDMS'+ str(dddd) +'X.xlsx'
                 file_name = static + file_obj
                 if category.lower() == 'prospects':
                     sheet = 'prospect'.upper()
-                    print('- X - '*25, '/n')
-                    print('- X - '*25, '/n')
-                    print('Working')
-                    print('- X - '*25, '/n')
-                    print('- X - '*25, '/n')
-                    dfetch = []
-                    for getid in selected:
-                        dfetch.append(to_dict(Prospects.query.get_or_404(getid)))
-                    data_fetched = pd.DataFrame(dfetch)
-                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
-                    # print(data_fetched)
+                    data_fetched = pd.DataFrame([to_dict(Prospects.query.filter_by(id=int(getid)).first()) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)                        
                     flash('Downloadable File generated for download')
-                    return render_template('export.html', file_name=file_obj, category=category)              
+                    return render_template('export.html', file_name=file_obj, category=category)            
+                    flash('Failed to export')
+                    return redirect('/customers/'+category)
                 elif category.lower() == 'students':
                     sheet = 'students'.upper()
-                    data_fetched = pd.DataFrame([to_dict(Students.query.get_or_404(getid)) for getid in selected])
-                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
-                    # print(data_fetched)
+                    data_fetched = pd.DataFrame([to_dict(Students.query.get_or_404(int(getid))) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)    
                     flash('Downloadable File generated for download')
-                    return render_template('export.html', file_name=file_obj, category=category)              
+                    return render_template('export.html', file_name=file_obj, category=category)                          
+                    flash('Failed to export')
+                    return redirect('/customers/'+category)
                 elif category.lower() == 'exstudents':
                     sheet = 'ex-student'.upper()
-                    data_fetched = pd.DataFrame([to_dict(Exstudents.query.get_or_404(getid)) for getid in selected])
-                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
-                    # print(data_fetched)
+                    data_fetched = pd.DataFrame([to_dict(Exstudents.query.get_or_404(int(getid))) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)    
                     flash('Downloadable File generated for download')
-                    return render_template('export.html', file_name=file_obj, category=category) 
+                    return render_template('export.html', file_name=file_obj, category=category)             
+                    flash('Failed to export')
+                    return redirect('/customers/'+category)
                 else:
                     flash('Invalid category selected')
                     return redirect('/customers/'+category)
@@ -497,10 +494,11 @@ def exportfile():
         if category == '0':
             flash('Please select a category')
         else:            
-            file_obj = 'data/newCDMS.xlsx'
+            dddd = random.randint()
+            file_obj = 'data/'+ str(dddd) +'newCDMS.xlsx'
             file_name = static + file_obj
-            # file_name = url_for('static', filename='data/newCDMS.xlsx')
-            # file_name = app.config['DATA_FOLDER']+'newCDMS.xlsx' 
+            # file_name = url_for('static', filename='data/'+ str(datetime.utcnow) +'newCDMS.xlsx')
+            # file_name = app.config['DATA_FOLDER']+''+ +'newCDMS.xlsx' 
             if category.lower() == 'mixed':     
                 data_fetched = pd.DataFrame([to_dict(item) for item in Prospects.query.all()])
                 data_fetched2 = pd.DataFrame([to_dict(item) for item in Students.query.all()])

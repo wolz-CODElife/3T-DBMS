@@ -494,8 +494,8 @@ def exportfile():
         if category == '0':
             flash('Please select a category')
         else:            
-            dddd = random.randint()
-            file_obj = 'data/'+ str(dddd) +'newCDMS.xlsx'
+            dddd = random.randint(20000000, 400000000)
+            file_obj = 'data/newCDMS'+ str(dddd) +'X.xlsx'
             file_name = static + file_obj
             # file_name = url_for('static', filename='data/'+ str(datetime.utcnow) +'newCDMS.xlsx')
             # file_name = app.config['DATA_FOLDER']+''+ +'newCDMS.xlsx' 

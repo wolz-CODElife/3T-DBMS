@@ -1,8 +1,8 @@
-"""'Updating'
+"""'Floating'
 
-Revision ID: dc6925664c61
+Revision ID: 8b2b7802573c
 Revises: 
-Create Date: 2020-12-21 14:31:30.804853
+Create Date: 2020-12-30 15:20:37.150867
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'dc6925664c61'
+revision = '8b2b7802573c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('phone', sa.String(), nullable=True),
     sa.Column('location', sa.String(), nullable=True),
     sa.Column('courses', sa.Text(), nullable=True),
-    sa.Column('balance', sa.Integer(), nullable=True),
+    sa.Column('balance', sa.Float(), nullable=True),
     sa.Column('results', sa.Text(), nullable=True),
     sa.Column('referral_name', sa.String(), nullable=True),
     sa.Column('referral_number', sa.String(), nullable=True),
@@ -58,7 +58,6 @@ def upgrade():
     sa.Column('extra1', sa.Text(), nullable=True),
     sa.Column('extra2', sa.Text(), nullable=True),
     sa.Column('extra3', sa.Text(), nullable=True),
-    sa.Column('extra4', sa.Text(), nullable=True),
     sa.Column('date_created', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -70,13 +69,13 @@ def upgrade():
     sa.Column('location', sa.String(), nullable=True),
     sa.Column('dob', sa.String(), nullable=True),
     sa.Column('courses', sa.Text(), nullable=True),
-    sa.Column('registration_fee', sa.Integer(), nullable=True),
-    sa.Column('tutorial_fee', sa.Integer(), nullable=True),
-    sa.Column('course_fee', sa.Integer(), nullable=True),
-    sa.Column('payment_1', sa.Integer(), nullable=True),
-    sa.Column('payment_2', sa.Integer(), nullable=True),
-    sa.Column('payment_3', sa.Integer(), nullable=True),
-    sa.Column('balance', sa.Integer(), nullable=True),
+    sa.Column('registration_fee', sa.Float(), nullable=True),
+    sa.Column('tutorial_fee', sa.Float(), nullable=True),
+    sa.Column('course_fee', sa.Float(), nullable=True),
+    sa.Column('payment_1', sa.Float(), nullable=True),
+    sa.Column('payment_2', sa.Float(), nullable=True),
+    sa.Column('payment_3', sa.Float(), nullable=True),
+    sa.Column('balance', sa.Float(), nullable=True),
     sa.Column('exam', sa.String(), nullable=True),
     sa.Column('remark_1', sa.Text(), nullable=True),
     sa.Column('remark_2', sa.Text(), nullable=True),

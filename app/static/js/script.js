@@ -8,4 +8,19 @@ $(document).ready(function() {
   $('#hambuger').click(function () {
     $("#nav").toggle();
   });
+
+  // Select all checkbox on constomer page
+  $('#selectall').click(function(){
+    if($('#selectable #selectall').is(':checked')){
+      $('#selectable input[type=checkbox]').each(function(){
+        $(this).prop("checked", true);
+      });
+    }
+    else{
+      $('#selectable input[type=checkbox]').each(function(){
+        $(this).prop("checked", false);
+      });
+    }
+  });
 });
+

@@ -44,7 +44,7 @@ def index():
 def index2():
     myid = current_user.id
     if request.method == 'POST':
-        course_id = int(request.form['course'])
+        course_id = float(request.form['course'])
         course = Courses.query.get_or_404(course_id)
         check = 0
         for offer in Offers.query.filter_by(course_id=course_id):
@@ -267,9 +267,9 @@ def edit_customer(category, id):
             client.location = request.form['location']
             client.dob = request.form['dob']
             client.courses = request.form['courses']
-            client.registration_fee = int(request.form['registration_fee'])
-            client.tutorial_fee = int(request.form['tutorial_fee'])
-            client.course_fee = int(request.form['course_fee'])
+            client.registration_fee = float(request.form['registration_fee'])
+            client.tutorial_fee = float(request.form['tutorial_fee'])
+            client.course_fee = float(request.form['course_fee'])
             if request.form['payment_1'] == '' or request.form['payment_1'] == ' ':
                 payment_1 = 0
             else:
@@ -282,10 +282,10 @@ def edit_customer(category, id):
                 payment_3 = 0
             else:
                 payment_3 = request.form['payment_3']
-            client.payment_1 = int(payment_1)
-            client.payment_2 = int(payment_2)
-            client.payment_3 = int(payment_3)
-            client.balance = (int(request.form['course_fee'])) - (int(payment_1) + int(payment_2) + int(payment_3))
+            client.payment_1 = float(payment_1)
+            client.payment_2 = float(payment_2)
+            client.payment_3 = float(payment_3)
+            client.balance = (float(request.form['course_fee'])) - (float(payment_1) + float(payment_2) + float(payment_3))
             client.exam = request.form['exam']
             client.remark_1 = request.form['remark_1']
             client.remark_2 = request.form['remark_2']
@@ -324,18 +324,56 @@ def move_customer(category, id):
     if request.method == 'POST':
         if request.form['newcategory'] != '0':
             newcategory = request.form['newcategory']
-            # TO-DO
-            # rmove the below flash 
-            # make the client move to new category
-            # 
-            # 
-            # 
-            # 
-            flash(newcategory)
-            return redirect(request.url)
+            if category.lower() == 'prospects':
+                client = Prospects.query.get_or_404(id)
+            elif category.lower() == 'students':
+                client = Students.query.get_or_404(id)
+            elif category.lower() == 'exstudents':
+                client = Exstudents.query.get_or_404(id)
+            if newcategory.lower() == 'prospects':
+                check = 0
+                for entity in Prospects.query.filter_by(email=client.email).all():
+                    check += 1
+                if check > 0:
+                    flash(str(client.fullname) + ' is already on ' + str(newcategory.title()) + ' table.')
+                else:
+                    if category.lower() == 'students':
+                        remark = client.remark_1
+                    else:
+                        remark = client.remark   
+                    newclient = Prospects(fullname=client.fullname, email=client.email, phone=client.phone, location=client.location, courses=client.courses, remark=remark, extra1=client.extra1, extra2=client.extra2, extra3=client.extra3)
+            elif newcategory.lower() == 'students':
+                check = 0
+                for entity in Students.query.filter_by(email=client.email).all():
+                    check += 1
+                if check > 0:
+                    flash(str(client.fullname) + ' is already on ' + str(newcategory.title()) + ' table.')
+                else:
+                    newclient = Students(fullname=client.fullname, email=client.email, phone=client.phone, location=client.location, courses=client.courses, remark_1=client.remark, extra1=client.extra1, extra2=client.extra2, extra3=client.extra3)
+            elif newcategory.lower() == 'exstudents':
+                check = 0
+                for entity in Exstudents.query.filter_by(email=client.email).all():
+                    check += 1
+                if check > 0:
+                    flash(str(client.fullname) + ' is already on ' + str(newcategory.title()) + ' table.')
+                else:
+                    if category.lower() == 'prospects':
+                        balance = 0                        
+                    else:
+                        balance = client.balance
+                    if category.lower() == 'students':
+                        remark = client.remark_1
+                    else:
+                        remark = client.remark                    
+                    newclient = Exstudents(fullname=client.fullname, email=client.email, phone=client.phone, location=client.location, courses=client.courses, balance=balance, remark=remark, extra1=client.extra1, extra2=client.extra2, extra3=client.extra3) 
+            db.session.add(newclient)
+            db.session.delete(client)
+            db.session.commit()           
+            flash(str(client.fullname) + ' has been moved to ' + str(newcategory.title()))
+            return redirect('/customers/'+str(newcategory))
         else:
             flash('Please Select a category')
-    return redirect('/customers/'+category)
+    return redirect('/customers/'+str(category))
 
 
 
@@ -358,6 +396,72 @@ def delete_customer(category, id):
         return render_template('delete.html', category=category, client=client)
 
 
+
+
+@app.route('/bulk-actions/<category>', methods=['GET', 'POST'])
+@login_required
+def bulkactions(category):
+    if request.method == 'POST':
+        selected =  request.form.getlist('selected')
+        countings = len(selected)
+        if countings > 0:
+            if (request.form['actiontype']).lower() == 'delete':
+                if category.lower() == 'prospects':
+                    for getid in selected:
+                        client = Prospects.query.get_or_404(getid)
+                        db.session.delete(client)
+                        # db.session.commit()
+                elif category.lower() == 'students':
+                    for getid in selected:
+                        client = Students.query.get_or_404(getid)
+                        db.session.delete(client)
+                        # db.session.commit()
+                elif category.lower() == 'exstudents':
+                    for getid in selected:
+                        client = Exstudents.query.get_or_404(getid)
+                        db.session.delete(client)        
+                db.session.commit()
+                flash('Deleted ' + str(countings) +' clients from ' + str(category.title()))
+                new_url = '/customers/' + category
+                return redirect(new_url)
+            elif (request.form['actiontype']).lower() == 'extract':
+                file_obj = 'data/newCDMS.xlsx'
+                file_name = static + file_obj
+                if category.lower() == 'prospects':
+                    sheet = 'prospect'.upper()
+                    data_fetched = pd.DataFrame([to_dict(Prospects.query.get_or_404(getid)) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
+                    # print(data_fetched)
+                    flash('Downloadable File generated for download')
+                    return render_template('export.html', file_name=file_obj, category=category)              
+                elif category.lower() == 'students':
+                    sheet = 'students'.upper()
+                    data_fetched = pd.DataFrame([to_dict(Students.query.get_or_404(getid)) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
+                    # print(data_fetched)
+                    flash('Downloadable File generated for download')
+                    return render_template('export.html', file_name=file_obj, category=category)              
+                elif category.lower() == 'exstudents':
+                    sheet = 'ex-student'.upper()
+                    data_fetched = pd.DataFrame([to_dict(Exstudents.query.get_or_404(getid)) for getid in selected])
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
+                    # print(data_fetched)
+                    flash('Downloadable File generated for download')
+                    return render_template('export.html', file_name=file_obj, category=category) 
+                else:
+                    flash('Invalid category selected')
+                    return redirect('/customers/'+category)
+            else:
+                flash('Invalid Bulk action')
+                return redirect('/customers/'+category)
+        else:
+            flash('Select at least one record')
+            return redirect('/customers/'+category)
+    else:             
+        new_url = '/customers/' + category
+        return redirect(new_url)
+
+
 # the below function is to verify if the uploaded file is an xls, xlsx or csv file
 def validate_xlfiles(xlfile):
     f_name, f_ext = os.path.splitext(xlfile.filename)
@@ -375,6 +479,7 @@ def to_dict(row):
     for key in keys:
         rtn_dict[key] = getattr(row, key)
     return rtn_dict
+
 
 @app.route('/export', methods=['GET', 'POST'])
 @login_required
@@ -402,15 +507,20 @@ def exportfile():
             else:
                 if category.lower() == 'prospect':
                     data_fetched = pd.DataFrame([to_dict(item) for item in Prospects.query.all()])
+                    sheet = category.upper()
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
                 elif category.lower() == 'students':
                     data_fetched = pd.DataFrame([to_dict(item) for item in Students.query.all()])
+                    sheet = category.upper()
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
                 elif category.lower() == 'ex-student':
                     data_fetched = pd.DataFrame([to_dict(item) for item in Exstudents.query.all()])
-                sheet = category.upper()
-                data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
+                    sheet = category.upper()
+                    data_fetched.to_excel(file_name, sheet_name=sheet, index=False)
                 flash('Downloadable File generated for download')
             return render_template('export.html', file_name=file_obj, category=category)
     return render_template('export.html')
+
 
 @app.route('/import', methods=['GET', 'POST'])
 @login_required
@@ -427,10 +537,14 @@ def importfile():
                 for sheet, data in files.items():
                     dfs = pd.read_excel(xlfile, sheet_name=sheet, header=0)
                 #     print(dfs.to_dict())
-                    if dfs[0].any():
-                        length = dfs[0]
+                    try: 
+                        if dfs["Full-Name"].any():
+                            length = dfs["Full-Name"]
+                    except KeyError: 
+                        if dfs['Email'].any():
+                            length = dfs['Email']
                     for i in range(0, len(length)):
-                        if sheet.lower() == 'prospect':
+                        if sheet.lower() == 'prospect' and len(dfs['Email']) > 0:
                             check_data_exist = 0
                             for items in Prospects.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname = dfs['Full-Name'][i]
@@ -447,7 +561,7 @@ def importfile():
                                 items.extra3 = dfs['Extra3'][i]
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Prospects(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
@@ -466,7 +580,7 @@ def importfile():
                                 db.session.commit()      
                             # else:
                             #     print('Found ', dfs['Email'][i], ' in db')         
-                        elif sheet.lower() == 'students':
+                        elif sheet.lower() == 'students' and len(dfs['Email']) > 0:
                             check_data_exist = 0
                             for items in Students.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname=dfs['Full-Name'][i] 
@@ -474,13 +588,13 @@ def importfile():
                                 items.location=dfs['Location'][i] 
                                 items.dob=dfs['Date-of-Birth'][i] 
                                 items.courses=dfs['Course-Name'][i] 
-                                items.registration_fee=int(dfs['Registration-Fee'][i]) 
-                                items.tutorial_fee=int(dfs['Tutorial-Fee'][i]) 
-                                items.course_fee=int(dfs['Course-Fee'][i]) 
-                                items.payment_1=int(dfs['1st-Payment'][i]) 
-                                items.payment_2=int(dfs['2nd-Payment'][i]) 
-                                items.payment_3=int(dfs['3rd-Payment'][i]) 
-                                items.balance=int(dfs['Balance'][i]) 
+                                items.registration_fee=float(dfs['Registration-Fee'][i]) 
+                                items.tutorial_fee=float(dfs['Tutorial-Fee'][i]) 
+                                items.course_fee=float(dfs['Course-Fee'][i]) 
+                                items.payment_1=float(dfs['1st-Payment'][i]) 
+                                items.payment_2=float(dfs['2nd-Payment'][i]) 
+                                items.payment_3=float(dfs['3rd-Payment'][i]) 
+                                items.balance=float(dfs['Balance'][i]) 
                                 items.exam=dfs['Exam'][i] 
                                 items.remark_1=dfs['Remark-1'][i] 
                                 items.remark_2=dfs['Remark-2'][i] 
@@ -489,7 +603,7 @@ def importfile():
                                 items.extra3=dfs['Extra3'][i]                                        
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Students(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
@@ -497,13 +611,13 @@ def importfile():
                                     location=dfs['Location'][i], 
                                     dob=dfs['Date-of-Birth'][i], 
                                     courses=dfs['Course-Name'][i], 
-                                    registration_fee=int(dfs['Registration-Fee'][i]), 
-                                    tutorial_fee=int(dfs['Tutorial-Fee'][i]), 
-                                    course_fee=int(dfs['Course-Fee'][i]), 
-                                    payment_1=int(dfs['1st-Payment'][i]), 
-                                    payment_2=int(dfs['2nd-Payment'][i]), 
-                                    payment_3=int(dfs['3rd-Payment'][i]), 
-                                    balance=int(dfs['Balance'][i]), 
+                                    registration_fee=float(dfs['Registration-Fee'][i]), 
+                                    tutorial_fee=float(dfs['Tutorial-Fee'][i]), 
+                                    course_fee=float(dfs['Course-Fee'][i]), 
+                                    payment_1=float(dfs['1st-Payment'][i]), 
+                                    payment_2=float(dfs['2nd-Payment'][i]), 
+                                    payment_3=float(dfs['3rd-Payment'][i]), 
+                                    balance=float(dfs['Balance'][i]), 
                                     exam=dfs['Exam'][i], 
                                     remark_1=dfs['Remark-1'][i], 
                                     remark_2=dfs['Remark-2'][i], 
@@ -514,7 +628,7 @@ def importfile():
                                 db.session.commit()      
                             # else:
                             #     print('Found ', dfs['Email'][i], ' in db')
-                        elif sheet.lower() == 'ex-student':
+                        elif sheet.lower() == 'ex-student' and len(dfs['Email']) > 0:
                             check_data_exist = 0
                             for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
                                 items.fullname=dfs['Full-Name'][i] 
@@ -522,7 +636,7 @@ def importfile():
                                 items.phone=dfs['Phone'][i] 
                                 items.location=dfs['Location'][i] 
                                 items.courses=dfs['Course-Name'][i] 
-                                items.balance=int(dfs['Balance'][i]) 
+                                items.balance=float(dfs['Balance'][i]) 
                                 items.results=dfs['Results'][i] 
                                 items.referral_name=dfs['Referral-Name'][i] 
                                 items.referral_number=dfs['Referral-Number'][i]
@@ -533,14 +647,14 @@ def importfile():
                                 items.extra3=dfs['Extra3'][i]            
                                 check_data_exist += 1
                             if check_data_exist == 0:
-                                # print(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Exstudents(
                                     fullname=dfs['Full-Name'][i], 
                                     email=dfs['Email'][i], 
                                     phone=dfs['Phone'][i], 
                                     location=dfs['Location'][i], 
                                     courses=dfs['Course-Name'][i], 
-                                    balance=int(dfs['Balance'][i]), 
+                                    balance=float(dfs['Balance'][i]), 
                                     results=dfs['Results'][i], 
                                     referral_name=dfs['Referral-Name'][i], 
                                     referral_number=dfs['Referral-Number'][i], 
@@ -590,8 +704,8 @@ def addclient(category):
             for items in Students.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
-                # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], dob=request.form['dob'], courses=request.form['courses'], registration_fee=int(request.form['registration_fee']), tutorial_fee=int(request.form['tutorial_fee']), course_fee=int(request.form['course_fee']), payment_1=int(request.form['payment_1']), payment_2=int(request.form['payment_2']), payment_3=int(request.form['payment_3']), balance=(int(request.form['course_fee'])) - (int(request.form['payment_1']) + int(request.form['payment_2']) + int(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
+                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], dob=request.form['dob'], courses=request.form['courses'], registration_fee=float(request.form['registration_fee']), tutorial_fee=float(request.form['tutorial_fee']), course_fee=float(request.form['course_fee']), payment_1=float(request.form['payment_1']), payment_2=float(request.form['payment_2']), payment_3=float(request.form['payment_3']), balance=(float(request.form['course_fee'])) - (float(request.form['payment_1']) + float(request.form['payment_2']) + float(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -601,8 +715,8 @@ def addclient(category):
             for items in Exstudents.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
-                # print(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], courses=request.form['courses'], balance=int(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=int(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
+                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], courses=request.form['courses'], balance=float(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=float(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -724,7 +838,7 @@ def editlesson(coursesid, id):
 def makeoffer():
     myid = current_user.id
     if request.method == 'POST':
-        course_id = int(request.form['course'])
+        course_id = float(request.form['course'])
         course = Courses.query.get_or_404(course_id)
         check = 0
         for offer in Offers.query.filter_by(course_id=course_id):
@@ -747,8 +861,8 @@ def applications():
         return redirect(url_for('courses'))
     else:
         if request.method == 'POST':
-            user_id = int(request.form['student'])
-            course_id = int(request.form['course'])
+            user_id = float(request.form['student'])
+            course_id = float(request.form['course'])
             course = Courses.query.get_or_404(course_id)
             student = User.query.get_or_404(user_id)
             check = 0

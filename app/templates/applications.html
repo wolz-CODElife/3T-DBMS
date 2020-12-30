@@ -24,7 +24,7 @@
     <h4 style="text-transform: capitalize;"> <i class="fa fa-users"></i> Applications
         {% if current_user.role|lower != 'student' %}
             {% if current_user.role|lower != 'reader' %}
-            <span class="btn btn-success float-right" data-toggle="modal" data-target="#addcourses"><i class="fa fa-plus"></i></span>
+            <span class="btn btn-success float-right" data-toggle="modal" data-target="#addapplication"><i class="fa fa-plus"></i></span>
             {% endif %}
         {% endif %}
     </h4>
@@ -72,36 +72,55 @@
         <h3>No Course offered yet!</h3>
         {% endif %}
     </div>
-    <hr class="bg-light">
-    <form action="" method="post">        
-        <h3>Assign User to Courses</h3>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect00">Select User</label>
+</div>
+<!-- Modal add prospect -->
+<div class="modal" style="align-self: center;" id="addapplication" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-dark">
+                    <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal">
+                        <i class="fa fa-times"></i>
+                    </span> &nbsp; Assign User to Courses
+                </h4>
             </div>
-            <select name="student" class="custom-select" id="inputGroupSelect00">
-                <option value="0"></option>
-                {% if students %}
-                {% for student in students %}
-                <option value="{{student.id}}">{{student.firstname}} {{student.lastname}}</option>
-                {% endfor %}
-                {% endif %}
-            </select>
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Select Course</label>
+            <div class="modal-body text-white bg-dark">
+                <form action="" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect00">Select User</label>
+                        </div>
+                        <select name="student" class="custom-select" id="inputGroupSelect00">
+                            <option value="0"></option>
+                            {% if students %}
+                            {% for student in students %}
+                            <option value="{{student.id}}">{{student.firstname}} {{student.lastname}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Select Course</label>
+                        </div>
+                        <select name="course" class="custom-select" id="inputGroupSelect01">
+                            <option value="0"></option>
+                            {% if courses %}
+                            {% for course in courses %}
+                            <option value="{{course.id}}">{{course.title}}</option>
+                            {% endfor %}
+                            {% endif %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn button">Activate <i class="fa fa-check"></i></button>
+                </form>
             </div>
-            <select name="course" class="custom-select" id="inputGroupSelect01">
-                <option value="0"></option>
-                {% if courses %}
-                {% for course in courses %}
-                <option value="{{course.id}}">{{course.title}}</option>
-                {% endfor %}
-                {% endif %}
-            </select>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Close
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
         </div>
-        <button type="submit" class="btn button">Activate <i class="fa fa-check"></i></button>
-    </form>
+    </div>
 </div>
 {% endblock %}

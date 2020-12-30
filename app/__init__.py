@@ -9,7 +9,8 @@ from os import environ
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SCreytkri'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/timetable'
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///customers.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') 
+# app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///customers.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DATA_FOLDER'] = 'static/data/'
 

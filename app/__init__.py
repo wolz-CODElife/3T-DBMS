@@ -3,12 +3,13 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+fromr os import environ
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SCreytkri'
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:''@localhost/timetable'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///customers.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('DATABASE_URL') or 'sqlite:///customers.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # app.config['DATA_FOLDER'] = 'static/data/'
 

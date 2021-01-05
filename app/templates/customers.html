@@ -162,7 +162,7 @@
                                 <td>{{client.phone if client.phone}}</td>
                                 <td>{{client.location if client.location}}</td>
                                 <td>{{client.data_source if client.data_source}}</td>
-                                <td>{{client.sector if client.sector}}</td>
+                                <td>{{client.sector if client.sector != 'NaN'}}</td>
                                 <td>{{client.company_name if client.company_name}}</td>
                                 <td>{{client.courses if client.courses}}</td>
                                 <td>{{client.status if client.status}}</td>

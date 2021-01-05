@@ -579,19 +579,19 @@ def importfile():
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Prospects(
-                                    fullname=dfs['Full-Name'][i], 
-                                    email=dfs['Email'][i], 
-                                    phone=dfs['Phone'][i], 
-                                    location=dfs['Location'][i], 
-                                    data_source = dfs['Data-Source'][i],
-                                    sector=dfs['Sector'][i], 
-                                    company_name = dfs['Company-Name'][i],
-                                    courses = dfs['Courses'][i],
-                                    status=dfs['Status'][i], 
-                                    remark=dfs['Remark'][i],
-                                    extra1=dfs['Extra1'][i], 
-                                    extra2=dfs['Extra2'][i],
-                                    extra3=dfs['Extra3'][i])             
+                                    fullname=str(dfs['Full-Name'][i]), 
+                                    email=str(dfs['Email'][i]), 
+                                    phone=str(dfs['Phone'][i]), 
+                                    location=str(dfs['Location'][i]), 
+                                    data_source = str(dfs['Data-Source'][i]),
+                                    sector=str(dfs['Sector'][i]), 
+                                    company_name = str(dfs['Company-Name'][i]),
+                                    courses = str(dfs['Courses'][i]),
+                                    status=str(dfs['Status'][i]), 
+                                    remark=str(dfs['Remark'][i]),
+                                    extra1=str(dfs['Extra1'][i]), 
+                                    extra2=str(dfs['Extra2'][i]),
+                                    extra3=str(dfs['Extra3'][i]))             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:

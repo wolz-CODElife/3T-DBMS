@@ -157,19 +157,19 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
-                                <td>{{client.fullname if client.fullname != 'NaN'}}</td>
+                                <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
-                                <td>{{client.phone if client.phone != 'NaN'}}</td>
-                                <td>{{client.location if client.location != 'NaN'}}</td>
-                                <td>{{client.data_source if client.data_source != 'NaN'}}</td>
-                                <td>{{client.sector if client.sector != 'NaN'}}</td>
-                                <td>{{client.company_name if client.company_name != 'NaN'}}</td>
-                                <td>{{client.courses if client.courses != 'NaN'}}</td>
-                                <td>{{client.status if client.status != 'NaN'}}</td>
-                                <td>{{client.remark if client.remark != 'NaN'}}</td>
-                                <td>{{client.extra1 if client.extra1 != 'NaN'}}</td>
-                                <td>{{client.extra2 if client.extra2 != 'NaN'}}</td>
-                                <td>{{client.extra3 if client.extra3 != 'NaN'}}</td>
+                                <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
+                                <td>{{client.location if (client.location).lower() != 'nan'}}</td>
+                                <td>{{client.data_source if (client.data_source).lower() != 'nan'}}</td>
+                                <td>{{client.sector if (client.sector).lower() != 'nan'}}</td>
+                                <td>{{client.company_name if (client.company_name).lower() != 'nan'}}</td>
+                                <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
+                                <td>{{client.status if (client.status).lower() != 'nan'}}</td>
+                                <td>{{client.remark if (client.remark).lower() != 'nan'}}</td>
+                                <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
+                                <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
+                                <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
                                 <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
@@ -184,29 +184,29 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
-                                <td>{{client.fullname if client.fullname != 'NaN'}}</td>
+                                <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
-                                <td>{{client.phone if client.phone != 'NaN'}}</td>
-                                <td>{{client.location if client.location != 'NaN'}}</td>
-                                <td>{{client.dob if client.dob != 'NaN'}}</td>
-                                <td>{{client.courses if client.courses != 'NaN'}}</td>
-                                <td>{{client.registration_fee if client.registration_fee != 'NaN'}}</td>
-                                <td>{{client.tutorial_fee if client.tutorial_fee != 'NaN'}}</td>
-                                <td>{{client.course_fee if client.course_fee != 'NaN'}}</td>
-                                <td>{{client.payment_1 if client.payment_1 != 'NaN'}}</td>
-                                <td>{{client.payment_2 if client.payment_2 != 'NaN'}}</td>
-                                <td>{{client.payment_3 if client.payment_3 != 'NaN'}}</td>
+                                <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
+                                <td>{{client.location if (client.location).lower() != 'nan'}}</td>
+                                <td>{{client.dob if (client.dob).lower() != 'nan'}}</td>
+                                <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
+                                <td>{{client.registration_fee if (client.registration_fee).lower() != 'nan'}}</td>
+                                <td>{{client.tutorial_fee if (client.tutorial_fee).lower() != 'nan'}}</td>
+                                <td>{{client.course_fee if (client.course_fee).lower() != 'nan'}}</td>
+                                <td>{{client.payment_1 if (client.payment_1).lower() != 'nan'}}</td>
+                                <td>{{client.payment_2 if (client.payment_2).lower() != 'nan'}}</td>
+                                <td>{{client.payment_3 if (client.payment_3).lower() != 'nan'}}</td>
                                 {% if client.balance|int > 0 %}
-                                <td class="bg-danger text-white">{{client.balance if client.balance != 'NaN'}}</td>
+                                <td class="bg-danger text-white">{{client.balance if (client.balance).lower() != 'nan'}}</td>
                                 {%else%}
-                                <td class="bg-success">{{client.balance if client.balance != 'NaN'}}</td>
+                                <td class="bg-success">{{client.balance if (client.balance).lower() != 'nan'}}</td>
                                 {% endif %}
-                                <td>{{client.exam if client.exam != 'NaN'}}</td>
-                                <td>{{client.remark_1 if client.remark_1 != 'NaN'}}</td>
-                                <td>{{client.remark_2 if client.remark_2 != 'NaN'}}</td>
-                                <td>{{client.extra1 if client.extra1 != 'NaN'}}</td>
-                                <td>{{client.extra2 if client.extra2 != 'NaN'}}</td>
-                                <td>{{client.extra3 if client.extra3 != 'NaN'}}</td>
+                                <td>{{client.exam if (client.exam).lower() != 'nan'}}</td>
+                                <td>{{client.remark_1 if (client.remark_1).lower() != 'nan'}}</td>
+                                <td>{{client.remark_2 if (client.remark_2).lower() != 'nan'}}</td>
+                                <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
+                                <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
+                                <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
                                 <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
@@ -221,20 +221,20 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
-                                <td>{{client.fullname if client.fullname != 'NaN'}}</td>
+                                <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
-                                <td>{{client.phone if client.phone != 'NaN'}}</td>
-                                <td>{{client.location if client.location != 'NaN'}}</td>
-                                <td>{{client.courses if client.courses != 'NaN'}}</td>
-                                <td>{{client.balance if client.balance != 'NaN'}}</td>
+                                <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
+                                <td>{{client.location if (client.location).lower() != 'nan'}}</td>
+                                <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
+                                <td>{{client.balance if (client.balance).lower() != 'nan'}}</td>
                                 <td>{{client.results}}</td>
                                 <td>{{client.referral_name}}</td>
                                 <td>{{client.referral_number}}</td>
                                 <td>{{client.referral_email}}</td>
-                                <td>{{client.remark if client.remark != 'NaN'}}</td>
-                                <td>{{client.extra1 if client.extra1 != 'NaN'}}</td>
-                                <td>{{client.extra2 if client.extra2 != 'NaN'}}</td>
-                                <td>{{client.extra3 if client.extra3 != 'NaN'}}</td>
+                                <td>{{client.remark if (client.remark).lower() != 'nan'}}</td>
+                                <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
+                                <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
+                                <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
                                 <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
@@ -255,7 +255,7 @@
                     <div class="modal-header" style="flex-direction: column;">
                         <h4 class="text-dark">
                             <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
-                            Edit <span class="badge">{{client.fullname if client.fullname != 'NaN'}}</span>
+                            Edit <span class="badge">{{client.fullname if (client.fullname).lower() != 'nan'}}</span>
                         </h4>
                         <div style="width: 100%;">
                             <form action="/move-customer/{{category}}/{{client.id}}" method="post">                                
@@ -286,7 +286,7 @@
                         <form action="/edit-client/{{category}}/{{client.id}}" method="post">
                             <div class="form-group">
                                 <label for="editfullname">Fullname: </label>
-                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if client.fullname != 'NaN'}}"
+                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if (client.fullname).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                             <div class="form-group">
@@ -296,57 +296,57 @@
                             </div>
                             <div class="form-group">
                                 <label for="editphone">Phone: </label>
-                                <input type="text" id="editphone" name="phone" value="{{client.phone if client.phone != 'NaN'}}"
+                                <input type="text" id="editphone" name="phone" value="{{client.phone if (client.phone).lower() != 'nan'}}"
                                     class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editlocation">Location: </label>
-                                <input type="text" id="editlocation" name="location" value="{{client.location if client.location != 'NaN'}}"
+                                <input type="text" id="editlocation" name="location" value="{{client.location if (client.location).lower() != 'nan'}}"
                                     class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editdata_source">Data Source: </label>
-                                <input type="text" id="editdata_source" name="data_source" value="{{client.data_source if client.data_source != 'NaN'}}"
+                                <input type="text" id="editdata_source" name="data_source" value="{{client.data_source if (client.data_source).lower() != 'nan'}}"
                                     class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editsector">Sector: </label>
-                                <input type="text" id="editsector" name="sector" value="{{client.sector if client.sector != 'NaN'}}"
+                                <input type="text" id="editsector" name="sector" value="{{client.sector if (client.sector).lower() != 'nan'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editcompany_name">Company Name: </label>
-                                <input type="text" id="editcompany_name" name="company_name" value="{{client.company_name if client.company_name != 'NaN'}}"
+                                <input type="text" id="editcompany_name" name="company_name" value="{{client.company_name if (client.company_name).lower() != 'nan'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editcourses">Courses: </label>
-                                <input type="text" id="editcourses" name="courses" value="{{client.courses if client.courses != 'NaN'}}"
+                                <input type="text" id="editcourses" name="courses" value="{{client.courses if (client.courses).lower() != 'nan'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editstatus">Status: </label>
                                 <select id="editstatus" name="status" class="form-control">
-                                    <option value="{{client.status if client.status != 'NaN'}}">{{client.status if client.status != 'NaN'}}</option>
+                                    <option value="{{client.status if (client.status).lower() != 'nan'}}">{{client.status if (client.status).lower() != 'nan'}}</option>
                                     <option value="Interested">Interested</option>
                                     <option value="Not-Interested">Not-Interested</option>
                                 </select>
                             </div>
                             <div class="form-group">
                                 <label for="editremark">Remark: </label>
-                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if client.remark != 'NaN'}}</textarea>
+                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if (client.remark).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra1">Record 1: </label>
-                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if client.extra1 != 'NaN'}}</textarea>
+                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if (client.extra1).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra2">Record 2: </label>
-                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if client.extra2 != 'NaN'}}</textarea>
+                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if (client.extra2).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra3">Record 3: </label>
-                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if client.extra3 != 'NaN'}}</textarea>
+                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if (client.extra3).lower() != 'nan'}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
                         </form>
@@ -455,7 +455,7 @@
                         <div class="modal-header" style="flex-direction: column;">
                             <h4 class="text-dark">
                                 <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
-                                Edit <span class="badge">{{client.fullname if client.fullname != 'NaN'}}</span>
+                                Edit <span class="badge">{{client.fullname if (client.fullname).lower() != 'nan'}}</span>
                             </h4>
                             <div style="width: 100%;">
                                 <form action="/move-customer/{{category}}/{{client.id}}" method="post">                                    
@@ -486,7 +486,7 @@
                             <form action="/edit-client/{{category}}/{{client.id}}" method="post">
                                 <div class="form-group">
                                     <label for="editfullname">Fullname: </label>
-                                    <input type="text" id="editfullname" name="fullname" value="{{client.fullname if client.fullname != 'NaN'}}"
+                                    <input type="text" id="editfullname" name="fullname" value="{{client.fullname if (client.fullname).lower() != 'nan'}}"
                                         class="form-control">
                                     </div>
                                     <div class="form-group">
@@ -496,86 +496,86 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editphone">Phone: </label>
-                                    <input type="text" id="editphone" name="phone" value="{{client.phone if client.phone != 'NaN'}}"
+                                    <input type="text" id="editphone" name="phone" value="{{client.phone if (client.phone).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editlocation">Location: </label>
-                                    <input type="text" id="editlocation" name="location" value="{{client.location if client.location != 'NaN'}}"
+                                    <input type="text" id="editlocation" name="location" value="{{client.location if (client.location).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editdob">Date of Birth: </label>
-                                    <input type="date" id="editdob" name="dob" value="{{client.dob if client.dob != 'NaN'}}"
+                                    <input type="date" id="editdob" name="dob" value="{{client.dob if (client.dob).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editcourses">Courses: </label>
-                                    <input type="text" id="editcourses" name="courses" value="{{client.courses if client.courses != 'NaN'}}"
+                                    <input type="text" id="editcourses" name="courses" value="{{client.courses if (client.courses).lower() != 'nan'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editregistration_fee">Registration Fee: </label>
-                                    <input type="text" id="editregistration_fee" name="registration_fee" value="{{client.registration_fee if client.registration_fee != 'NaN'}}"
+                                    <input type="text" id="editregistration_fee" name="registration_fee" value="{{client.registration_fee if (client.registration_fee).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="edittutorial_fee">Tutorial Fee: </label>
-                                    <input type="text" id="edittutorial_fee" name="tutorial_fee" value="{{client.tutorial_fee if client.tutorial_fee != 'NaN'}}"
+                                    <input type="text" id="edittutorial_fee" name="tutorial_fee" value="{{client.tutorial_fee if (client.tutorial_fee).lower() != 'nan'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editcourse_fee">Course Fee: </label>
-                                    <input type="text" id="editcourse_fee" name="course_fee" value="{{client.course_fee if client.course_fee != 'NaN'}}"
+                                    <input type="text" id="editcourse_fee" name="course_fee" value="{{client.course_fee if (client.course_fee).lower() != 'nan'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editpayment_1">Payment 1: </label>
-                                    <input type="text" id="editpayment_1" name="payment_1" value="{{client.payment_1 if client.payment_1 != 'NaN'}}"
+                                    <input type="text" id="editpayment_1" name="payment_1" value="{{client.payment_1 if (client.payment_1).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editpayment_2">Payment 2: </label>
-                                    <input type="text" id="editpayment_2" name="payment_2" value="{{client.payment_2 if client.payment_2 != 'NaN'}}"
+                                    <input type="text" id="editpayment_2" name="payment_2" value="{{client.payment_2 if (client.payment_2).lower() != 'nan'}}"
                                         class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="editpayment_3">Payment 3: </label>
-                                        <input type="text" id="editpayment_3" name="payment_3" value="{{client.payment_3 if client.payment_3 != 'NaN'}}"
+                                        <input type="text" id="editpayment_3" name="payment_3" value="{{client.payment_3 if (client.payment_3).lower() != 'nan'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
                                     {% if client.balance|int > 0 %}
-                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'NaN'}}" class="form-control bg-danger text-white">
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if (client.balance).lower() != 'nan'}}" class="form-control bg-danger text-white">
                                     {% else %}
-                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'NaN'}}" class="form-control bg-success">
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if (client.balance).lower() != 'nan'}}" class="form-control bg-success">
                                     {% endif %}
                                 </div>
                                 <div class="form-group">
                                     <label for="editexam">Exam: </label>
-                                    <input type="text" id="editexam" name="exam" value="{{client.exam if client.exam != 'NaN'}}"
+                                    <input type="text" id="editexam" name="exam" value="{{client.exam if (client.exam).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editremark_1">Remark 1: </label>
-                                    <textarea id="editremark_1" name="remark_1" class="form-control">{{client.remark_1 if client.remark_1 != 'NaN'}}</textarea>
+                                    <textarea id="editremark_1" name="remark_1" class="form-control">{{client.remark_1 if (client.remark_1).lower() != 'nan'}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="editremark_2">Remark 2: </label>
-                                    <textarea id="editremark_2" name="remark_2" class="form-control">{{client.remark_2 if client.remark_2 != 'NaN'}}</textarea>
+                                    <textarea id="editremark_2" name="remark_2" class="form-control">{{client.remark_2 if (client.remark_2).lower() != 'nan'}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="editextra1">Record 1: </label>
-                                    <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if client.extra1 != 'NaN'}}</textarea>
+                                    <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if (client.extra1).lower() != 'nan'}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="editextra2">Record 2: </label>
-                                    <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if client.extra2 != 'NaN'}}</textarea>
+                                    <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if (client.extra2).lower() != 'nan'}}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="editextra3">Record 3: </label>
-                                    <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if client.extra3 != 'NaN'}}</textarea>
+                                    <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if (client.extra3).lower() != 'nan'}}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
                             </form>
@@ -705,7 +705,7 @@
                     <div class="modal-header" style="flex-direction: column;">
                         <h4 class="text-dark">
                             <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
-                            Edit <span class="badge">{{client.fullname if client.fullname != 'NaN'}}</span>
+                            Edit <span class="badge">{{client.fullname if (client.fullname).lower() != 'nan'}}</span>
                         </h4>
                         <div style="width: 100%;">
                             <form action="/move-customer/{{category}}/{{client.id}}" method="post">                                
@@ -736,7 +736,7 @@
                         <form action="/edit-client/{{category}}/{{client.id}}" method="post">
                             <div class="form-group">
                                 <label for="editfullname">Fullname: </label>
-                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if client.fullname != 'NaN'}}"
+                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if (client.fullname).lower() != 'nan'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -746,22 +746,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editphone">Phone: </label>
-                                <input type="text" id="editphone" name="phone" value="{{client.phone if client.phone != 'NaN'}}"
+                                <input type="text" id="editphone" name="phone" value="{{client.phone if (client.phone).lower() != 'nan'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editlocation">Location: </label>
-                                <input type="text" id="editlocation" name="location" value="{{client.location if client.location != 'NaN'}}"
+                                <input type="text" id="editlocation" name="location" value="{{client.location if (client.location).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editcourse">Courses: </label>
-                                    <input type="text" id="editcourse" name="courses" value="{{client.courses if client.courses != 'NaN'}}"
+                                    <input type="text" id="editcourse" name="courses" value="{{client.courses if (client.courses).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
-                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if client.balance != 'NaN'}}"
+                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if (client.balance).lower() != 'nan'}}"
                                     class="form-control">
                                 </div>
                             <div class="form-group">
@@ -786,19 +786,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="editremark">Remark: </label>
-                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if client.remark != 'NaN'}}</textarea>
+                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if (client.remark).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra1">Extra 1: </label>
-                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if client.extra1 != 'NaN'}}</textarea>
+                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if (client.extra1).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra2">Record 2: </label>
-                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if client.extra2 != 'NaN'}}</textarea>
+                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if (client.extra2).lower() != 'nan'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra3">Record 3: </label>
-                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if client.extra3 != 'NaN'}}</textarea>
+                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if (client.extra3).lower() != 'nan'}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
                         </form>

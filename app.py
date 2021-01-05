@@ -1,4 +1,5 @@
 
 from app import app
 
-app.run()
+app.run(DEBUG=True)
+# app.run()

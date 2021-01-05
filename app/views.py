@@ -12,6 +12,14 @@ from datetime import datetime
 import csv
 import pandas as pd
 
+import numpy
+from psycopg2.extensions import register_adapter, AsIs
+def addapt_numpy_float64(numpy_float64):
+    return AsIs(numpy_float64)
+def addapt_numpy_int64(numpy_int64):
+    return AsIs(numpy_int64)
+register_adapter(numpy.float64, addapt_numpy_float64)
+register_adapter(numpy.int64, addapt_numpy_int64)
 static = os.path.join(app.root_path, 'static/')
 
 
@@ -561,19 +569,19 @@ def importfile():
                     for i in range(0, len(length)):
                         if sheet.lower() == 'prospect' and len(dfs['Email']) > 0:
                             check_data_exist = 0
-                            for items in Prospects.query.filter_by(email=dfs['Email'][i]):
-                                items.fullname = dfs['Full-Name'][i]
-                                items.phone = dfs['Phone'][i]
-                                items.location = dfs['Location'][i]
-                                items.data_source = dfs['Data-Source'][i]
-                                items.sector = dfs['Sector'][i]
-                                items.company_name = dfs['Company-Name'][i]
-                                items.courses = dfs['Courses'][i]
-                                items.status = dfs['Status'][i]
-                                items.remark = dfs['Remark'][i]
-                                items.extra1 = dfs['Extra1'][i]
-                                items.extra2 = dfs['Extra2'][i]
-                                items.extra3 = dfs['Extra3'][i]
+                            for items in Prospects.query.filter_by(email=dfs['Email'][i].item()):
+                                items.fullname = dfs['Full-Name'][i].item()
+                                items.phone = dfs['Phone'][i].item()
+                                items.location = dfs['Location'][i].item()
+                                items.data_source = dfs['Data-Source'][i].item()
+                                items.sector = dfs['Sector'][i].item()
+                                items.company_name = dfs['Company-Name'][i].item()
+                                items.courses = dfs['Courses'][i].item()
+                                items.status = dfs['Status'][i].item()
+                                items.remark = dfs['Remark'][i].item()
+                                items.extra1 = dfs['Extra1'][i].item()
+                                items.extra2 = dfs['Extra2'][i].item()
+                                items.extra3 = dfs['Extra3'][i].item()
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')

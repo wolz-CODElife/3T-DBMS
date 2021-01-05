@@ -705,7 +705,7 @@
                     <div class="modal-header" style="flex-direction: column;">
                         <h4 class="text-dark">
                             <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;
-                            Edit <span class="badge">{{client.fullname if client.fullname}}</span>
+                            Edit <span class="badge">{{client.fullname if client.fullname != 'NaN'}}</span>
                         </h4>
                         <div style="width: 100%;">
                             <form action="/move-customer/{{category}}/{{client.id}}" method="post">                                
@@ -736,7 +736,7 @@
                         <form action="/edit-client/{{category}}/{{client.id}}" method="post">
                             <div class="form-group">
                                 <label for="editfullname">Fullname: </label>
-                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if client.fullname}}"
+                                <input type="text" id="editfullname" name="fullname" value="{{client.fullname if client.fullname != 'NaN'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
@@ -746,22 +746,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editphone">Phone: </label>
-                                <input type="text" id="editphone" name="phone" value="{{client.phone if client.phone}}"
+                                <input type="text" id="editphone" name="phone" value="{{client.phone if client.phone != 'NaN'}}"
                                 class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="editlocation">Location: </label>
-                                <input type="text" id="editlocation" name="location" value="{{client.location if client.location}}"
+                                <input type="text" id="editlocation" name="location" value="{{client.location if client.location != 'NaN'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editcourse">Courses: </label>
-                                    <input type="text" id="editcourse" name="courses" value="{{client.courses if client.courses}}"
+                                    <input type="text" id="editcourse" name="courses" value="{{client.courses if client.courses != 'NaN'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
-                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if client.balance}}"
+                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if client.balance != 'NaN'}}"
                                     class="form-control">
                                 </div>
                             <div class="form-group">
@@ -786,19 +786,19 @@
                             </div>
                             <div class="form-group">
                                 <label for="editremark">Remark: </label>
-                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if client.remark}}</textarea>
+                                <textarea id="editremark" name="remark" class="form-control">{{client.remark if client.remark != 'NaN'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra1">Extra 1: </label>
-                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if client.extra1}}</textarea>
+                                <textarea id="editextra1" name="extra1" class="form-control">{{client.extra1 if client.extra1 != 'NaN'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra2">Record 2: </label>
-                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if client.extra2}}</textarea>
+                                <textarea id="editextra2" name="extra2" class="form-control">{{client.extra2 if client.extra2 != 'NaN'}}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="editextra3">Record 3: </label>
-                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if client.extra3}}</textarea>
+                                <textarea id="editextra3" name="extra3" class="form-control">{{client.extra3 if client.extra3 != 'NaN'}}</textarea>
                             </div>
                             <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
                         </form>

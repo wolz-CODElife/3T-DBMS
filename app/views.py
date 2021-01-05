@@ -598,12 +598,12 @@ def importfile():
                             #     print('Found ', dfs['Email'][i], ' in db')         
                         elif sheet.lower() == 'students' and len(dfs['Email']) > 0:
                             check_data_exist = 0
-                            for items in Students.query.filter_by(email=dfs['Email'][i]):
-                                items.fullname=dfs['Full-Name'][i] 
-                                items.phone=dfs['Phone'][i]
-                                items.location=dfs['Location'][i] 
-                                items.dob=dfs['Date-of-Birth'][i] 
-                                items.courses=dfs['Course-Name'][i] 
+                            for items in Students.query.filter_by(email=str(dfs['Email'][i])):
+                                items.fullname=str(dfs['Full-Name'][i] )
+                                items.phone=str(dfs['Phone'][i])
+                                items.location=str(dfs['Location'][i]) 
+                                items.dob=str(dfs['Date-of-Birth'][i]) 
+                                items.courses=str(dfs['Course-Name'][i]) 
                                 items.registration_fee=float(dfs['Registration-Fee'][i]) 
                                 items.tutorial_fee=float(dfs['Tutorial-Fee'][i]) 
                                 items.course_fee=float(dfs['Course-Fee'][i]) 
@@ -611,22 +611,22 @@ def importfile():
                                 items.payment_2=float(dfs['2nd-Payment'][i]) 
                                 items.payment_3=float(dfs['3rd-Payment'][i]) 
                                 items.balance=float(dfs['Balance'][i]) 
-                                items.exam=dfs['Exam'][i] 
-                                items.remark_1=dfs['Remark-1'][i] 
-                                items.remark_2=dfs['Remark-2'][i] 
-                                items.extra1=dfs['Extra1'][i] 
-                                items.extra2=dfs['Extra2'][i] 
-                                items.extra3=dfs['Extra3'][i]                                        
+                                items.exam=str(dfs['Exam'][i]) 
+                                items.remark_1=str(dfs['Remark-1'][i]) 
+                                items.remark_2=str(dfs['Remark-2'][i]) 
+                                items.extra1=str(dfs['Extra1'][i]) 
+                                items.extra2=str(dfs['Extra2'][i]) 
+                                items.extra3=str(dfs['Extra3'][i])                                        
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Students(
-                                    fullname=dfs['Full-Name'][i], 
-                                    email=dfs['Email'][i], 
-                                    phone=dfs['Phone'][i],
-                                    location=dfs['Location'][i], 
-                                    dob=dfs['Date-of-Birth'][i], 
-                                    courses=dfs['Course-Name'][i], 
+                                    fullname=str(dfs['Full-Name'][i]), 
+                                    email=str(dfs['Email'][i]), 
+                                    phone=str(dfs['Phone'][i]),
+                                    location=str(dfs['Location'][i]), 
+                                    dob=str(dfs['Date-of-Birth'][i]), 
+                                    courses=str(dfs['Course-Name'][i]), 
                                     registration_fee=float(dfs['Registration-Fee'][i]), 
                                     tutorial_fee=float(dfs['Tutorial-Fee'][i]), 
                                     course_fee=float(dfs['Course-Fee'][i]), 
@@ -634,51 +634,51 @@ def importfile():
                                     payment_2=float(dfs['2nd-Payment'][i]), 
                                     payment_3=float(dfs['3rd-Payment'][i]), 
                                     balance=float(dfs['Balance'][i]), 
-                                    exam=dfs['Exam'][i], 
-                                    remark_1=dfs['Remark-1'][i], 
-                                    remark_2=dfs['Remark-2'][i], 
-                                    extra1=dfs['Extra1'][i], 
-                                    extra2=dfs['Extra2'][i], 
-                                    extra3=dfs['Extra3'][i])                                        
+                                    exam=str(dfs['Exam'][i]), 
+                                    remark_1=str(dfs['Remark-1'][i]), 
+                                    remark_2=str(dfs['Remark-2'][i]), 
+                                    extra1=str(dfs['Extra1'][i]), 
+                                    extra2=str(dfs['Extra2'][i]), 
+                                    extra3=str(dfs['Extra3'][i]))
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:
                             #     print('Found ', dfs['Email'][i], ' in db')
                         elif sheet.lower() == 'ex-student' and len(dfs['Email']) > 0:
                             check_data_exist = 0
-                            for items in Exstudents.query.filter_by(email=dfs['Email'][i]):
-                                items.fullname=dfs['Full-Name'][i] 
-                                items.email=dfs['Email'][i] 
-                                items.phone=dfs['Phone'][i] 
-                                items.location=dfs['Location'][i] 
-                                items.courses=dfs['Course-Name'][i] 
+                            for items in Exstudents.query.filter_by(email=str(dfs['Email'][i])):
+                                items.fullname=str(dfs['Full-Name'][i]) 
+                                items.email=str(dfs['Email'][i]) 
+                                items.phone=str(dfs['Phone'][i]) 
+                                items.location=str(dfs['Location'][i]) 
+                                items.courses=str(dfs['Course-Name'][i]) 
                                 items.balance=float(dfs['Balance'][i]) 
-                                items.results=dfs['Results'][i] 
-                                items.referral_name=dfs['Referral-Name'][i] 
-                                items.referral_number=dfs['Referral-Number'][i]
-                                items.referral_email=dfs['Referral-Email'][i] 
-                                items.remark=dfs['Remark'][i] 
-                                items.extra1=dfs['Extra1'][i] 
-                                items.extra2=dfs['Extra2'][i] 
-                                items.extra3=dfs['Extra3'][i]            
+                                items.results=str(dfs['Results'][i]) 
+                                items.referral_name=str(dfs['Referral-Name'][i]) 
+                                items.referral_number=str(dfs['Referral-Number'][i])
+                                items.referral_email=str(dfs['Referral-Email'][i]) 
+                                items.remark=str(dfs['Remark'][i]) 
+                                items.extra1=str(dfs['Extra1'][i]) 
+                                items.extra2=str(dfs['Extra2'][i]) 
+                                items.extra3=str(dfs['Extra3'][i])            
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                 new_data_input = Exstudents(
-                                    fullname=dfs['Full-Name'][i], 
-                                    email=dfs['Email'][i], 
-                                    phone=dfs['Phone'][i], 
-                                    location=dfs['Location'][i], 
-                                    courses=dfs['Course-Name'][i], 
+                                    fullname=str(dfs['Full-Name'][i]), 
+                                    email=str(dfs['Email'][i]), 
+                                    phone=str(dfs['Phone'][i]), 
+                                    location=str(dfs['Location'][i]), 
+                                    courses=str(dfs['Course-Name'][i]), 
                                     balance=float(dfs['Balance'][i]), 
-                                    results=dfs['Results'][i], 
-                                    referral_name=dfs['Referral-Name'][i], 
-                                    referral_number=dfs['Referral-Number'][i], 
-                                    referral_email=dfs['Referral-Email'][i], 
-                                    remark=dfs['Remark'][i], 
-                                    extra1=dfs['Extra1'][i], 
-                                    extra2=dfs['Extra2'][i], 
-                                    extra3=dfs['Extra3'][i])             
+                                    results=str(dfs['Results'][i]), 
+                                    referral_name=str(dfs['Referral-Name'][i]), 
+                                    referral_number=str(dfs['Referral-Number'][i]), 
+                                    referral_email=str(dfs['Referral-Email'][i]), 
+                                    remark=str(dfs['Remark'][i]), 
+                                    extra1=str(dfs['Extra1'][i]), 
+                                    extra2=str(dfs['Extra2'][i]), 
+                                    extra3=str(dfs['Extra3'][i]))             
                                 db.session.add(new_data_input)
                                 db.session.commit()      
                             # else:

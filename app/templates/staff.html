@@ -85,6 +85,7 @@
                             <th colspan="2">Actions</th>
                             <th>Firstname</th>
                             <th>Lastname</th>
+                            <th>Email</th>
                             <th>Role</th>
                         </tr>
                     </thead>
@@ -97,6 +98,7 @@
                                 <td><a href="/delete-user/{{user.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a href="/delete-user/{{user.id}}"></td>
                                 <td>{{user.firstname}}</td>
                                 <td>{{user.lastname}}</td>
+                                <td>{{user.email}}</td>
                                 <td>{{user.role}}</td>
                             </tr>
                             {% endif %}
@@ -123,6 +125,10 @@
                     </div>
                     <div class="form-group">
                         <label for="editlastname{{user.id}}">Lastname: </label>
+                        <input type="text" id="editlastname{{user.id}}" name="lastname" value="{{user.lastname}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editemail{{user.id}}">Lastname: </label>
                         <input type="text" id="editlastname{{user.id}}" name="lastname" value="{{user.lastname}}" class="form-control">
                     </div>
                     <div class="form-group">

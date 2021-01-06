@@ -67,10 +67,10 @@
                     {% if current_user.role|lower == 'admin' %}
                     <li><a href="/users/staff"><button>Staff</button></a></li>
                     <hr style="border: solid 2px #a71a1a;">
-                    <li><a href="/users/students"><button>Students</button></a></li>
-                    <li><a href="/applications"><button>Applications</button></a></li>
+                    <li><a href="/users/students"><button class="bg-danger">Students</button></a></li>
+                    <li><a href="/applications"><button class="bg-danger">Applications</button></a></li>
                     {% endif %}
-                    <li><a href="/courses"><button>Courses</button></a></li>
+                    <li><a href="/courses"><button class="bg-danger">Courses</button></a></li>
                     <li><a href="/settings"><button>Settings</button></a></li>
                     <li><a href="/logout"><button>Logout</button></a></li>
                 </ul>

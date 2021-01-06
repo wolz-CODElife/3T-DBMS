@@ -37,8 +37,8 @@
                     {% for course in courses %}
                         {% if offer.course_id == course.id %}
                             <div class="col-md-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">                                
-                                <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2">
-                                    <p>
+                                <a href="/lessons/{{course.id}}" class="bg-primary pt-2">
+                                    <p style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;">
                                     <i class="fa fa-book"></i> {{course.title}}
                                     </p>
                                 <br>

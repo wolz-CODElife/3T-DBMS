@@ -43,7 +43,9 @@
                                     {% else %}
                                     <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2 mb-2">
                                 {% endif %}
+                                <p>
                                     <i class="fa fa-book"></i> {{course.title}}
+                                </p>
                                 </a>
                                 {% if offer.status|lower() == 'pending' %}
                                 Status - <i class="text-warning">{{offer.status|title()}}</i>
@@ -75,8 +77,9 @@
                 {% for course in courses %}
                     <div class="col-md-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">                                
                         <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2">
+                            <p>
                             <i class="fa fa-book"></i> {{course.title}}
-                            <br>
+                            </p>
                         </a>
                         <br>
                         {% if current_user.role|lower() != 'student' %}

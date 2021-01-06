@@ -39,9 +39,9 @@
                         {% if offer.course_id == course.id %}
                             <div class="col-md-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">
                                 {% if offer.status|lower() == 'pending'%}
-                                    <a href="#" disabled class="bg-primary pt-2 mb-2">
+                                    <a href="#" disabled style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2 mb-2">
                                     {% else %}
-                                    <a href="/lessons/{{course.id}}" class="bg-primary pt-2 mb-2">
+                                    <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2 mb-2">
                                 {% endif %}
                                 <p style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;">
                                     <i class="fa fa-book"></i> {{course.title}}

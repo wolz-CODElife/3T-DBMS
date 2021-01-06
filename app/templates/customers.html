@@ -190,16 +190,16 @@
                                 <td>{{client.location if (client.location).lower() != 'nan'}}</td>
                                 <td>{{client.dob if (client.dob).lower() != 'nan'}}</td>
                                 <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
-                                <td>{{client.registration_fee if client.registration_fee != 'nan'}}</td>
-                                <td>{{client.tutorial_fee if client.tutorial_fee != 'nan'}}</td>
-                                <td>{{client.course_fee if client.course_fee != 'nan'}}</td>
-                                <td>{{client.payment_1 if client.payment_1 != 'nan'}}</td>
-                                <td>{{client.payment_2 if client.payment_2 != 'nan'}}</td>
-                                <td>{{client.payment_3 if client.payment_3 != 'nan'}}</td>
+                                <td>{{client.registration_fee if client.registration_fee != 'NaN'}}</td>
+                                <td>{{client.tutorial_fee if client.tutorial_fee != 'NaN'}}</td>
+                                <td>{{client.course_fee if client.course_fee != 'NaN'}}</td>
+                                <td>{{client.payment_1 if client.payment_1 != 'NaN'}}</td>
+                                <td>{{client.payment_2 if client.payment_2 != 'NaN'}}</td>
+                                <td>{{client.payment_3 if client.payment_3 != 'NaN'}}</td>
                                 {% if client.balance|int > 0 %}
-                                <td class="bg-danger text-white">{{client.balance if client.balance != 'nan'}}</td>
+                                <td class="bg-danger text-white">{{client.balance if client.balance != 'NaN'}}</td>
                                 {%else%}
-                                <td class="bg-success">{{client.balance if client.balance != 'nan'}}</td>
+                                <td class="bg-success">{{client.balance if client.balance != 'NaN'}}</td>
                                 {% endif %}
                                 <td>{{client.exam if (client.exam).lower() != 'nan'}}</td>
                                 <td>{{client.remark_1 if (client.remark_1).lower() != 'nan'}}</td>
@@ -226,7 +226,7 @@
                                 <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
                                 <td>{{client.location if (client.location).lower() != 'nan'}}</td>
                                 <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
-                                <td>{{client.balance if client.balance != 'nan'}}</td>
+                                <td>{{client.balance if client.balance != 'NaN'}}</td>
                                 <td>{{client.results}}</td>
                                 <td>{{client.referral_name}}</td>
                                 <td>{{client.referral_number}}</td>
@@ -516,40 +516,40 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editregistration_fee">Registration Fee: </label>
-                                    <input type="text" id="editregistration_fee" name="registration_fee" value="{{client.registration_fee if client.registration_fee != 'nan'}}"
+                                    <input type="text" id="editregistration_fee" name="registration_fee" value="{{client.registration_fee if client.registration_fee != 'NaN'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="edittutorial_fee">Tutorial Fee: </label>
-                                    <input type="text" id="edittutorial_fee" name="tutorial_fee" value="{{client.tutorial_fee if client.tutorial_fee != 'nan'}}"
+                                    <input type="text" id="edittutorial_fee" name="tutorial_fee" value="{{client.tutorial_fee if client.tutorial_fee != 'NaN'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editcourse_fee">Course Fee: </label>
-                                    <input type="text" id="editcourse_fee" name="course_fee" value="{{client.course_fee if client.course_fee != 'nan'}}"
+                                    <input type="text" id="editcourse_fee" name="course_fee" value="{{client.course_fee if client.course_fee != 'NaN'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editpayment_1">Payment 1: </label>
-                                    <input type="text" id="editpayment_1" name="payment_1" value="{{client.payment_1 if client.payment_1 != 'nan'}}"
+                                    <input type="text" id="editpayment_1" name="payment_1" value="{{client.payment_1 if client.payment_1 != 'NaN'}}"
                                     class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editpayment_2">Payment 2: </label>
-                                    <input type="text" id="editpayment_2" name="payment_2" value="{{client.payment_2 if client.payment_2 != 'nan'}}"
+                                    <input type="text" id="editpayment_2" name="payment_2" value="{{client.payment_2 if client.payment_2 != 'NaN'}}"
                                         class="form-control">
                                     </div>
                                     <div class="form-group">
                                         <label for="editpayment_3">Payment 3: </label>
-                                        <input type="text" id="editpayment_3" name="payment_3" value="{{client.payment_3 if client.payment_3 != 'nan'}}"
+                                        <input type="text" id="editpayment_3" name="payment_3" value="{{client.payment_3 if client.payment_3 != 'NaN'}}"
                                         class="form-control">
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
                                     {% if client.balance|int > 0 %}
-                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'nan'}}" class="form-control bg-danger text-white">
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'NaN'}}" class="form-control bg-danger text-white">
                                     {% else %}
-                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'nan'}}" class="form-control bg-success">
+                                    <input type="text" id="editbalance" name="balance" disabled value="{{client.balance if client.balance != 'NaN'}}" class="form-control bg-success">
                                     {% endif %}
                                 </div>
                                 <div class="form-group">
@@ -761,7 +761,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="editbalance">Balance: </label>
-                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if client.balance != 'nan'}}"
+                                    <input type="text" id="editbalance" name="balance" value="{{client.balance if client.balance != 'NaN'}}"
                                     class="form-control">
                                 </div>
                             <div class="form-group">

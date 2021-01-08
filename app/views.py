@@ -219,7 +219,11 @@ def filter(category):
             if category == 'students':
                 clients = Students.query.filter(Students.balance > 0).all()
         else:
-            dt = datetime.strptime(search, '%Y%m%d')
+            if int(search):
+                dt = datetime.strptime(search, '%Y')
+            else:
+                now = datetime.datetime.now()
+                dt = datetime.strptime(now.year, '%Y')
             if category == 'prospects':
                 # clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.data_source.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.company_name.ilike(f'%{search}%'), Prospects.courses.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%'), Prospects.extra1.ilike(f'%{search}%'), Prospects.extra2.ilike(f'%{search}%'), Prospects.extra3.ilike(f'%{search}%'))).all()
                 # clients = Prospects.query.filter(or_(Prospects.fullname.ilike(f'%{search}%'), Prospects.email.ilike(f'%{search}%'), Prospects.phone.ilike(f'%{search}%'), Prospects.location.ilike(f'%{search}%'), Prospects.data_source.ilike(f'%{search}%'), Prospects.sector.ilike(f'%{search}%'), Prospects.company_name.ilike(f'%{search}%'), Prospects.courses.ilike(f'%{search}%'), Prospects.status.ilike(f'%{search}%'), Prospects.remark.ilike(f'%{search}%'), Prospects.extra1.ilike(f'%{search}%'), Prospects.extra2.ilike(f'%{search}%'), Prospects.extra3.ilike(f'%{search}%'), Prospects.date_created == (f'%{int(search)}%'))).all()

@@ -717,8 +717,45 @@ def addclient(category):
             for items in Students.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
+                
+                if request.form['registration_fee'] == '' or request.form['registration_fee'] == ' ':
+                    registration_fee = 0
+                else:
+                    registration_fee = request.form['registration_fee']
+                if request.form['tutorial_fee'] == '' or request.form['tutorial_fee'] == ' ':
+                    tutorial_fee = 0
+                else:
+                    tutorial_fee = request.form['tutorial_fee']
+                if request.form['payment_1'] == '' or request.form['payment_1'] == ' ':
+                    payment_1 = 0
+                else:
+                    payment_1 = request.form['payment_1']
+                if request.form['payment_2'] == '' or request.form['payment_2'] == ' ':
+                    payment_2 = 0
+                else:
+                    payment_2 = request.form['payment_2']
+                if request.form['payment_3'] == '' or request.form['payment_3'] == ' ':
+                    payment_3 = 0
+                else:
+                    payment_3 = request.form['payment_3']
+                if request.form['course_fee'] == '' or request.form['course_fee'] == ' ':
+                    course_fee = 0
+                else:
+                    course_fee = request.form['course_fee']
                 # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Students(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], dob=request.form['dob'], courses=request.form['courses'], registration_fee=float(request.form['registration_fee']), tutorial_fee=float(request.form['tutorial_fee']), course_fee=float(request.form['course_fee']), payment_1=float(request.form['payment_1']), payment_2=float(request.form['payment_2']), payment_3=float(request.form['payment_3']), balance=(float(request.form['course_fee'])) - (float(request.form['payment_1']) + float(request.form['payment_2']) + float(request.form['payment_3'])), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Students(fullname=request.form['fullname'], 
+                email=request.form['email'], 
+                phone=request.form['phone'], 
+                location=request.form['location'], 
+                dob=request.form['dob'], 
+                courses=request.form['courses'], 
+                registration_fee=float(registration_fee), 
+                tutorial_fee=float(tutorial_fee), 
+                course_fee=float(course_fee), 
+                payment_1=float(payment_1), 
+                payment_2=float(payment_2), 
+                payment_3=float(payment_3), 
+                balance=(float(course_fee)) - (float(payment_1) + float(payment_2) + float(payment_3)), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:

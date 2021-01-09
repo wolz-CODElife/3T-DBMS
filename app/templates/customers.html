@@ -85,7 +85,9 @@
                         {% if current_user.role|lower != 'reader' %}
                             <th colspan="2">Actions</th>
                         {% endif %}
+                        <th>Reg Date</th>
                         <th>Full Name</th>
+                        <th>Remark</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Location</th>
@@ -94,17 +96,17 @@
                         <th>Company Name</th>
                         <th>Courses</th>
                         <th>Status</th>
-                        <th>Remark</th>
                         <th>Record 1</th>
                         <th>Record 2</th>
                         <th>Record 3</th>
-                        <th>Reg Date</th>
                         {% endif %}
                         {% if category == 'students' %}
                         {% if current_user.role|lower != 'reader' %}
-                            <th colspan="2">Actions</th>
+                        <th colspan="2">Actions</th>
                         {% endif %}
+                        <th>Reg Date</th>
                         <th>Full Name</th>
+                        <th>Remark 1</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Location</th>
@@ -118,18 +120,18 @@
                         <th>Payment 3</th>
                         <th>Balance</th>
                         <th>Exam</th>
-                        <th>Remark 1</th>
                         <th>Remark 2</th>
                         <th>Record 1</th>
                         <th>Record 2</th>
                         <th>Record 3</th>
-                        <th>Reg Date</th>
                         {% endif %}
                         {% if category == 'exstudents' %}
                         {% if current_user.role|lower != 'reader' %}
                         <th colspan="2">Actions</th>
                         {% endif %}
+                        <th>Reg Date</th>
                         <th>Full Name</th>
+                        <th>Remark</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Location</th>
@@ -139,11 +141,9 @@
                         <th>Referral Name</th>
                         <th>Referral Number</th>
                         <th>Referral Email</th>
-                        <th>Remark</th>
                         <th>Record 1</th>
                         <th>Record 2</th>
                         <th>Record 3</th>
-                        <th>Reg Date</th>
                     {% endif %}
                 </tr>
             </thead>
@@ -157,7 +157,9 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
+                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                                 <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
+                                <td>{{client.remark if (client.remark).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
                                 <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
                                 <td>{{client.location if (client.location).lower() != 'nan'}}</td>
@@ -166,11 +168,9 @@
                                 <td>{{client.company_name if (client.company_name).lower() != 'nan'}}</td>
                                 <td>{{client.courses if (client.courses).lower() != 'nan'}}</td>
                                 <td>{{client.status if (client.status).lower() != 'nan'}}</td>
-                                <td>{{client.remark if (client.remark).lower() != 'nan'}}</td>
                                 <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
                                 <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
                                 <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
-                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
                             {% endif %}
@@ -184,6 +184,7 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
+                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                                 <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
                                 <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
@@ -207,7 +208,6 @@
                                 <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
                                 <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
                                 <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
-                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
                             {% endif %}
@@ -221,6 +221,7 @@
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
                                 {% endif %}
+                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                                 <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
                                 <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
@@ -235,7 +236,6 @@
                                 <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
                                 <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>
                                 <td>{{client.extra3 if (client.extra3).lower() != 'nan'}}</td>
-                                <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                             </tr>
                             {% endfor %}
                             {% endif %}

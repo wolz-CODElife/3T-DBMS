@@ -622,12 +622,36 @@ def importfile():
                                 else:
                                     registration_fee = dfs['Registration-Fee'][i]
                                 items.registration_fee=float(registration_fee) 
-                                items.tutorial_fee=float(dfs['Tutorial-Fee'][i]) 
-                                items.course_fee=float(dfs['Course-Fee'][i]) 
-                                items.payment_1=float(dfs['1st-Payment'][i]) 
-                                items.payment_2=float(dfs['2nd-Payment'][i]) 
-                                items.payment_3=float(dfs['3rd-Payment'][i]) 
-                                items.balance=float(dfs['Balance'][i]) 
+                                if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
+                                    tutorial_fee = 0
+                                else:
+                                    tutorial_fee = dfs['Tutorial-Fee'][i]
+                                items.tutorial_fee=float(tutorial_fee) 
+                                if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
+                                    course_fee = 0
+                                else:
+                                    course_fee = dfs['Course-Fee'][i]
+                                items.course_fee=float(course_fee) 
+                                if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
+                                    payment_1 = 0
+                                else:
+                                    payment_1 = dfs['1st-Payment'][i]
+                                items.payment_1=float(payment_1) 
+                                if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
+                                    payment_2 = 0
+                                else:
+                                    payment_2 = dfs['2nd-Payment'][i]
+                                items.payment_2=float(payment_2) 
+                                if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
+                                    payment_3 = 0
+                                else:
+                                    payment_3 = dfs['3rd-Payment'][i]
+                                items.payment_3=float(payment_3) 
+                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                    balance = 0
+                                else:
+                                    balance = dfs['Balance'][i]
+                                items.balance=float(balance) 
                                 items.exam=str(dfs['Exam'][i]) 
                                 items.remark_1=str(dfs['Remark-1'][i]) 
                                 items.remark_2=str(dfs['Remark-2'][i]) 
@@ -637,6 +661,34 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
+                                    registration_fee = 0
+                                else:
+                                    registration_fee = dfs['Registration-Fee'][i]
+                                if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
+                                    tutorial_fee = 0
+                                else:
+                                    tutorial_fee = dfs['Tutorial-Fee'][i]
+                                if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
+                                    course_fee = 0
+                                else:
+                                    course_fee = dfs['Course-Fee'][i]
+                                if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
+                                    payment_1 = 0
+                                else:
+                                    payment_1 = dfs['1st-Payment'][i]
+                                if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
+                                    payment_2 = 0
+                                else:
+                                    payment_2 = dfs['2nd-Payment'][i]
+                                if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
+                                    payment_3 = 0
+                                else:
+                                    payment_3 = dfs['3rd-Payment'][i]
+                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                    balance = 0
+                                else:
+                                    balance = dfs['Balance'][i]
                                 new_data_input = Students(
                                     fullname=str(dfs['Full-Name'][i]), 
                                     email=str(dfs['Email'][i]), 
@@ -644,13 +696,13 @@ def importfile():
                                     location=str(dfs['Location'][i]), 
                                     dob=str(dfs['Date-of-Birth'][i]), 
                                     courses=str(dfs['Course-Name'][i]), 
-                                    registration_fee=float(dfs['Registration-Fee'][i]), 
-                                    tutorial_fee=float(dfs['Tutorial-Fee'][i]), 
-                                    course_fee=float(dfs['Course-Fee'][i]), 
-                                    payment_1=float(dfs['1st-Payment'][i]), 
-                                    payment_2=float(dfs['2nd-Payment'][i]), 
-                                    payment_3=float(dfs['3rd-Payment'][i]), 
-                                    balance=float(dfs['Balance'][i]), 
+                                    registration_fee=float(registration_fee), 
+                                    tutorial_fee=float(tutorial_fee), 
+                                    course_fee=float(course_fee), 
+                                    payment_1=float(payment_1), 
+                                    payment_2=float(payment_2), 
+                                    payment_3=float(payment_3), 
+                                    balance=float(balance), 
                                     exam=str(dfs['Exam'][i]), 
                                     remark_1=str(dfs['Remark-1'][i]), 
                                     remark_2=str(dfs['Remark-2'][i]), 
@@ -669,7 +721,11 @@ def importfile():
                                 items.phone=str(dfs['Phone'][i]) 
                                 items.location=str(dfs['Location'][i]) 
                                 items.courses=str(dfs['Course-Name'][i]) 
-                                items.balance=float(dfs['Balance'][i]) 
+                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                    balance = 0
+                                else:
+                                    balance = dfs['Balance'][i]
+                                items.balance=float(balance) 
                                 items.results=str(dfs['Results'][i]) 
                                 items.referral_name=str(dfs['Referral-Name'][i]) 
                                 items.referral_number=str(dfs['Referral-Number'][i])
@@ -681,13 +737,17 @@ def importfile():
                                 check_data_exist += 1
                             if check_data_exist == 0:
                                 # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                    balance = 0
+                                else:
+                                    balance = dfs['Balance'][i]
                                 new_data_input = Exstudents(
                                     fullname=str(dfs['Full-Name'][i]), 
                                     email=str(dfs['Email'][i]), 
                                     phone=str(dfs['Phone'][i]), 
                                     location=str(dfs['Location'][i]), 
                                     courses=str(dfs['Course-Name'][i]), 
-                                    balance=float(dfs['Balance'][i]), 
+                                    balance=float(balance),
                                     results=str(dfs['Results'][i]), 
                                     referral_name=str(dfs['Referral-Name'][i]), 
                                     referral_number=str(dfs['Referral-Number'][i]), 

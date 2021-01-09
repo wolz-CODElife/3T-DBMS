@@ -761,17 +761,15 @@ def addclient(category):
                 # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
                 new_data_input = Students(fullname=request.form['fullname'], 
                 email=request.form['email'], 
-                phone=request.form['phone'], 
-                location=request.form['location'], 
-                dob=request.form['dob'], 
-                courses=request.form['courses'], 
-                registration_fee=float(registration_fee), 
-                tutorial_fee=float(tutorial_fee), 
-                course_fee=float(course_fee), 
-                payment_1=float(payment_1), 
-                payment_2=float(payment_2), 
-                payment_3=float(payment_3), 
-                balance=(float(course_fee)) - (float(payment_1) + float(payment_2) + float(payment_3)), exam=request.form['exam'], remark_1=request.form['remark_1'], remark_2=request.form['remark_2'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                phone=request.form['phone'], location=request.form['location'], 
+                dob=request.form['dob'], courses=request.form['courses'], 
+                registration_fee=float(registration_fee), tutorial_fee=float(tutorial_fee), 
+                course_fee=float(course_fee), payment_1=float(payment_1), 
+                payment_2=float(payment_2), payment_3=float(payment_3), 
+                balance=(float(course_fee)) - (float(payment_1) + float(payment_2) + float(payment_3)),
+                 exam=request.form['exam'], remark_1=request.form['remark_1'], 
+                 remark_2=request.form['remark_2'], extra1=extra1, 
+                 extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:
@@ -781,8 +779,17 @@ def addclient(category):
             for items in Exstudents.query.filter_by(email=request.form['email']):
                 check_data_exist += 1
             if check_data_exist == 0:
+                if request.form['balance'] == '' or request.form['balance'] == ' ':
+                    balance = 0
+                else:
+                    balance = request.form['balance']
                 # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
-                new_data_input = Exstudents(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], courses=request.form['courses'], balance=float(request.form['balance']), results=request.form['results'], referral_name=request.form['referral_name'], referral_number=float(request.form['referral_number']), referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
+                new_data_input = Exstudents(fullname=request.form['fullname'], 
+                email=request.form['email'], phone=request.form['phone'], 
+                location=request.form['location'], courses=request.form['courses'], 
+                balance=float(balance), results=request.form['results'], 
+                referral_name=request.form['referral_name'], referral_number=request.form['referral_number'], 
+                referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
                 db.session.commit()      
             # else:

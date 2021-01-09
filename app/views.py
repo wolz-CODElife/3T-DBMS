@@ -617,7 +617,11 @@ def importfile():
                                 items.location=str(dfs['Location'][i]) 
                                 items.dob=str(dfs['Date-of-Birth'][i]) 
                                 items.courses=str(dfs['Course-Name'][i]) 
-                                items.registration_fee=float(dfs['Registration-Fee'][i]) 
+                                if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
+                                    registration_fee = 0
+                                else:
+                                    registration_fee = dfs['Registration-Fee'][i]
+                                items.registration_fee=float(registration_fee) 
                                 items.tutorial_fee=float(dfs['Tutorial-Fee'][i]) 
                                 items.course_fee=float(dfs['Course-Fee'][i]) 
                                 items.payment_1=float(dfs['1st-Payment'][i]) 

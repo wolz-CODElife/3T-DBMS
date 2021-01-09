@@ -275,9 +275,18 @@ def edit_customer(category, id):
             client.location = request.form['location']
             client.dob = request.form['dob']
             client.courses = request.form['courses']
-            client.registration_fee = float(request.form['registration_fee'])
-            client.tutorial_fee = float(request.form['tutorial_fee'])
-            client.course_fee = float(request.form['course_fee'])
+            if request.form['registration_fee'] == '' or request.form['registration_fee'] == ' ':
+                registration_fee = 0
+            else:
+                registration_fee = request.form['registration_fee']
+            if request.form['tutorial_fee'] == '' or request.form['tutorial_fee'] == ' ':
+                tutorial_fee = 0
+            else:
+                tutorial_fee = request.form['tutorial_fee']
+            if request.form['course_fee'] == '' or request.form['course_fee'] == ' ':
+                course_fee = 0
+            else:
+                course_fee = request.form['course_fee']
             if request.form['payment_1'] == '' or request.form['payment_1'] == ' ':
                 payment_1 = 0
             else:
@@ -290,10 +299,13 @@ def edit_customer(category, id):
                 payment_3 = 0
             else:
                 payment_3 = request.form['payment_3']
+            client.registration_fee = float(registration_fee)
+            client.tutorial_fee = float(tutorial_fee)
+            client.course_fee = float(course_fee)
             client.payment_1 = float(payment_1)
             client.payment_2 = float(payment_2)
             client.payment_3 = float(payment_3)
-            client.balance = (float(request.form['course_fee'])) - (float(payment_1) + float(payment_2) + float(payment_3))
+            client.balance = (float(course_fee)) - (float(payment_1) + float(payment_2) + float(payment_3))
             client.exam = request.form['exam']
             client.remark_1 = request.form['remark_1']
             client.remark_2 = request.form['remark_2']
@@ -307,7 +319,11 @@ def edit_customer(category, id):
             client.phone = request.form['phone']
             client.location = request.form['location']
             client.courses = request.form['courses']
-            client.balance = request.form['balance']
+            if request.form['balance'] == '' or request.form['balance'] == ' ':
+                balance = 0
+            else:
+                balance = request.form['balance']
+            client.balance = float(balance)
             client.results = request.form['results']
             client.referral_name = request.form['referral_name']
             client.referral_number = request.form['referral_number']

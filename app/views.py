@@ -574,192 +574,195 @@ def importfile():
                             length = dfs['Email']
                     for i in range(0, len(length)):
                         if sheet.lower() == 'prospect' and len(dfs['Email']) > 0:
-                            check_data_exist = 0
-                            for items in Prospects.query.filter_by(email=str(dfs['Email'][i])):
-                                items.fullname = str(dfs['Full-Name'][i])
-                                items.phone = str(dfs['Phone'][i])
-                                items.location = str(dfs['Location'][i])
-                                items.data_source = str(dfs['Data-Source'][i])
-                                items.sector = str(dfs['Sector'][i])
-                                items.company_name = str(dfs['Company-Name'][i])
-                                items.courses = str(dfs['Courses'][i])
-                                items.status = str(dfs['Status'][i])
-                                items.remark = str(dfs['Remark'][i])
-                                items.extra1 = str(dfs['Extra1'][i])
-                                items.extra2 = str(dfs['Extra2'][i])
-                                items.extra3 = str(dfs['Extra3'][i])
-                                check_data_exist += 1
-                            if check_data_exist == 0:
-                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                new_data_input = Prospects(
-                                    fullname=str(dfs['Full-Name'][i]), 
-                                    email=str(dfs['Email'][i]), 
-                                    phone=str(dfs['Phone'][i]), 
-                                    location=str(dfs['Location'][i]), 
-                                    data_source = str(dfs['Data-Source'][i]),
-                                    sector=str(dfs['Sector'][i]), 
-                                    company_name = str(dfs['Company-Name'][i]),
-                                    courses = str(dfs['Courses'][i]),
-                                    status=str(dfs['Status'][i]), 
-                                    remark=str(dfs['Remark'][i]),
-                                    extra1=str(dfs['Extra1'][i]), 
-                                    extra2=str(dfs['Extra2'][i]),
-                                    extra3=str(dfs['Extra3'][i]))             
-                                db.session.add(new_data_input)
-                                db.session.commit()      
-                            # else:
-                            #     print('Found ', dfs['Email'][i], ' in db')         
+                            if category.lower() == 'mixed' or category.lower() == 'prospect':
+                                check_data_exist = 0
+                                for items in Prospects.query.filter_by(email=str(dfs['Email'][i])):
+                                    items.fullname = str(dfs['Full-Name'][i])
+                                    items.phone = str(dfs['Phone'][i])
+                                    items.location = str(dfs['Location'][i])
+                                    items.data_source = str(dfs['Data-Source'][i])
+                                    items.sector = str(dfs['Sector'][i])
+                                    items.company_name = str(dfs['Company-Name'][i])
+                                    items.courses = str(dfs['Courses'][i])
+                                    items.status = str(dfs['Status'][i])
+                                    items.remark = str(dfs['Remark'][i])
+                                    items.extra1 = str(dfs['Extra1'][i])
+                                    items.extra2 = str(dfs['Extra2'][i])
+                                    items.extra3 = str(dfs['Extra3'][i])
+                                    check_data_exist += 1
+                                if check_data_exist == 0:
+                                    # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                    new_data_input = Prospects(
+                                        fullname=str(dfs['Full-Name'][i]), 
+                                        email=str(dfs['Email'][i]), 
+                                        phone=str(dfs['Phone'][i]), 
+                                        location=str(dfs['Location'][i]), 
+                                        data_source = str(dfs['Data-Source'][i]),
+                                        sector=str(dfs['Sector'][i]), 
+                                        company_name = str(dfs['Company-Name'][i]),
+                                        courses = str(dfs['Courses'][i]),
+                                        status=str(dfs['Status'][i]), 
+                                        remark=str(dfs['Remark'][i]),
+                                        extra1=str(dfs['Extra1'][i]), 
+                                        extra2=str(dfs['Extra2'][i]),
+                                        extra3=str(dfs['Extra3'][i]))             
+                                    db.session.add(new_data_input)
+                                    db.session.commit()      
+                                # else:
+                                #     print('Found ', dfs['Email'][i], ' in db')         
                         elif sheet.lower() == 'students' and len(dfs['Email']) > 0:
-                            check_data_exist = 0
-                            for items in Students.query.filter_by(email=str(dfs['Email'][i])):
-                                items.fullname=str(dfs['Full-Name'][i] )
-                                items.phone=str(dfs['Phone'][i])
-                                items.location=str(dfs['Location'][i]) 
-                                items.dob=str(dfs['Date-of-Birth'][i]) 
-                                items.courses=str(dfs['Course-Name'][i]) 
-                                if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
-                                    registration_fee = 0
-                                else:
-                                    registration_fee = dfs['Registration-Fee'][i]
-                                items.registration_fee=float(registration_fee) 
-                                if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
-                                    tutorial_fee = 0
-                                else:
-                                    tutorial_fee = dfs['Tutorial-Fee'][i]
-                                items.tutorial_fee=float(tutorial_fee) 
-                                if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
-                                    course_fee = 0
-                                else:
-                                    course_fee = dfs['Course-Fee'][i]
-                                items.course_fee=float(course_fee) 
-                                if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
-                                    payment_1 = 0
-                                else:
-                                    payment_1 = dfs['1st-Payment'][i]
-                                items.payment_1=float(payment_1) 
-                                if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
-                                    payment_2 = 0
-                                else:
-                                    payment_2 = dfs['2nd-Payment'][i]
-                                items.payment_2=float(payment_2) 
-                                if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
-                                    payment_3 = 0
-                                else:
-                                    payment_3 = dfs['3rd-Payment'][i]
-                                items.payment_3=float(payment_3) 
-                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
-                                    balance = 0
-                                else:
-                                    balance = dfs['Balance'][i]
-                                items.balance=float(balance) 
-                                items.exam=str(dfs['Exam'][i]) 
-                                items.remark_1=str(dfs['Remark-1'][i]) 
-                                items.remark_2=str(dfs['Remark-2'][i]) 
-                                items.extra1=str(dfs['Extra1'][i]) 
-                                items.extra2=str(dfs['Extra2'][i]) 
-                                items.extra3=str(dfs['Extra3'][i])                                        
-                                check_data_exist += 1
-                            if check_data_exist == 0:
-                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
-                                    registration_fee = 0
-                                else:
-                                    registration_fee = dfs['Registration-Fee'][i]
-                                if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
-                                    tutorial_fee = 0
-                                else:
-                                    tutorial_fee = dfs['Tutorial-Fee'][i]
-                                if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
-                                    course_fee = 0
-                                else:
-                                    course_fee = dfs['Course-Fee'][i]
-                                if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
-                                    payment_1 = 0
-                                else:
-                                    payment_1 = dfs['1st-Payment'][i]
-                                if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
-                                    payment_2 = 0
-                                else:
-                                    payment_2 = dfs['2nd-Payment'][i]
-                                if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
-                                    payment_3 = 0
-                                else:
-                                    payment_3 = dfs['3rd-Payment'][i]
-                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
-                                    balance = 0
-                                else:
-                                    balance = dfs['Balance'][i]
-                                new_data_input = Students(
-                                    fullname=str(dfs['Full-Name'][i]), 
-                                    email=str(dfs['Email'][i]), 
-                                    phone=str(dfs['Phone'][i]),
-                                    location=str(dfs['Location'][i]), 
-                                    dob=str(dfs['Date-of-Birth'][i]), 
-                                    courses=str(dfs['Course-Name'][i]), 
-                                    registration_fee=float(registration_fee), 
-                                    tutorial_fee=float(tutorial_fee), 
-                                    course_fee=float(course_fee), 
-                                    payment_1=float(payment_1), 
-                                    payment_2=float(payment_2), 
-                                    payment_3=float(payment_3), 
-                                    balance=float(balance), 
-                                    exam=str(dfs['Exam'][i]), 
-                                    remark_1=str(dfs['Remark-1'][i]), 
-                                    remark_2=str(dfs['Remark-2'][i]), 
-                                    extra1=str(dfs['Extra1'][i]), 
-                                    extra2=str(dfs['Extra2'][i]), 
-                                    extra3=str(dfs['Extra3'][i]))
-                                db.session.add(new_data_input)
-                                db.session.commit()      
-                            # else:
-                            #     print('Found ', dfs['Email'][i], ' in db')
+                            if category.lower() == 'mixed' or category.lower() == 'students':
+                                check_data_exist = 0
+                                for items in Students.query.filter_by(email=str(dfs['Email'][i])):
+                                    items.fullname=str(dfs['Full-Name'][i] )
+                                    items.phone=str(dfs['Phone'][i])
+                                    items.location=str(dfs['Location'][i]) 
+                                    items.dob=str(dfs['Date-of-Birth'][i]) 
+                                    items.courses=str(dfs['Course-Name'][i]) 
+                                    if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
+                                        registration_fee = 0
+                                    else:
+                                        registration_fee = dfs['Registration-Fee'][i]
+                                    items.registration_fee=float(registration_fee) 
+                                    if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
+                                        tutorial_fee = 0
+                                    else:
+                                        tutorial_fee = dfs['Tutorial-Fee'][i]
+                                    items.tutorial_fee=float(tutorial_fee) 
+                                    if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
+                                        course_fee = 0
+                                    else:
+                                        course_fee = dfs['Course-Fee'][i]
+                                    items.course_fee=float(course_fee) 
+                                    if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
+                                        payment_1 = 0
+                                    else:
+                                        payment_1 = dfs['1st-Payment'][i]
+                                    items.payment_1=float(payment_1) 
+                                    if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
+                                        payment_2 = 0
+                                    else:
+                                        payment_2 = dfs['2nd-Payment'][i]
+                                    items.payment_2=float(payment_2) 
+                                    if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
+                                        payment_3 = 0
+                                    else:
+                                        payment_3 = dfs['3rd-Payment'][i]
+                                    items.payment_3=float(payment_3) 
+                                    if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                        balance = 0
+                                    else:
+                                        balance = dfs['Balance'][i]
+                                    items.balance=float(balance) 
+                                    items.exam=str(dfs['Exam'][i]) 
+                                    items.remark_1=str(dfs['Remark-1'][i]) 
+                                    items.remark_2=str(dfs['Remark-2'][i]) 
+                                    items.extra1=str(dfs['Extra1'][i]) 
+                                    items.extra2=str(dfs['Extra2'][i]) 
+                                    items.extra3=str(dfs['Extra3'][i])                                        
+                                    check_data_exist += 1
+                                if check_data_exist == 0:
+                                    # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                    if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
+                                        registration_fee = 0
+                                    else:
+                                        registration_fee = dfs['Registration-Fee'][i]
+                                    if dfs['Tutorial-Fee'][i] == '' or dfs['Tutorial-Fee'][i] == ' ':
+                                        tutorial_fee = 0
+                                    else:
+                                        tutorial_fee = dfs['Tutorial-Fee'][i]
+                                    if dfs['Course-Fee'][i] == '' or dfs['Course-Fee'][i] == ' ':
+                                        course_fee = 0
+                                    else:
+                                        course_fee = dfs['Course-Fee'][i]
+                                    if dfs['1st-Payment'][i] == '' or dfs['1st-Payment'][i] == ' ':
+                                        payment_1 = 0
+                                    else:
+                                        payment_1 = dfs['1st-Payment'][i]
+                                    if dfs['2nd-Payment'][i] == '' or dfs['2nd-Payment'][i] == ' ':
+                                        payment_2 = 0
+                                    else:
+                                        payment_2 = dfs['2nd-Payment'][i]
+                                    if dfs['3rd-Payment'][i] == '' or dfs['3rd-Payment'][i] == ' ':
+                                        payment_3 = 0
+                                    else:
+                                        payment_3 = dfs['3rd-Payment'][i]
+                                    if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                        balance = 0
+                                    else:
+                                        balance = dfs['Balance'][i]
+                                    new_data_input = Students(
+                                        fullname=str(dfs['Full-Name'][i]), 
+                                        email=str(dfs['Email'][i]), 
+                                        phone=str(dfs['Phone'][i]),
+                                        location=str(dfs['Location'][i]), 
+                                        dob=str(dfs['Date-of-Birth'][i]), 
+                                        courses=str(dfs['Course-Name'][i]), 
+                                        registration_fee=float(registration_fee), 
+                                        tutorial_fee=float(tutorial_fee), 
+                                        course_fee=float(course_fee), 
+                                        payment_1=float(payment_1), 
+                                        payment_2=float(payment_2), 
+                                        payment_3=float(payment_3), 
+                                        balance=float(balance), 
+                                        exam=str(dfs['Exam'][i]), 
+                                        remark_1=str(dfs['Remark-1'][i]), 
+                                        remark_2=str(dfs['Remark-2'][i]), 
+                                        extra1=str(dfs['Extra1'][i]), 
+                                        extra2=str(dfs['Extra2'][i]), 
+                                        extra3=str(dfs['Extra3'][i]))
+                                    db.session.add(new_data_input)
+                                    db.session.commit()      
+                                # else:
+                                #     print('Found ', dfs['Email'][i], ' in db')
                         elif sheet.lower() == 'ex-student' and len(dfs['Email']) > 0:
-                            check_data_exist = 0
-                            for items in Exstudents.query.filter_by(email=str(dfs['Email'][i])):
-                                items.fullname=str(dfs['Full-Name'][i]) 
-                                items.email=str(dfs['Email'][i]) 
-                                items.phone=str(dfs['Phone'][i]) 
-                                items.location=str(dfs['Location'][i]) 
-                                items.courses=str(dfs['Course-Name'][i]) 
-                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
-                                    balance = 0
-                                else:
-                                    balance = dfs['Balance'][i]
-                                items.balance=float(balance) 
-                                items.results=str(dfs['Results'][i]) 
-                                items.referral_name=str(dfs['Referral-Name'][i]) 
-                                items.referral_number=str(dfs['Referral-Number'][i])
-                                items.referral_email=str(dfs['Referral-Email'][i]) 
-                                items.remark=str(dfs['Remark'][i]) 
-                                items.extra1=str(dfs['Extra1'][i]) 
-                                items.extra2=str(dfs['Extra2'][i]) 
-                                items.extra3=str(dfs['Extra3'][i])            
-                                check_data_exist += 1
-                            if check_data_exist == 0:
-                                # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
-                                if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
-                                    balance = 0
-                                else:
-                                    balance = dfs['Balance'][i]
-                                new_data_input = Exstudents(
-                                    fullname=str(dfs['Full-Name'][i]), 
-                                    email=str(dfs['Email'][i]), 
-                                    phone=str(dfs['Phone'][i]), 
-                                    location=str(dfs['Location'][i]), 
-                                    courses=str(dfs['Course-Name'][i]), 
-                                    balance=float(balance),
-                                    results=str(dfs['Results'][i]), 
-                                    referral_name=str(dfs['Referral-Name'][i]), 
-                                    referral_number=str(dfs['Referral-Number'][i]), 
-                                    referral_email=str(dfs['Referral-Email'][i]), 
-                                    remark=str(dfs['Remark'][i]), 
-                                    extra1=str(dfs['Extra1'][i]), 
-                                    extra2=str(dfs['Extra2'][i]), 
-                                    extra3=str(dfs['Extra3'][i]))             
-                                db.session.add(new_data_input)
-                                db.session.commit()      
-                            # else:
-                            #     print('Found ', dfs['Email'][i], ' in db')  
+                            if category.lower() == 'mixed' or category.lower() == 'ex-student':
+                                check_data_exist = 0
+                                for items in Exstudents.query.filter_by(email=str(dfs['Email'][i])):
+                                    items.fullname=str(dfs['Full-Name'][i]) 
+                                    items.email=str(dfs['Email'][i]) 
+                                    items.phone=str(dfs['Phone'][i]) 
+                                    items.location=str(dfs['Location'][i]) 
+                                    items.courses=str(dfs['Course-Name'][i]) 
+                                    if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                        balance = 0
+                                    else:
+                                        balance = dfs['Balance'][i]
+                                    items.balance=float(balance) 
+                                    items.results=str(dfs['Results'][i]) 
+                                    items.referral_name=str(dfs['Referral-Name'][i]) 
+                                    items.referral_number=str(dfs['Referral-Number'][i])
+                                    items.referral_email=str(dfs['Referral-Email'][i]) 
+                                    items.remark=str(dfs['Remark'][i]) 
+                                    items.extra1=str(dfs['Extra1'][i]) 
+                                    items.extra2=str(dfs['Extra2'][i]) 
+                                    items.extra3=str(dfs['Extra3'][i])            
+                                    check_data_exist += 1
+                                if check_data_exist == 0:
+                                    # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
+                                    if dfs['Balance'][i] == '' or dfs['Balance'][i] == ' ':
+                                        balance = 0
+                                    else:
+                                        balance = dfs['Balance'][i]
+                                    new_data_input = Exstudents(
+                                        fullname=str(dfs['Full-Name'][i]), 
+                                        email=str(dfs['Email'][i]), 
+                                        phone=str(dfs['Phone'][i]), 
+                                        location=str(dfs['Location'][i]), 
+                                        courses=str(dfs['Course-Name'][i]), 
+                                        balance=float(balance),
+                                        results=str(dfs['Results'][i]), 
+                                        referral_name=str(dfs['Referral-Name'][i]), 
+                                        referral_number=str(dfs['Referral-Number'][i]), 
+                                        referral_email=str(dfs['Referral-Email'][i]), 
+                                        remark=str(dfs['Remark'][i]), 
+                                        extra1=str(dfs['Extra1'][i]), 
+                                        extra2=str(dfs['Extra2'][i]), 
+                                        extra3=str(dfs['Extra3'][i]))             
+                                    db.session.add(new_data_input)
+                                    db.session.commit()      
+                                # else:
+                                #     print('Found ', dfs['Email'][i], ' in db')  
                 flash("Successful Upload")
                 return render_template('import.html')
             else:

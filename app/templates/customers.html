@@ -186,6 +186,7 @@
                                 {% endif %}
                                 <td>{{client.date_created.strftime('%d/%m/%Y')}}</td>
                                 <td>{{client.fullname if (client.fullname).lower() != 'nan'}}</td>
+                                <td>{{client.remark_1 if (client.remark_1).lower() != 'nan'}}</td>
                                 <td>{{client.email}}</td>
                                 <td>{{client.phone if (client.phone).lower() != 'nan'}}</td>
                                 <td>{{client.location if (client.location).lower() != 'nan'}}</td>
@@ -203,7 +204,6 @@
                                 <td class="bg-success">{{client.balance if client.balance|string() != 'nan'}}</td>
                                 {% endif %}
                                 <td>{{client.exam if (client.exam).lower() != 'nan'}}</td>
-                                <td>{{client.remark_1 if (client.remark_1).lower() != 'nan'}}</td>
                                 <td>{{client.remark_2 if (client.remark_2).lower() != 'nan'}}</td>
                                 <td>{{client.extra1 if (client.extra1).lower() != 'nan'}}</td>
                                 <td>{{client.extra2 if (client.extra2).lower() != 'nan'}}</td>

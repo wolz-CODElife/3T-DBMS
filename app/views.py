@@ -815,7 +815,6 @@ def addclient(category):
                     course_fee = 0
                 else:
                     course_fee = request.form['course_fee']
-                # prfloat(request.form['email'], ' not found in db . . .Proceed . . .')
                 new_data_input = Students(fullname=request.form['fullname'], 
                 email=request.form['email'], 
                 phone=request.form['phone'], location=request.form['location'], 
@@ -828,9 +827,7 @@ def addclient(category):
                  remark_2=request.form['remark_2'], extra1=extra1, 
                  extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
-                db.session.commit()      
-            # else:
-            #     print('Found ', request.form['email'], ' in db')
+                db.session.commit()
         elif category.lower() == 'exstudents':
             check_data_exist = 0
             for items in Exstudents.query.filter_by(email=request.form['email']):

@@ -986,8 +986,8 @@ def applications():
         return redirect(url_for('courses'))
     else:
         if request.method == 'POST':
-            user_id = float(request.form['student'])
-            course_id = float(request.form['course'])
+            user_id = int(request.form['student'])
+            course_id = int(request.form['course'])
             course = Courses.query.get_or_404(course_id)
             student = User.query.get_or_404(user_id)
             check = 0

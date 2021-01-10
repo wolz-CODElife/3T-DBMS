@@ -565,13 +565,6 @@ def importfile():
                 files = pd.read_excel(xlfile, sheet_name=None, header=0)
                 for sheet, data in files.items():
                     dfs = pd.read_excel(xlfile, sheet_name=sheet, header=0)
-                    # print(dfs.to_dict())
-                    # try: 
-                    #     if dfs["Full-Name"].any():
-                    #         length = dfs["Full-Name"]
-                    # except KeyError: 
-                    #     if dfs['Email'].any():
-                    #         length = 
                     for i in range(0, len(dfs['Email'])):
                         if sheet.lower() == 'prospect' and len(dfs['Email']) > 0:
                             if category.lower() == 'mixed' or category.lower() == 'prospect':

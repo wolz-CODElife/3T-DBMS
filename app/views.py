@@ -784,9 +784,7 @@ def addclient(category):
             if check_data_exist == 0:
                 new_data_input = Prospects(fullname=request.form['fullname'], email=request.form['email'], phone=request.form['phone'], location=request.form['location'], data_source=request.form['data_source'], sector=request.form['sector'], company_name=request.form['company_name'], courses=request.form['courses'], status=request.form['status'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
-                db.session.commit()      
-            # else:
-            #     print('Found ', dfs['Email'][i], ' in db')         
+                db.session.commit()              
         elif category.lower() == 'students':
             check_data_exist = 0
             for items in Students.query.filter_by(email=request.form['email']):

@@ -655,7 +655,6 @@ def importfile():
                                     items.extra3=str(dfs['Extra3'][i])                                        
                                     check_data_exist += 1
                                 if check_data_exist == 0:
-                                    # prfloat(dfs['Email'][i], ' not found in db . . .Proceed . . .')
                                     if dfs['Registration-Fee'][i] == '' or dfs['Registration-Fee'][i] == ' ':
                                         registration_fee = 0
                                     else:

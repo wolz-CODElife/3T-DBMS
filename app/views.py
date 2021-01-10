@@ -845,9 +845,7 @@ def addclient(category):
                 referral_name=request.form['referral_name'], referral_number=request.form['referral_number'], 
                 referral_email=request.form['referral_email'], remark=request.form['remark'], extra1=extra1, extra2=extra2, extra3=extra3)             
                 db.session.add(new_data_input)
-                db.session.commit()      
-            # else:
-            #     print('Found ', dfs['Email'][i], ' in db')  
+                db.session.commit()       
         flash("Client Successfully added")
     new_url = '/customers/' + category
     return redirect(new_url)

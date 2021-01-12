@@ -20,4 +20,6 @@ This a Database Management System built on python that extracts data from MS Exc
 - Flask-Migrate
 ```
 
-## 
+## Deployment
+Heroku - Stack18
+Postgresql Hobby-Dev

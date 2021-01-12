@@ -21,5 +21,5 @@ This a Database Management System built on python that extracts data from MS Exc
 ```
 
 ## Deployment
-Heroku - Stack18
-Postgresql Hobby-Dev
+- Heroku - Stack18
+- Postgresql Hobby-Dev

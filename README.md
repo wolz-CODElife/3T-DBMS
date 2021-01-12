@@ -10,3 +10,14 @@ This a Database Management System built on python that extracts data from MS Exc
 ```
 - JavaScript (jQuery)
 - Python
+```
+- Flask
+- Openxyl
+- Numpy
+- Pandas
+- SQLAlchemy
+- Flask-Login
+- Flask-Migrate
+```
+
+## 

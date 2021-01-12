@@ -4,3 +4,7 @@ This a Database Management System built on python that extracts data from MS Exc
 ## Dependencies
 - HTML
 - CSS
+```
+- Bootstrap
+- Font-Awesome
+```

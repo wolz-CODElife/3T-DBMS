@@ -149,7 +149,7 @@
             </thead>
             <tbody>
                 {% if category == 'prospects' %}
-                    {% if clients %}
+                    {% if clients %} 
                         {% for client in clients %}
                         <tr>
                             <td><input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>

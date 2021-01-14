@@ -23,49 +23,49 @@
 <div class="pb-2">
     <h4 style="text-transform: capitalize;"> <i class="fa fa-users"></i> Staff</h4>
 </div>
+<div class="container">        
+    <form action="/users/staff" enctype="multipart/form-data" method="post">
+        <p>Create New Staff:</p>
+        <div class="row">
+            <div class="col-lg m-2">
+                <label for="firstname">Firstname: </label>
+                <input type="text" id="firstname" name="firstname" placeholder="Firstname . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="lastname">Lastname: </label>
+                <input type="text" id="lastname" name="lastname" placeholder="Lastname . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" placeholder="Email . . ." class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg m-2">
+                <label for="role">Role: </label>
+                <select id="role" name="role" class="form-control">
+                    <option value="0"></option>
+                    <option value="Admin">Admin</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Reader">Reader</option>
+                </select>
+            </div>
+            <div class="col-lg m-2">
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" placeholder="Password . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="re_password">Confirm Password: </label>
+                <input type="password" id="re_password" name="confirm_password" placeholder="Confirm Password . . ." class="form-control">
+            </div>
+        </div>
+        <p class="m-2">                
+            <button type="submit" class="btn button">Submit</button>
+        </p>
+    </form>
+    <hr>
+</div>
 <div class="listings">
-    <div class="container">        
-        <form action="/users/staff" enctype="multipart/form-data" method="post">
-            <p>Create New Staff:</p>
-            <div class="row">
-                <div class="col-lg m-2">
-                    <label for="firstname">Firstname: </label>
-                    <input type="text" id="firstname" name="firstname" placeholder="Firstname . . ." class="form-control">
-                </div>
-                <div class="col-lg m-2">
-                    <label for="lastname">Lastname: </label>
-                    <input type="text" id="lastname" name="lastname" placeholder="Lastname . . ." class="form-control">
-                </div>
-                <div class="col-lg m-2">
-                    <label for="email">Email: </label>
-                    <input type="email" id="email" name="email" placeholder="Email . . ." class="form-control">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg m-2">
-                    <label for="role">Role: </label>
-                    <select id="role" name="role" class="form-control">
-                        <option value="0"></option>
-                        <option value="Admin">Admin</option>
-                        <option value="Manager">Manager</option>
-                        <option value="Reader">Reader</option>
-                    </select>
-                </div>
-                <div class="col-lg m-2">
-                    <label for="password">Password: </label>
-                    <input type="password" id="password" name="password" placeholder="Password . . ." class="form-control">
-                </div>
-                <div class="col-lg m-2">
-                    <label for="re_password">Confirm Password: </label>
-                    <input type="password" id="re_password" name="confirm_password" placeholder="Confirm Password . . ." class="form-control">
-                </div>
-            </div>
-            <p class="m-2">                
-                <button type="submit" class="btn button">Submit</button>
-            </p>
-        </form>
-        <hr>
-    </div>
     <div class="container">
         {% if users %}
             <div class="responsive">

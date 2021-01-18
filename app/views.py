@@ -199,13 +199,13 @@ def deleteuser(id):
 def customers(category):
     page = request.args.get('page', 1, type=int)
     if category == 'prospects':
-        clients = Prospects.query.order_by(Prospects.date_created.desc()).paginate(page, 30, False)
+        clients = Prospects.query.order_by(Prospects.date_created.desc()).paginate(page, 50, False)
         clientscount = Prospects.query.all()
     elif category == 'students':
-        clients = Students.query.order_by(Students.date_created.desc()).paginate(page, 30, False)
+        clients = Students.query.order_by(Students.date_created.desc()).paginate(page, 50, False)
         clientscount = Students.query.all()
     elif category == 'exstudents':
-        clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 30, False)        
+        clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 50, False)        
         clientscount = Exstudents.query.all()        
     next_url = url_for('customers', category=category, clients=clients.next_num)\
     if clients.has_next else None

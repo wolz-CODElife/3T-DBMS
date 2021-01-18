@@ -207,9 +207,9 @@ def customers(category):
     elif category == 'exstudents':
         clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 50, False)        
         clientscount = Exstudents.query.all()        
-    next_url = url_for('customers', category=category, clients=clients.next_num)\
+    next_url = url_for('customers', category=category, page=clients.next_num)\
     if clients.has_next else None
-    prev_url = url_for('customers', category=category, clients=clients.prev_num)\
+    prev_url = url_for('customers', category=category, page=clients.prev_num)\
     if clients.has_prev else None
     return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
 

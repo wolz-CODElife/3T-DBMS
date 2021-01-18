@@ -197,13 +197,21 @@ def deleteuser(id):
 @app.route('/customers/<category>', methods=['GET', 'POST'])
 @login_required
 def customers(category):
+    page = request.args.get('page', 1, type=int)
     if category == 'prospects':
-        clients = Prospects.query.order_by(Prospects.date_created.desc()).all()
+        clients = Prospects.query.order_by(Prospects.date_created.desc()).paginate(page, 30, False)
+        clientscount = Prospects.query.all()
     elif category == 'students':
-        clients = Students.query.order_by(Students.date_created.desc()).all()
+        clients = Students.query.order_by(Students.date_created.desc()).paginate(page, 30, False)
+        clientscount = Students.query.all()
     elif category == 'exstudents':
-        clients = Exstudents.query.order_by(Exstudents.date_created.desc()).all()
-    return render_template('customers.html', category=category, clients=clients, totalcount=clients)
+        clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 30, False)        
+        clientscount = Exstudents.query.all()        
+    next_url = url_for('customers', category=category, clients=clients.next_num)\
+    if clients.has_next else None
+    prev_url = url_for('customers', category=category, clients=clients.prev_num)\
+    if clients.has_prev else None
+    return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
 
 
 

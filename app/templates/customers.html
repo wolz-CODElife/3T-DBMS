@@ -63,7 +63,16 @@
                 <div class="input-group-append">
                     <button type="submit" class="btn button">Apply <i class="fa fa-check"></i></button>
                 </div>
-            </div>
+            </div> 
+        </div>
+        <div class="col-lg-6">      
+            {% if next_url %}
+            <a href="{{ next_url }}" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> Next</a>
+            {% endif %}
+            {% if prev_url %}
+            <a href="{{ prev_url }}" class="btn btn-primary">Previous <i class="fa fa-angle-double-right"></i></a>
+            {% endif %}
+            <br>
         </div>
     </div>
     <div class="table-responsive listings">

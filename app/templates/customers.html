@@ -66,7 +66,7 @@
             </div> 
         </div>
         <div class="col-lg-6 m-1">   
-            <span class="btn btn-light float-right">{{clients|count}}</span>/<span class="btn btn-light m-1">{{totalcount|length}}</span>
+            <span class="float-right"><a href="#" class="btn btn-light">{{clients|count}}</a>/<a href="#" class="btn btn-light m-1">{{totalcount|length}}</a></span>
             {% if prev_url %}
             <a href="{{ prev_url }}" class="btn btn-primary"><i class="fa fa-angle-double-right"></i> Previous</a>
             {% endif %}

@@ -41,6 +41,9 @@
             {% endif %}
             <a href="/customers/{{category}}" class="btn btn-danger float-right">Clear Filter <i class="fa fa-times"></i></a>
         </div>
+        <div class="col-md-2 text-right">
+            <span class="btn btn-light m-1">{{clients|count}}</span>/<span class="btn btn-light m-1">{{totalcount|length}}</span>
+        </div>
     </div>
 </form>
 {% if search %}
@@ -62,8 +65,7 @@
                 </div>
             </div> 
         </div>
-        <div class="col-md-6 m-1">   
-            <span class="btn btn-light float-right">{{clients|count}}</span>/<span class="btn btn-light m-1">{{totalcount|length}}</span>
+        <div class="col-lg-6 m-1">   
             {% if prev_url %}
             <a href="{{ prev_url }}" class="btn btn-primary"><i class="fa fa-angle-double-right"></i> Previous</a>
             {% endif %}

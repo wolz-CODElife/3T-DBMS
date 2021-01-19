@@ -200,18 +200,19 @@ def customers(category):
     page = request.args.get('page', 1, type=int)
     if category.lower() == 'prospects':
         clients = Prospects.query.order_by(Prospects.date_created.desc()).paginate(page, 50, False)
-        clientscount = Prospects.query.all()
+        # clientscount = Prospects.query.all()
     elif category.lower() == 'students':
         clients = Students.query.order_by(Students.date_created.desc()).paginate(page, 50, False)
-        clientscount = Students.query.all()
+        # clientscount = Students.query.all()
     elif category.lower() == 'exstudents':
         clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 50, False)        
-        clientscount = Exstudents.query.all()        
+        # clientscount = Exstudents.query.all()        
     next_url = url_for('customers', category=category, page=clients.next_num)\
     if clients.has_next else None
     prev_url = url_for('customers', category=category, page=clients.prev_num)\
     if clients.has_prev else None
-    return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
+    return render_template('customers.html', category=category, clients=clients.items, next_url=next_url, prev_url=prev_url)
+    # return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
 
 
 

@@ -51,7 +51,7 @@
 {% endif %}
 <form method="POST" action="/bulk-actions/{{category}}">
     <div class="row">
-        <div class="col-lg-4">                
+        <div class="col-md-4">                
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <label class="input-group-text bg-dark text-light" for="inputGroupSelect3iu4">Bulk action</label>
@@ -65,7 +65,7 @@
                 </div>
             </div> 
         </div>
-        <div class="col-lg-6 m-1">   
+        <div class="col-md m-1">   
             <span class="float-right"><a href="#" class="btn btn-light">{{clients|count}}</a>/<a href="#" class="btn btn-light m-1">{{totalcount|length}}</a></span>
             {% if prev_url %}
             <a href="{{ prev_url }}" class="btn btn-primary"><i class="fa fa-angle-double-right"></i> Previous</a>

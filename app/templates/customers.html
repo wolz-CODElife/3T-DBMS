@@ -162,7 +162,7 @@
                     {% if clients %} 
                         {% for client in clients %}
                         <tr>
-                            <td><input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
+                            <td>{{client.id}} <input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
                             {% if current_user.role|lower != 'reader' %}
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
@@ -189,7 +189,7 @@
                             {% if clients %}
                             {% for client in clients %}
                             <tr>
-                                <td><input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
+                                <td>{{client.id}} <input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
                                 {% if current_user.role|lower != 'reader' %}
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>
@@ -226,7 +226,7 @@
                             {% if clients %}
                             {% for client in clients %}
                             <tr>
-                                <td><input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
+                                <td>{{client.id}} <input type="checkbox" name="selected" class="selectid" value="{{client.id}}"></td>
                                 {% if current_user.role|lower != 'reader' %}
                                 <td><span class="btn" data-toggle="modal" data-target="#client-edit{{client.id}}"><i class="fa fa-edit"></i></span></td>
                                 <td><a href="/delete-customer/{{category}}/{{client.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a></td>

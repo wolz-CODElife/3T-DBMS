@@ -211,7 +211,8 @@ def customers(category):
     if clients.has_next else None
     prev_url = url_for('customers', category=category, page=clients.prev_num)\
     if clients.has_prev else None
-    return render_template('customers.html', category=category, clients=clients.items, page=page, next_url=next_url, prev_url=prev_url)
+    pages = clients.pages
+    return render_template('customers.html', category=category, clients=clients.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
     # return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
 
 

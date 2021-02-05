@@ -253,18 +253,19 @@
         </table>
     </div>
 </form>
-<br><br><br>
+<br>
 <div class="row">
-    <div class="col text-right">
+    <div class="col text-right m-1">
         {% if prev_url %}
-            <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
+        <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
         {% endif %}
-            <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
+        <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
         {% if next_url %}
-            <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
+        <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
         {% endif %}
     </div>
 </div>
+<br><br>
 {% if category == 'prospects' %}
 <!-- Modal Edit prospects -->
     {% if clients %}

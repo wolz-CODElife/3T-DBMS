@@ -67,10 +67,10 @@
         </div>
         <div class="col-md m-1">   
             <!-- <span class="float-right"><a href="#" class="btn btn-light">{{clients|count}}</a>/<a href="#" class="btn btn-light m-1">{{totalcount|length}}</a></span> -->
-            <span class="float-right">Showing page {{page}} of {{pages}}</span>
             {% if prev_url %}
             <a href="{{ prev_url }}" class="btn btn-primary"><i class="fa fa-angle-double-left"></i> Previous</a>
             {% endif %}
+            <span class="badge badge-primary">Page {{page}}</span> of <span class="badge badge-primary">{{pages}} Pages</span>
             {% if next_url %}
             <a href="{{ next_url }}" class="btn btn-primary">Next <i class="fa fa-angle-double-right"></i></a>
             {% endif %}

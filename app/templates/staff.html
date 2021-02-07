@@ -65,20 +65,20 @@
     </form>
     <hr>
 </div>
+<div class="row m-1">            
+    <div class="col-md">   
+        {% if prev_url %}
+        <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
+        {% endif %}
+        <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
+        {% if next_url %}
+        <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
+        {% endif %}
+    </div>
+</div>
 <div class="listings">
     <div class="container">
         {% if users %}            
-            <div class="row m-1">            
-                <div class="col-md">   
-                    {% if prev_url %}
-                    <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
-                    {% endif %}
-                    <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
-                    {% if next_url %}
-                    <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
-                    {% endif %}
-                </div>
-            </div>
             <div class="responsive">
                 {% if current_user %}
                 {% if current_user.theme %}

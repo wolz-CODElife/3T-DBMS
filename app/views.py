@@ -143,7 +143,7 @@ def users(usertype):
     
     page = request.args.get('page', 1, type=int)
     if usertype == 'students':
-        users = User.query.filter_by(role='Student').paginate(page, 50, False)
+        users = User.query.filter_by(role='Student').paginate(page, 10, False)
         if users:     
             next_url = url_for('users', usertype='students', page=users.next_num)\
             if users.has_next else None
@@ -152,7 +152,7 @@ def users(usertype):
             pages = users.pages
         return render_template('students.html', users=users.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
     else:
-        users = User.query.filter(User.role!='Student').paginate(page, 1, False)           
+        users = User.query.filter(User.role!='Student').paginate(page, 50, False)           
         if users:     
             next_url = url_for('users', usertype='staff', page=users.next_num)\
             if users.has_next else None

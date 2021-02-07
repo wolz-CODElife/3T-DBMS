@@ -145,18 +145,18 @@ def users(usertype):
     if usertype == 'students':
         users = User.query.filter_by(role='Student').paginate(page, 50, False)
         if users:     
-            next_url = url_for('users/students', page=users.next_num)\
+            next_url = url_for('users', usertype='students', page=users.next_num)\
             if users.has_next else None
-            prev_url = url_for('users/students', page=users.prev_num)\
+            prev_url = url_for('users', usertype='students', page=users.prev_num)\
             if users.has_prev else None
             pages = users.pages
         return render_template('students.html', users=users.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
     else:
         users = User.query.filter(User.role!='Student').paginate(page, 1, False)           
         if users:     
-            next_url = url_for('users/staff', page=users.next_num)\
+            next_url = url_for('users', usertype='staff', page=users.next_num)\
             if users.has_next else None
-            prev_url = url_for('users/staff', page=users.prev_num)\
+            prev_url = url_for('users', usertype='staff', page=users.prev_num)\
             if users.has_prev else None
             pages = users.pages
         return render_template('staff.html', users=users.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)

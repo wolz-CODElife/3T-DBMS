@@ -65,6 +65,17 @@
 <div class="listings">
     <div class="container">
         {% if users %}
+        <div class="row m-1">            
+            <div class="col-md">   
+                {% if prev_url %}
+                <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
+                {% endif %}
+                <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
+                {% if next_url %}
+                <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
+                {% endif %}
+            </div>
+        </div>
             <div class="responsive">
                 {% if current_user %}
                 {% if current_user.theme %}
@@ -88,7 +99,6 @@
                     </thead>
                     <tbody>
                         {% for user in users %}
-                            {% if user.role|lower() == 'student' %}
                             <tr>
                                 <td><button class="btn" data-toggle="modal" data-target="#user-edit{{user.id}}"><i class="fa fa-edit"></i></button></td>
                                 <td><a href="/delete-user/{{user.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a href="/delete-user/{{user.id}}"></td>
@@ -97,7 +107,6 @@
                                 <td>{{user.email}}</td>
                                 <td>{{user.role}}</td>
                             </tr>
-                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

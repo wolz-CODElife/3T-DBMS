@@ -62,7 +62,7 @@
     </form>
     <hr>
 </div>
-<div class="row m-1">            
+<div class="row m-1 ml-4">            
     <div class="col-md">   
         {% if prev_url %}
         <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
@@ -114,6 +114,7 @@
         {% endif %}
     </div>
 </div>
+<br><br><br>
 <!-- Modal Edit Employee -->
 {% for user in users %}
 <div class="modal" style="align-self: center;" id="user-edit{{user.id}}" role="dialog">

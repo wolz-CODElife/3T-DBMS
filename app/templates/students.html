@@ -1,0 +1,153 @@
+{% extends 'base2.html' %}
+{% block title %}Students{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+<hr>
+{% endif %}
+
+{% endwith %}
+
+<div class="pb-2">
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-users"></i> Students</h4>
+</div>
+<div class="container">        
+    <form action="/users/students" enctype="multipart/form-data" method="post">
+        <p>Create New Student:</p>
+        <div class="row">
+            <div class="col-lg m-2">
+                <label for="firstname">Firstname: </label>
+                <input type="text" id="firstname" name="firstname" placeholder="Firstname . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="lastname">Lastname: </label>
+                <input type="text" id="lastname" name="lastname" placeholder="Lastname . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="email">Email: </label>
+                <input type="email" id="email" name="email" placeholder="Email . . ." class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg m-2">
+                <label for="role">Role: </label>
+                <select id="role" name="role" class="form-control">
+                    <option value="Student">Student</option>
+                </select>
+            </div>
+            <div class="col-lg m-2">
+                <label for="password">Password: </label>
+                <input type="password" id="password" name="password" placeholder="Password . . ." class="form-control">
+            </div>
+            <div class="col-lg m-2">
+                <label for="re_password">Confirm Password: </label>
+                <input type="password" id="re_password" name="confirm_password" placeholder="Confirm Password . . ." class="form-control">
+            </div>
+        </div>
+        <p class="m-2">                
+            <button type="submit" class="btn button">Submit</button>
+        </p>
+    </form>
+    <hr>
+</div>
+<div class="listings">
+    <div class="container">
+        {% if users %}
+            <div class="responsive">
+                {% if current_user %}
+                {% if current_user.theme %}
+                {% if current_user.theme == 'light' %}
+                <table class="table table-dark table-striped table-bordered table-hover" id="selectable">
+                    {% else %}
+                    <table class="table table-light text-darktable-striped table-bordered table-hover" id="selectable">
+                        {% endif %}
+                        {% else %}
+                        <table class="table table-light text-dark table-striped table-bordered table-hover" id="selectable">
+                            {% endif %}
+                            {% endif %}
+                    <thead class="thead">
+                        <tr>
+                            <th colspan="2">Actions</th>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            {% if user.role|lower() == 'student' %}
+                            <tr>
+                                <td><button class="btn" data-toggle="modal" data-target="#user-edit{{user.id}}"><i class="fa fa-edit"></i></button></td>
+                                <td><a href="/delete-user/{{user.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a href="/delete-user/{{user.id}}"></td>
+                                <td>{{user.firstname}}</td>
+                                <td>{{user.lastname}}</td>
+                                <td>{{user.email}}</td>
+                                <td>{{user.role}}</td>
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+    </div>
+</div>
+<!-- Modal Edit Employee -->
+{% for user in users %}
+<div class="modal" style="align-self: center;" id="user-edit{{user.id}}" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-dark">Edit <span class="badge">{{user.firstname}} {{user.lastname}}</span></h4>
+            </div>
+            <div class="modal-body text-white bg-dark">
+                <form action="/edit-user/students/{{user.id}}" method="post">
+                    <div class="form-group">
+                        <label for="editfirstname{{user.id}}">Firstname: </label>
+                        <input type="text" id="editfirstname{{user.id}}" name="firstname" value="{{user.firstname}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editlastname{{user.id}}">Lastname: </label>
+                        <input type="text" id="editlastname{{user.id}}" name="lastname" value="{{user.lastname}}" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editrole{{user.id}}">Role: </label>
+                        <select id="editrole{{user.id}}" name="role" class="form-control">                            
+                            <option value="{{user.role}}">{{user.role}}</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Manager">Manager</option>
+                            <option value="Reader">Reader</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="editpassword{{user.id}}">Password: </label>
+                        <input type="password" id="editpassword{{user.id}}" name="password" placeholder="Enter new Password if needed . . ." class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="editcopassword{{user.id}}">Password: </label>
+                        <input type="password" id="editcopassword{{user.id}}" name="copassword" placeholder="Confirm Password if needed . . ." class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

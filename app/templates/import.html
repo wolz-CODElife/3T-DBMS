@@ -1,0 +1,65 @@
+{% extends 'base2.html' %}
+{% block title %}Import Sheet{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+<hr>
+{% endif %}
+
+{% endwith %}
+
+<div class="pb-2">
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-file-import"></i> Import Sheets</h4>
+</div>
+<div class="listings">
+    <div class="container">   
+        <div>
+            <p class="text-light">
+                <span class="text-danger">**NOTE: </span> Files upload may fail if they dont match this sample sheet, column header must not have white spaces <br>
+                Download Sample Workbook : <a href="{{url_for('static', filename='uploads/CDMS.xlsx')}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
+            </p>
+        </div>     
+        <form action="/import" enctype="multipart/form-data" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Please Select Category</label>
+                </div>
+                <select name="category" class="custom-select" id="inputGroupSelect01">
+                    <option value="0"></option>
+                    <option value="mixed">Mixed</option>
+                    <option value="prospect">Prospects</option>
+                    <option value="students">Students</option>
+                    <option value="ex-student">Exstudents</option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Upload xls, xlsx, or csv only</span>
+                </div>
+                <div class="custom-file">
+                    <!-- <label class="custom-file-label" for="inputGroupFile03">Choose file</label> -->
+                    <input type="file" name="file" class="form-control" id="inputGroupFile01">
+                    <!-- <input type="file" name="file" class="custom-file-input" id="inputGroupFile01"> -->
+
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-primary">Import <i class="fa fa-file-import"></i></button>
+                </div>
+            </div>
+        </form>
+        <hr>
+    </div>
+</div>
+{% endblock %}

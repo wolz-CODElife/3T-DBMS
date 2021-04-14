@@ -1,0 +1,183 @@
+{% extends 'base2.html' %}
+{% block title %}Courses{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+<hr>
+{% endif %}
+
+{% endwith %}
+
+<div class="pb-2">
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-book-open"></i> Courses 
+        {% if current_user.role|lower != 'student' %}
+            {% if current_user.role|lower != 'reader' %}
+            <span class="btn btn-success float-right" data-toggle="modal" data-target="#addcourses"><i class="fa fa-plus"></i></span>
+            {% endif %}
+        {% endif %}
+    </h4>
+</div>
+<div class="listings">
+    <h3>My Courses</h3>
+    <div class="row" style="width: 100%; max-height: 70vh; overflow: auto;">
+        {% if offers %}
+            {% for offer in offers %}
+                {% if courses %}
+                    {% for course in courses %}
+                        {% if offer.course_id == course.id %}
+                             <div class="col-md-5 col-lg-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;"> 
+                                {% if offer.status|lower() == 'pending'%}
+                                    <a href="#" disabled style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2 mb-2">
+                                    {% else %}
+                                    <a href="/lessons/{{course.id}}" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;" class="bg-primary pt-2 mb-2">
+                                {% endif %}
+                                <span class="btn btn-primary" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;">
+                                    <i class="fa fa-book"></i> {{course.title}}
+                                </span>
+                                </a>
+                                {% if offer.status|lower() == 'pending' %}
+                                Status - <i class="text-warning">{{offer.status|title()}}</i>
+                                {% else %}
+                                Status - <i class="text-success">{{offer.status|title()}}</i>
+                                {% endif %}
+                                <a href="/delete-my-offer/{{offer.id}}" class="float-right btn btn-danger"><i class="fa fa-times"></i></a>
+                                <hr class="bg-light">
+                                <div class="h6 mt-3">
+                                    <i class="fa fa-clock"></i> {{course.date_created.strftime('%d %B, %Y')}}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                <h3 class="text-center m-5 p-2">No Course found . . .</h3>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+        <h3 class="text-center m-5 p-2">No Course offered yet!</h3>
+        {% endif %}
+    </div>
+    {% if current_user.role|lower() != 'student' %}
+        {% if current_user.role|lower() != 'reader' %}
+        <hr class="bg-light">
+        <h3>All Courses</h3>
+        <div class="row" style="width: 100%; max-height: 70vh; overflow: auto;">
+            {% if courses %}
+                {% for course in courses %}
+                <div class="col-md-5 col-lg-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">                              
+                        <a href="/lessons/{{course.id}}" class="bg-primary pt-2">
+                            <span class="btn btn-primary" style="min-height: 40px; width: 100%; text-decoration:none; font-size: 1.1rem;">
+                                <i class="fa fa-book"></i> {{course.title}}
+                            </span>
+                        </a>
+                        <br>
+                        {% if current_user.role|lower() != 'student' %}
+                            {% if current_user.role|lower() != 'reader' %}
+                            <div class="mt-3 mb-3">
+                                <a href="/delete-course/{{course.id}}" class="btn btn-danger float-right"><i class="fa fa-trash-alt"></i></a>&nbsp;
+                                <a href="#" class="btn btn-primary float-left" data-toggle="modal" data-target="#editcourse{{course.id}}"><i class="fa fa-edit"></i></a>
+                            </div>
+                            {% endif %}
+                        {% endif %}
+                        <div class="h6 mt-3">
+                            <i class="fa fa-clock"></i> {{course.date_created.strftime('%d %B, %Y')}}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+            <h3 class="text-center m-5 p-2">No Course found . . .</h3>
+            {% endif %}
+        </div>
+        {% endif %}
+    {% endif %}
+    <hr class="bg-light">
+    <form action="/make-offer" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Apply for a course</label>
+            </div>
+            <select name="course" class="custom-select" id="inputGroupSelect01">
+                <option value="0"></option>
+                {% if courses %}
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course.title}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn button">Apply <i class="fa fa-check"></i></button>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal add prospect -->
+<div class="modal" style="align-self: center;" id="addcourses" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-dark">
+                    <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;Add New Course
+                </h4>
+            </div>
+            <div class="modal-body text-white bg-dark">
+                <form action="/courses" method="post">
+                    <div class="form-group">
+                        <label for="titlecourses">Course Title: </label>
+                        <input type="text" id="titlecourses" name="title" placeholder="Course Title . . ."
+                            class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-plus"></i> Add</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Close 
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if courses %}
+{% for course in courses %}
+<!-- Modal add prospect -->
+<div class="modal" style="align-self: center;" id="editcourse{{course.id}}" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-dark">
+                    <span class="bg-danger h6" style="border-radius: 50%; padding: 4px 8px;" data-dismiss="modal"><i class="fa fa-times"></i></span> &nbsp;Edit - {{course.title}}
+                </h4>
+            </div>
+            <div class="modal-body text-white bg-dark">
+                <form action="/edit-course/{{course.id}}" method="post">
+                    <div class="form-group">
+                        <label for="titlecourses">Course Title: </label>
+                        <input type="text" id="titlecourses" name="title" value="{{course.title}}"
+                            class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-edit"></i> Edit</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Close 
+                    <i class="fa fa-times"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

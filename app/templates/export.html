@@ -1,0 +1,59 @@
+{% extends 'base2.html' %}
+{% block title %}Export Sheet{% endblock %}
+{% block body %}
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+<hr>
+{% endif %}
+
+{% endwith %}
+
+<div class="pb-2">
+    <h4 style="text-transform: capitalize;"> <i class="fa fa-file-import"></i> Export Sheets</h4>
+</div>
+<div class="listings">
+    <div class="container">   
+        <form action="/export" method="post">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Please Select Category</label>
+                </div>
+                <select name="category" class="custom-select" id="inputGroupSelect01">
+                    {% if category %}
+                    <option value="{{category}}">{{category|title()}}</option>
+                    {% else %}
+                    <option  value="0"></option>
+                    {% endif %}
+                    <option value="mixed">Mixed</option>
+                    <option value="prospects">Prospects</option>
+                    <option value="students">Students</option>
+                    <option value="ex-student">Exstudents</option>
+                </select>
+                <div class="input-group-append">
+                    <button type="submit" class="btn button">Export <i class="fa fa-file-export"></i></button>
+                </div>
+            </div>
+        </form>
+        {% if file_name %}
+            <hr class="bg-info">
+            <hr class="bg-info">
+            <div class="text-info text-center">
+                <h2>File Ready for Download</h2>
+                <a href="{{url_for('static', filename=file_name)}}" class="btn button">Download <i class="fa fa-file-download"></i></a>
+            </div>     
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

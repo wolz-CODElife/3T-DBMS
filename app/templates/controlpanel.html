@@ -1,0 +1,52 @@
+{% extends 'base2.html' %}
+{% block title %}Control Panel{% endblock %}
+{% block body %}
+
+<h2 style="color: dodgerblue;"><i class="fa fa-cog"></i> Control Panel</h2>
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+{% for message in messages %}
+
+<div class="alert alert-success alert-dismissable" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">x</span>
+    </button>
+    {{message}}
+</div>
+
+{% endfor %}
+
+{% endif %}
+
+{% endwith %}
+<ul class="tab">
+    <li><a href="#" class="tablinks active" onclick="openCity(event, 'Complaints')">Complaints</a></li>
+    <li><a href="#" class="tablinks" onclick="openCity(event, 'Subjects')">Subjects</a></li>
+    <li><a href="#" class="tablinks" onclick="openCity(event, 'Classes')">Classes</a></li>
+    <li><a href="#" class="tablinks" onclick="openCity(event, 'Educators')">Educators</a></li>
+    <li><a href="#" class="tablinks" onclick="openCity(event, 'TimeTable')">TimeTable</a></li>
+</ul>
+
+<div id="Complaints" class="tabcontent default">
+    {% include '_complaints.html' %}
+</div>
+
+<div id="Subjects" class="tabcontent">
+    {% include '_subjects.html' %}
+</div>
+
+<div id="Classes" class="tabcontent">
+    {% include '_classes.html' %}
+</div>
+
+<div id="Educators" class="tabcontent">
+    {% include '_educators.html' %}
+</div>
+
+<div id="TimeTable" class="tabcontent">
+    {% include '_timetable.html' %}
+</div>
+
+{% endblock %}

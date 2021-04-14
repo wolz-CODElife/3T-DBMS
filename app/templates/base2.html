@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/animate.css')}}">
+    {% if current_user %}
+        {% if current_user.theme %}
+            {% if current_user.theme == 'light' %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/dark.css')}}">
+            {% else %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/light.css')}}">
+            {% endif %}
+            {% else %}
+            <link rel="stylesheet" href="{{url_for('static', filename='css/light.css')}}">
+        {% endif %}
+    {% endif %}
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+</head>
+<body>
+    <!-- pre-loader -->
+    <div id="loader">
+        <!-- <i class="fa fa-spinner fa-spin"></i> -->
+        <img src="{{url_for('static', filename='img/logo.png')}}" class="fa-spin" style="width: 80px; height: 80px;" alt="">
+    </div>
+    <!-- site's main content -->
+    <div id="content">        
+        <div id="header" class="row p-2">
+            <div class="col-md h4">
+                <button class="float-left btn btn-outline-dark mr-4 hambuger" id="hambuger"><i class="fa fa-bars"></i></button>
+                {% if current_user %}
+                    {% if current_user.theme %}
+                        {% if current_user.theme == 'light' %}
+                        <a href="/theme/dark" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/sun.png')}}" alt="light"></a>
+                        {% else %}
+                        <a href="/theme/light" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/moon.png')}}" alt="light"></a>
+                        {% endif %}
+                    {% else %}
+                        <a href="/theme/light" class="float-right"><img style="width: 25px; height: 25px;" src="{{url_for('static', filename='img/moon.png')}}" alt="light"></a>
+                    {% endif %}
+                    <a href="settings" class="float-right user-details" style="text-transform: capitalize; text-decoration: none;"> <i class="fa fa-user-circle"></i> {{current_user.firstname}} {{current_user.lastname}}</a>
+                {% endif %}
+                <p>3T-CDMS</p>
+            </div>
+        </div>
+        <div id="section">
+            <div class="nav" id="nav">
+                <ul>
+                    <li>                        
+                        {% if current_user %}
+                            <a href="/settings" class="h5 nav-user-details" style="text-transform: capitalize; text-decoration: none;"> <i class="fa fa-user-circle"></i> {{current_user.firstname}} {{current_user.lastname}}</a>
+                        {% endif %}
+                    </li>
+                    <li><a href="/"><button>Dashboard</button></a></li>
+                    {% if current_user.role|lower != 'student' %}
+                    <li><a href="/customers/prospects"><button>Prospects</button></a></li>
+                    <li><a href="/customers/students"><button>Students</button></a></li>
+                    <li><a href="/customers/exstudents"><button>Exstudents</button></a></li>
+                    {% if current_user.role|lower != 'reader' %}
+                    <li><a href="/import"><button>Import Sheets</button></a></li>
+                    <li><a href="/export"><button>Export Sheets</button></a></li>
+                    {% endif %}
+                    {% endif %}
+                    {% if current_user.role|lower == 'admin' %}
+                    <li><a href="/users/staff"><button>Staff</button></a></li>
+                    <hr style="border: solid 2px #a71a1a;">
+                    <li><a href="/users/students"><button class="bg-danger"><span class="text-dark">Students</span></button></a></li>
+                    <li><a href="/applications"><button class="bg-danger"><span class="text-dark">Applications</span></button></a></li>
+                    {% endif %}
+                    <li><a href="/courses"><button class="bg-danger"><span class="text-dark">Courses</span></button></a></li>
+                    <li><a href="/settings"><button class="bg-danger"><span class="text-dark">Settings</span></button></a></li>
+                    <li><a href="/logout"><button class="bg-danger"><span class="text-dark">Logout</span></button></a></li>
+                </ul>
+            </div>
+            <div class="aside">  
+                <div class="container-fluid p-3">
+                    {% block body %}
+                    
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='css/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='css/fontawesome/js/all.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+
+</body>
+</html>

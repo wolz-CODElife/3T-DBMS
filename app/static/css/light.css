@@ -1,0 +1,172 @@
+
+/* width */
+::-webkit-scrollbar {
+  background: #091921;
+  width: 15px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 5px 15px 15px rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #055178;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #055178;
+}
+
+*,
+:after,
+:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  color: #191c48;
+}
+body{
+  background: #a4e3f5;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+  }
+#loader{
+    width: 100%;
+    height: 100vh;
+    font-size: 3rem;
+    background: #86beda;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#content{
+  display: none;
+  margin-top: 50px;
+}
+#header{
+  background: #ffffff;
+  position: fixed;
+  z-index: 50;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 50px;
+  width: 100vw;
+  }
+  #header .hambuger{
+    display: none !important;
+}
+#section{
+  overflow:hidden;
+}
+.nav{
+  background: #ffffff;
+  width: 250px;
+  float: left;
+  position: fixed;
+  border-right: solid 0.9px #055178;
+  height: 100vh;
+  padding-bottom: 90px;
+  display: unset;
+  z-index: 2;
+  overflow: auto;
+}
+.nav ul{
+  list-style: none;
+  width: 100%;
+}
+.nav ul li{
+  padding: 10px;
+  width: 100%;
+}
+.nav a button{
+  border: none;
+  padding: 10px;
+  text-align: left;
+  margin: 0px 0.9px;
+  background: #a4e3f5;
+  color: #191c48;
+  font-weight: bolder;
+  width: 100%;
+  text-decoration: none;
+  transform: 0.9s;
+  transition: 0.9s;
+}
+.nav a button:hover{
+  background: #191c48;
+  padding-left: 30px;
+  color: #86beda;
+}
+.login{
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /* margin: auto; */
+}
+.nav-user-details{
+  display: none;
+}
+.aside{  
+  margin-left: 260px;
+}
+.listings{
+  height: 80vh;
+  width: 99%;
+  overflow: auto;
+}
+a.wall{
+  transition: 0.6s;
+  transform: 0.6s;
+  border: 2.5px solid #373d91;
+  border-radius: 20px;
+  text-decoration: none;
+}
+.wall h3, .wall p{
+  text-decoration: none;
+}
+.wall:hover{
+  background: #128ec4;
+}
+.wall p{
+  font-size: 4rem;
+}
+.button{
+  background: #373d91;
+  border: 2.5px solid #128ec4;
+  color: #128ec4;
+  transform: 0.6s;
+  transition: 0.6s;
+}
+.button:hover{
+  background: transparent;
+  color: #373d91;
+}
+
+
+
+
+@media only screen and (max-width : 768px){
+    .nav{
+      display: none;
+    }
+    #section{
+      width: 99.9%;
+    }
+    .aside{      
+      margin-left: 0px;
+    }
+    #header .hambuger{
+        display: block !important;
+    }
+    .user-details{
+      display: none;
+    }
+    .nav-user-details{
+      display: unset;
+    }
+  }

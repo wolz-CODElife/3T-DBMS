@@ -1,0 +1,48 @@
+{% extends 'base2.html' %}
+{% block title %}Settings{% endblock %}
+{% block body %}
+
+<h4><i class="fa fa-user-cog"></i> Settings</h4>
+<div class="row mt-3 mb-3">
+    <div class="col-md-8 text-white m-auto p-3" style="border-radius: 20px;">
+        {% with messages = get_flashed_messages() %}
+        
+        {% if messages %}
+        
+        {% for message in messages %}
+        
+        <div class="alert alert-success alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">x</span>
+            </button>
+            {{message}}
+        </div>
+        
+        {% endfor %}
+        <hr>
+        {% endif %}
+        
+        {% endwith %}
+        <form action="/edit-user/me/{{current_user.id}}" method="post">
+            <div class="form-group">
+                <label for="firstname">Firstname: </label>
+                <input type="text" name="firstname" class="form-control" value="{{current_user.firstname}}" id="firstname">
+            </div>
+            <div class="form-group">
+                <label for="lastname">Lastname: </label>
+                <input type="text" name="lastname" class="form-control" value="{{current_user.lastname}}" id="lastname">
+            </div>
+            <div class="form-group">
+                <label for="password">Password: </label>
+                <input type="password" name="password" id="password" placeholder="Enter New Password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="copassword">Confirm Password: </label>
+                <input type="copassword" name="copassword" id="copassword" placeholder="Confirm Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success"><i class="fa fa-edit"></i> Edit</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/fontawesome/css/all.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/animate.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/dark.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/logo.png')}}" type="image/x-icon">
+</head>
+<body>
+    <!-- pre-loader -->
+    <div id="loader">
+        <!-- <i class="fa fa-spinner fa-spin"></i> -->
+        <img src="{{url_for('static', filename='img/logo.png')}}" class="fa-spin" style="width: 80px; height: 80px;" alt="">
+    </div>
+    <!-- site's main content -->
+    <div id="content">        
+        <div id="header" class="row p-2">
+            <div class="col-md h4">
+                <p>3T-CDMS</p>
+            </div>
+        </div> 
+        <div class="login">
+            {% block body %}
+            
+            {% endblock %}
+        </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='css/bootstrap/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='css/fontawesome/js/all.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+
+</body>
+</html>

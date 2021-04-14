@@ -69,7 +69,9 @@
             {% if prev_url %}
             <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
             {% endif %}
+            {% if page or pages %}
             <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
+            {% endif %}
             {% if next_url %}
             <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
             {% endif %}
@@ -259,7 +261,9 @@
         {% if prev_url %}
         <a href="{{ prev_url }}" class="btn btn-primary m-1"><i class="fa fa-angle-double-left"></i> Previous</a>
         {% endif %}
+        {% if page or pages %}
         <span class="badge badge-primary">{{page}}</span> of <span class="badge badge-primary">{{pages}}</span>
+        {% endif %}
         {% if next_url %}
         <a href="{{ next_url }}" class="btn btn-primary m-1">Next <i class="fa fa-angle-double-right"></i></a>
         {% endif %}

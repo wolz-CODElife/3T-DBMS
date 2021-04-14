@@ -140,11 +140,26 @@ def users(usertype):
                     db.session.commit()
 
                     flash('User Registration Successful!')
-    users = User.query.all()
+    
+    page = request.args.get('page', 1, type=int)
     if usertype == 'students':
-        return render_template('students.html', users=users)
+        users = User.query.filter_by(role='Student').paginate(page, 10, False)
+        if users:     
+            next_url = url_for('users', usertype='students', page=users.next_num)\
+            if users.has_next else None
+            prev_url = url_for('users', usertype='students', page=users.prev_num)\
+            if users.has_prev else None
+            pages = users.pages
+        return render_template('students.html', users=users.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
     else:
-        return render_template('staff.html', users=users)
+        users = User.query.filter(User.role!='Student').paginate(page, 50, False)           
+        if users:     
+            next_url = url_for('users', usertype='staff', page=users.next_num)\
+            if users.has_next else None
+            prev_url = url_for('users', usertype='staff', page=users.prev_num)\
+            if users.has_prev else None
+            pages = users.pages
+        return render_template('staff.html', users=users.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
 
 @app.route('/edit-user/<usertype>/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -206,12 +221,14 @@ def customers(category):
         # clientscount = Students.query.all()
     elif category.lower() == 'exstudents':
         clients = Exstudents.query.order_by(Exstudents.date_created.desc()).paginate(page, 50, False)        
-        # clientscount = Exstudents.query.all()        
-    next_url = url_for('customers', category=category, page=clients.next_num)\
-    if clients.has_next else None
-    prev_url = url_for('customers', category=category, page=clients.prev_num)\
-    if clients.has_prev else None
-    return render_template('customers.html', category=category, clients=clients.items, next_url=next_url, prev_url=prev_url)
+        # clientscount = Exstudents.query.all()   
+    if clients:     
+        next_url = url_for('customers', category=category, page=clients.next_num)\
+        if clients.has_next else None
+        prev_url = url_for('customers', category=category, page=clients.prev_num)\
+        if clients.has_prev else None
+        pages = clients.pages
+    return render_template('customers.html', category=category, clients=clients.items, page=page, pages=pages, next_url=next_url, prev_url=prev_url)
     # return render_template('customers.html', category=category, clients=clients.items, totalcount=clientscount, next_url=next_url, prev_url=prev_url)
 
 

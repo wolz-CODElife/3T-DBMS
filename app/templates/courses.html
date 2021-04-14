@@ -26,11 +26,30 @@
             {% if current_user.role|lower != 'reader' %}
             <span class="btn btn-success float-right" data-toggle="modal" data-target="#addcourses"><i class="fa fa-plus"></i></span>
             {% endif %}
-        {% endif %}
-    </h4>
-</div>
-<div class="listings">
-    <h3>My Courses</h3>
+            {% endif %}
+        </h4>
+    </div>
+    <form action="/make-offer" method="post">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Apply for a course</label>
+            </div>
+            <select name="course" class="custom-select" id="inputGroupSelect01">
+                <option value="0"></option>
+                {% if courses %}
+                {% for course in courses %}
+                <option value="{{course.id}}">{{course.title}}</option>
+                {% endfor %}
+                {% endif %}
+            </select>
+            <div class="input-group-append">
+                <button type="submit" class="btn button">Apply <i class="fa fa-check"></i></button>
+            </div>
+        </div>
+    </form>
+    <hr class="bg-light">
+    <div class="listings">
+        <h3>My Courses</h3>
     <div class="row" style="width: 100%; max-height: 70vh; overflow: auto;">
         {% if offers %}
             {% for offer in offers %}
@@ -69,10 +88,10 @@
         {% endif %}
     </div>
     {% if current_user.role|lower() != 'student' %}
-        {% if current_user.role|lower() != 'reader' %}
-        <hr class="bg-light">
-        <h3>All Courses</h3>
-        <div class="row" style="width: 100%; max-height: 70vh; overflow: auto;">
+    {% if current_user.role|lower() != 'reader' %}
+    <hr class="bg-light">
+    <h3>All Courses</h3>
+    <div class="row" style="width: 100%; max-height: 70vh; overflow: auto;">
             {% if courses %}
                 {% for course in courses %}
                 <div class="col-md-5 col-lg-3 m-3 p-3 wall" style="border: 2.5px solid #128ec4; border-radius: 20px;">                              
@@ -101,25 +120,6 @@
         </div>
         {% endif %}
     {% endif %}
-    <hr class="bg-light">
-    <form action="/make-offer" method="post">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Apply for a course</label>
-            </div>
-            <select name="course" class="custom-select" id="inputGroupSelect01">
-                <option value="0"></option>
-                {% if courses %}
-                {% for course in courses %}
-                <option value="{{course.id}}">{{course.title}}</option>
-                {% endfor %}
-                {% endif %}
-            </select>
-            <div class="input-group-append">
-                <button type="submit" class="btn button">Apply <i class="fa fa-check"></i></button>
-            </div>
-        </div>
-    </form>
 </div>
 <!-- Modal add prospect -->
 <div class="modal" style="align-self: center;" id="addcourses" role="dialog">

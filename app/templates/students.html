@@ -61,8 +61,6 @@
         </p>
     </form>
     <hr>
-<<<<<<< HEAD
-=======
     <div class="row m-1 ml-1">            
         <div class="col-md">   
             {% if prev_url %}
@@ -74,7 +72,6 @@
             {% endif %}
         </div>
     </div>
->>>>>>> ce9faf063fa483d5c09075753f35190e25382a30
 </div>
 <div class="listings">
     <div class="container">
@@ -102,10 +99,6 @@
                     </thead>
                     <tbody>
                         {% for user in users %}
-<<<<<<< HEAD
-                            {% if user.role|lower() == 'student' %}
-=======
->>>>>>> ce9faf063fa483d5c09075753f35190e25382a30
                             <tr>
                                 <td><button class="btn" data-toggle="modal" data-target="#user-edit{{user.id}}"><i class="fa fa-edit"></i></button></td>
                                 <td><a href="/delete-user/{{user.id}}" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a href="/delete-user/{{user.id}}"></td>
@@ -114,10 +107,6 @@
                                 <td>{{user.email}}</td>
                                 <td>{{user.role}}</td>
                             </tr>
-<<<<<<< HEAD
-                            {% endif %}
-=======
->>>>>>> ce9faf063fa483d5c09075753f35190e25382a30
                         {% endfor %}
                     </tbody>
                 </table>
@@ -125,10 +114,7 @@
         {% endif %}
     </div>
 </div>
-<<<<<<< HEAD
-=======
 <br><br><br>
->>>>>>> ce9faf063fa483d5c09075753f35190e25382a30
 <!-- Modal Edit Employee -->
 {% for user in users %}
 <div class="modal" style="align-self: center;" id="user-edit{{user.id}}" role="dialog">

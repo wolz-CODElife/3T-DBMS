@@ -915,7 +915,7 @@ def lessons(coursesid):
             if catch.course.id == coursesid and catch.link == link:
                 catchcount += 1
         if catchcount > 0:
-            flash(title + ' is already registered')
+            flash(title + ' is already registered') 
         else:
             new_lesson = Lessons(course=course, title=title, link=link)
             db.session.add(new_lesson)
@@ -925,6 +925,7 @@ def lessons(coursesid):
         return redirect(new_url)
     lessons = Lessons.query.filter_by(course_id=coursesid).all()
     return render_template('lessons.html', lessons=lessons, course=course, coursesid=coursesid)
+ 
 
 
 

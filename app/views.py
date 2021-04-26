@@ -911,8 +911,8 @@ def lessons(coursesid):
         link = link.replace('https://www.youtube.com/embed/', '')
         link = link.replace('https://youtu.be/', '')
         catchcount = 0        
-        for catch in Lessons.query.filter_by(title=title):
-            if catch.course.id == coursesid and catch.link == link:
+        for catch in Lessons.query.filter_by(link=link):
+            if catch.title.strip().lower() == title.strip().lower():
                 catchcount += 1
         if catchcount > 0:
             flash(title + ' is already registered') 

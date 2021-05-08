@@ -893,7 +893,7 @@ def courses():
             db.session.commit()
             flash(title + ' successfully registered')
     myid = current_user.id
-    courses = Courses.query.all()
+    courses = Courses.query.order_by(Courses.title.asc()).all()
     offers = Offers.query.filter_by(user_id=myid).order_by(Offers.status.asc()).all()
     return render_template('courses.html', courses=courses, offers=offers)
 

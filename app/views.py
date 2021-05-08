@@ -1030,7 +1030,7 @@ def applications():
                 flash('Successfully sent application . . .')
         courses = Courses.query.all()
         offers = Offers.query.order_by(Offers.status.desc()).all()
-        students = User.query.filter_by(role='Student').all()
+        students = User.query.filter_by(role='Student').order_by(User.firstname.asc()).all()
         return render_template('applications.html', courses=courses, offers=offers, students=students)
 
 

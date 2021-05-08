@@ -1028,7 +1028,7 @@ def applications():
                 db.session.add(new_offer)
                 db.session.commit()
                 flash('Successfully sent application . . .')
-        courses = Courses.query.all()
+        courses = Courses.query.order_by(Courses.title.asc()).all()
         offers = Offers.query.order_by(Offers.status.desc()).all()
         students = User.query.filter_by(role='Student').order_by(User.firstname.asc()).all()
         return render_template('applications.html', courses=courses, offers=offers, students=students)
